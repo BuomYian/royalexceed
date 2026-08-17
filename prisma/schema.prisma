@@ -1,0 +1,408 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL") // Supabase pooler, pgbouncer=true
+  directUrl = env("DIRECT_URL") // Supabase direct, for migrations
+}
+
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+  SALES
+  SERVICE
+  EDITOR
+}
+
+enum BodyType {
+  SUV
+  CROSSOVER
+  SEDAN
+  HATCHBACK
+  PICKUP
+  MPV
+  VAN
+}
+
+enum FuelType {
+  PETROL
+  DIESEL
+  HYBRID
+  PLUGIN_HYBRID
+  ELECTRIC
+}
+
+enum Transmission {
+  MANUAL
+  AUTOMATIC
+  DCT
+  CVT
+}
+
+enum Drivetrain {
+  FWD
+  RWD
+  AWD
+  FOUR_WD
+}
+
+enum PublishStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum StockStatus {
+  IN_TRANSIT
+  AVAILABLE
+  RESERVED
+  SOLD
+}
+
+enum Condition {
+  NEW
+  CERTIFIED_PRE_OWNED
+  USED
+}
+
+enum LeadType {
+  GENERAL
+  QUOTE
+  TEST_DRIVE
+  SERVICE
+  PARTS
+  FINANCE
+  FLEET
+  CALLBACK
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  NEGOTIATION
+  WON
+  LOST
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  RESCHEDULED
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+}
+
+enum Currency {
+  USD
+  SSP
+}
+
+model User {
+  id          String    @id @db.Uuid // mirrors Supabase auth.users.id
+  email       String    @unique
+  fullName    String
+  phone       String?
+  role        Role      @default(SALES)
+  avatarUrl   String?
+  isActive    Boolean   @default(true)
+  lastLoginAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  assignedLeads   Lead[]             @relation("LeadAssignee")
+  leadNotes       LeadNote[]
+  testDrives      TestDriveBooking[]
+  serviceBookings ServiceBooking[]
+  articles        Article[]
+  auditLogs       AuditLog[]
+}
+
+model Model {
+  id               String        @id @default(cuid())
+  slug             String        @unique
+  name             String // "S07"
+  displayName      String // "Soueast S07"
+  tagline          String?
+  description      String        @db.Text
+  bodyType         BodyType
+  seats            Int
+  startingPriceUsd Decimal?      @db.Decimal(12, 2)
+  priceOnRequest   Boolean       @default(false)
+  year             Int
+  heroImageUrl     String?
+  thumbnailUrl     String?
+  brochureUrl      String?
+  status           PublishStatus @default(DRAFT)
+  isFeatured       Boolean       @default(false)
+  sortOrder        Int           @default(0)
+  viewCount        Int           @default(0)
+  metaTitle        String?
+  metaDescription  String?
+  ogImageUrl       String?
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  variants   Variant[]
+  colors     ModelColor[]
+  images     ModelImage[]
+  specGroups SpecGroup[]
+  features   FeatureBlock[]
+  inventory  InventoryUnit[]
+  leads      Lead[]
+  testDrives TestDriveBooking[]
+
+  @@index([status, isFeatured])
+  @@index([bodyType])
+}
+
+model Variant {
+  id           String       @id @default(cuid())
+  modelId      String
+  model        Model        @relation(fields: [modelId], references: [id], onDelete: Cascade)
+  name         String // "Comfort 1.5T 2WD"
+  priceUsd     Decimal?     @db.Decimal(12, 2)
+  engine       String? // "1.5L Turbo GDI"
+  powerHp      Int?
+  torqueNm     Int?
+  fuelType     FuelType
+  transmission Transmission
+  drivetrain   Drivetrain
+  sortOrder    Int          @default(0)
+
+  inventory InventoryUnit[]
+
+  @@unique([modelId, name])
+}
+
+model ModelColor {
+  id        String  @id @default(cuid())
+  modelId   String
+  model     Model   @relation(fields: [modelId], references: [id], onDelete: Cascade)
+  name      String
+  hexCode   String
+  imageUrl  String?
+  sortOrder Int     @default(0)
+}
+
+model ModelImage {
+  id        String  @id @default(cuid())
+  modelId   String
+  model     Model   @relation(fields: [modelId], references: [id], onDelete: Cascade)
+  url       String
+  alt       String
+  category  String  @default("exterior") // exterior | interior | detail
+  sortOrder Int     @default(0)
+}
+
+model SpecGroup {
+  id        String     @id @default(cuid())
+  modelId   String
+  model     Model      @relation(fields: [modelId], references: [id], onDelete: Cascade)
+  title     String // "Engine & Performance"
+  sortOrder Int        @default(0)
+  specs     SpecItem[]
+}
+
+model SpecItem {
+  id        String    @id @default(cuid())
+  groupId   String
+  group     SpecGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  label     String
+  value     String
+  unit      String?
+  sortOrder Int       @default(0)
+}
+
+model FeatureBlock {
+  id          String  @id @default(cuid())
+  modelId     String
+  model       Model   @relation(fields: [modelId], references: [id], onDelete: Cascade)
+  title       String
+  description String  @db.Text
+  imageUrl    String?
+  layout      String  @default("image-right")
+  sortOrder   Int     @default(0)
+}
+
+model InventoryUnit {
+  id          String           @id @default(cuid())
+  stockNumber String           @unique
+  vin         String?          @unique
+  modelId     String
+  model       Model            @relation(fields: [modelId], references: [id])
+  variantId   String?
+  variant     Variant?         @relation(fields: [variantId], references: [id])
+  year        Int
+  colorName   String
+  mileageKm   Int              @default(0)
+  condition   Condition        @default(NEW)
+  status      StockStatus      @default(IN_TRANSIT)
+  priceUsd    Decimal?         @db.Decimal(12, 2)
+  arrivalDate DateTime?
+  soldAt      DateTime?
+  notes       String?          @db.Text
+  images      InventoryImage[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  @@index([status])
+  @@index([modelId])
+}
+
+model InventoryImage {
+  id        String        @id @default(cuid())
+  unitId    String
+  unit      InventoryUnit @relation(fields: [unitId], references: [id], onDelete: Cascade)
+  url       String
+  alt       String?
+  sortOrder Int           @default(0)
+}
+
+model Lead {
+  id         String     @id @default(cuid())
+  type       LeadType   @default(GENERAL)
+  status     LeadStatus @default(NEW)
+  fullName   String
+  phone      String
+  email      String?
+  message    String?    @db.Text
+  modelId    String?
+  model      Model?     @relation(fields: [modelId], references: [id])
+  source     String? // organic | facebook | whatsapp | referral | contact-sales | contact-service | contact-parts | contact-fleet
+  pageUrl    String?
+  assigneeId String?    @db.Uuid
+  assignee   User?      @relation("LeadAssignee", fields: [assigneeId], references: [id])
+  notes      LeadNote[]
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  @@index([status, createdAt])
+  @@index([type])
+}
+
+model LeadNote {
+  id        String   @id @default(cuid())
+  leadId    String
+  lead      Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  authorId  String   @db.Uuid
+  author    User     @relation(fields: [authorId], references: [id])
+  body      String   @db.Text
+  createdAt DateTime @default(now())
+}
+
+model TestDriveBooking {
+  id            String        @id @default(cuid())
+  reference     String        @unique // "TD-2026-0143"
+  fullName      String
+  phone         String
+  email         String?
+  modelId       String?
+  model         Model?        @relation(fields: [modelId], references: [id])
+  preferredDate DateTime      @db.Date
+  timeSlot      String // "10:00-11:00"
+  location      String        @default("Showroom - Juba Town")
+  notes         String?       @db.Text
+  status        BookingStatus @default(PENDING)
+  assigneeId    String?       @db.Uuid
+  assignee      User?         @relation(fields: [assigneeId], references: [id])
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@unique([preferredDate, timeSlot])
+  @@index([status, preferredDate])
+}
+
+model ServiceBooking {
+  id            String        @id @default(cuid())
+  reference     String        @unique // "SV-2026-0087"
+  fullName      String
+  phone         String
+  email         String?
+  vehicleModel  String
+  plateNumber   String?
+  vin           String?
+  mileageKm     Int?
+  serviceType   String
+  preferredDate DateTime
+  description   String?       @db.Text
+  status        BookingStatus @default(PENDING)
+  assigneeId    String?       @db.Uuid
+  assignee      User?         @relation(fields: [assigneeId], references: [id])
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model Article {
+  id              String        @id @default(cuid())
+  slug            String        @unique
+  title           String
+  excerpt         String?       @db.Text
+  body            String        @db.Text
+  coverImageUrl   String?
+  tags            String[]
+  status          PublishStatus @default(DRAFT)
+  publishedAt     DateTime?
+  authorId        String        @db.Uuid
+  author          User          @relation(fields: [authorId], references: [id])
+  metaTitle       String?
+  metaDescription String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@index([status, publishedAt])
+}
+
+model Testimonial {
+  id          String   @id @default(cuid())
+  authorName  String
+  authorTitle String?
+  company     String?
+  quote       String   @db.Text
+  avatarUrl   String?
+  rating      Int      @default(5)
+  isApproved  Boolean  @default(false)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+}
+
+model SiteSetting {
+  id        String   @id @default("singleton")
+  data      Json // contact, hours, socials, hero slides, SEO defaults
+  usdToSsp  Decimal  @db.Decimal(12, 4)
+  updatedAt DateTime @updatedAt
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  actorId   String?  @db.Uuid
+  actor     User?    @relation(fields: [actorId], references: [id])
+  action    String // CREATE | UPDATE | DELETE | LOGIN | STATUS_CHANGE
+  entity    String // "Model", "Lead"
+  entityId  String?
+  changes   Json?
+  ipAddress String?
+  createdAt DateTime @default(now())
+
+  @@index([entity, createdAt])
+}
+
+// --- Extensions beyond the spec's starting-point schema (documented in README) ---
+
+/// Atomic, race-safe counter for human-readable reference numbers (TD-2026-0143, SV-2026-0087).
+model Sequence {
+  key   String @id // e.g. "TD-2026", "SV-2026"
+  value Int    @default(0)
+}
+
+/// Prisma-backed rate limiting (IP + phone) for public form endpoints, avoiding a Redis dependency.
+model RateLimitHit {
+  id        String   @id @default(cuid())
+  key       String // e.g. "ip:1.2.3.4:test-drive" or "phone:+211.../lead"
+  createdAt DateTime @default(now())
+
+  @@index([key, createdAt])
+}
