@@ -24,7 +24,8 @@
     "hours": "Opening Hours",
     "address": "Showroom Address",
     "rights": "All rights reserved.",
-    "followUs": "Follow us"
+    "followUs": "Follow us",
+    "admin": "Admin"
   },
   "common": {
     "priceOnRequest": "Price on request",

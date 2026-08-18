@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
 import { MapPin, Clock, Phone, Mail } from "lucide-react";
+import NextLink from "next/link";
 import { Link } from "@/i18n/navigation";
 import { FacebookIcon, InstagramIcon, TikTokIcon, XIcon } from "@/components/shared/social-icons";
 import type { ResolvedSiteSettings } from "@/lib/settings";
@@ -124,6 +125,16 @@ export function Footer({ settings }: { settings: ResolvedSiteSettings }) {
             © {year} Exceed Limited. {tFooter("rights")}
           </p>
           <div className="flex gap-4">
+            {/*
+              Plain next/link, not the locale-aware `Link` above: /admin lives
+              outside the [locale] route tree (see proxy.ts's explicit bypass)
+              and stays unlocalized, so prefixing it with a locale segment
+              would 404. /admin itself redirects to /admin/login when signed
+              out and on to the dashboard once authenticated.
+            */}
+            <NextLink href="/admin" className="hover:text-foreground">
+              {tFooter("admin")}
+            </NextLink>
             <Link href="/privacy" className="hover:text-foreground">
               {tFooter("privacy")}
             </Link>
