@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { getSiteSettings } from "@/lib/settings";
 import { getPublishedModels } from "@/lib/data/models";
 import { modelFilterSchema } from "@/lib/validations/model";
 import { VehicleCard } from "@/components/vehicle/vehicle-card";
@@ -26,7 +25,7 @@ export default async function ModelsPage({ searchParams }: PageProps<"/[locale]/
     sort: sp.sort,
   });
 
-  const [settings, models] = await Promise.all([getSiteSettings(), getPublishedModels(filters)]);
+  const models = await getPublishedModels(filters);
 
   return (
     <div className="container-brand py-10 sm:py-14">
@@ -46,7 +45,6 @@ export default async function ModelsPage({ searchParams }: PageProps<"/[locale]/
             <VehicleCard
               key={m.slug}
               model={{ ...m, startingPriceUsd: m.startingPriceUsd ? Number(m.startingPriceUsd) : null }}
-              usdToSsp={settings.usdToSsp}
             />
           ))}
         </div>

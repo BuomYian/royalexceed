@@ -30,9 +30,9 @@ export function Footer({ settings }: { settings: ResolvedSiteSettings }) {
         <div className="sm:col-span-2 lg:col-span-2">
           <Link href="/" className="flex items-center gap-2 font-heading text-lg font-bold">
             <span className="flex h-9 w-9 items-center justify-center rounded-md bg-primary text-primary-foreground">
-              FBM
+              EL
             </span>
-            FBM International
+            Exceed Limited
           </Link>
           <p className="mt-4 max-w-sm text-sm text-muted-foreground">{tFooter("tagline")}</p>
           <div className="mt-5 flex items-center gap-3">
@@ -121,7 +121,7 @@ export function Footer({ settings }: { settings: ResolvedSiteSettings }) {
       <div className="border-t border-border/60">
         <div className="container-brand flex flex-col items-center justify-between gap-3 py-6 text-xs text-muted-foreground sm:flex-row">
           <p>
-            © {year} FBM International. {tFooter("rights")}
+            © {year} Exceed Limited. {tFooter("rights")}
           </p>
           <div className="flex gap-4">
             <Link href="/privacy" className="hover:text-foreground">

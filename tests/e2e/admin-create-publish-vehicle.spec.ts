@@ -34,11 +34,13 @@ test("admin can create and publish a new model, live immediately on the public s
 
   // Publish.
   await adminPage.getByRole("tab", { name: "General" }).click();
-  await adminPage.getByText("Published", { exact: true }).click();
+  await adminPage.getByRole("switch", { name: "Published" }).click();
 
   await adminPage.getByRole("button", { name: "Create model" }).click();
 
-  await expect(adminPage).toHaveURL(/\/admin\/models\/[a-z0-9]+$/i, { timeout: 15_000 });
+  // Negative lookahead excludes /admin/models/new itself, which would
+  // otherwise also match `[a-z0-9]+` and mask a submission failure.
+  await expect(adminPage).toHaveURL(/\/admin\/models\/(?!new$)[a-z0-9]+$/i, { timeout: 15_000 });
 
   const slug = uniqueCode.toLowerCase();
   await adminPage.goto(`/models/${slug}`);

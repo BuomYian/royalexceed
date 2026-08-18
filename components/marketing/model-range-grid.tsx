@@ -14,7 +14,7 @@ type ModelSummary = {
   thumbnailUrl: string | null;
 };
 
-export function ModelRangeGrid({ models, usdToSsp }: { models: ModelSummary[]; usdToSsp: number }) {
+export function ModelRangeGrid({ models }: { models: ModelSummary[] }) {
   const t = useTranslations("home");
   const tCommon = useTranslations("common");
 
@@ -29,7 +29,7 @@ export function ModelRangeGrid({ models, usdToSsp }: { models: ModelSummary[]; u
       </div>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {models.map((model) => (
-          <VehicleCard key={model.slug} model={model} usdToSsp={usdToSsp} />
+          <VehicleCard key={model.slug} model={model} />
         ))}
       </div>
     </section>

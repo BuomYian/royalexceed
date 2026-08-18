@@ -105,7 +105,7 @@ export function UsersManager({ users }: { users: User[] }) {
                   <TableCell className="font-medium">{u.fullName}</TableCell>
                   <TableCell>{u.email}</TableCell>
                   <TableCell>
-                    <Select value={u.role} onValueChange={(v) => changeRole(u.id, v)} disabled={pending}>
+                    <Select value={u.role} onValueChange={(v) => v && changeRole(u.id, v)} disabled={pending}>
                       <SelectTrigger className="w-40"><SelectValue /></SelectTrigger>
                       <SelectContent>
                         {ROLES.map((r) => <SelectItem key={r} value={r}>{r.replace("_", " ")}</SelectItem>)}

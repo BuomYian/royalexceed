@@ -69,7 +69,7 @@ export function InventoryTable({
     { header: "Mileage", cell: ({ row }) => `${row.original.mileageKm.toLocaleString()} km` },
     {
       header: "Price",
-      cell: ({ row }) => (row.original.priceUsd ? formatMoney(row.original.priceUsd, "USD") : "—"),
+      cell: ({ row }) => (row.original.priceUsd ? formatMoney(row.original.priceUsd) : "—"),
     },
     { accessorKey: "status", header: "Status", meta: { sortable: true }, cell: ({ row }) => <StatusBadge status={row.original.status} /> },
     ...(canDelete

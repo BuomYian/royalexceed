@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
-import { updateSiteSettingsSchema, type UpdateSiteSettingsInput } from "@/lib/validations/settings";
+import { updateSiteSettingsSchema } from "@/lib/validations/settings";
 import { updateSiteSettings } from "@/lib/actions/settings";
 import type { ResolvedSiteSettings } from "@/lib/settings";
 import { Button } from "@/components/ui/button";
@@ -17,12 +17,13 @@ import { UnsavedChangesGuard } from "@/components/admin/unsaved-changes-guard";
 
 export function SettingsForm({ defaultValues }: { defaultValues: ResolvedSiteSettings }) {
   const [pending, startTransition] = useTransition();
-  const form = useForm<UpdateSiteSettingsInput>({
+  // No explicit useForm<T> generic — see components/admin/model-form.tsx for why.
+  const form = useForm({
     resolver: zodResolver(updateSiteSettingsSchema),
     defaultValues,
   });
 
-  function onSubmit(values: UpdateSiteSettingsInput) {
+  const onSubmit = form.handleSubmit((values) => {
     startTransition(async () => {
       const result = await updateSiteSettings(values);
       if (!result.success) toast.error(result.error);
@@ -31,10 +32,10 @@ export function SettingsForm({ defaultValues }: { defaultValues: ResolvedSiteSet
         form.reset(values);
       }
     });
-  }
+  });
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+    <form onSubmit={onSubmit} className="space-y-4">
       <UnsavedChangesGuard dirty={form.formState.isDirty} />
 
       <Card>
@@ -42,8 +43,7 @@ export function SettingsForm({ defaultValues }: { defaultValues: ResolvedSiteSet
         <CardContent className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-1.5"><Label>Phone</Label><Input {...form.register("phone")} /></div>
           <div className="space-y-1.5"><Label>WhatsApp number (digits only, intl format)</Label><Input {...form.register("whatsappNumber")} /></div>
-          <div className="space-y-1.5"><Label>Email</Label><Input {...form.register("email")} /></div>
-          <div className="space-y-1.5"><Label>USD → SSP rate</Label><Input type="number" step="0.0001" {...form.register("usdToSsp", { valueAsNumber: true })} /></div>
+          <div className="space-y-1.5 sm:col-span-2"><Label>Email</Label><Input {...form.register("email")} /></div>
         </CardContent>
       </Card>
 

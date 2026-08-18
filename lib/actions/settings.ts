@@ -13,12 +13,12 @@ export async function updateSiteSettings(raw: UpdateSiteSettingsInput): Promise<
   if (!parsed.success) {
     return { success: false, error: "Validation failed", fieldErrors: parsed.error.flatten().fieldErrors };
   }
-  const { usdToSsp, ...data } = parsed.data;
+  const data = parsed.data;
 
   await prisma.siteSetting.upsert({
     where: { id: "singleton" },
-    update: { data, usdToSsp },
-    create: { id: "singleton", data, usdToSsp },
+    update: { data },
+    create: { id: "singleton", data },
   });
 
   await writeAuditLog({ actorId: user.id, action: "UPDATE", entity: "SiteSetting", entityId: "singleton" });

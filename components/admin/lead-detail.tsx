@@ -97,7 +97,7 @@ export function LeadDetail({
           <Button
             variant="outline"
             render={
-              <a href={buildWhatsAppLink(lead.phone, `Hi ${lead.fullName}, this is FBM International.`)} target="_blank" rel="noopener noreferrer">
+              <a href={buildWhatsAppLink(lead.phone, `Hi ${lead.fullName}, this is Exceed Limited.`)} target="_blank" rel="noopener noreferrer">
                 <MessageCircle className="h-4 w-4" /> WhatsApp
               </a>
             }
@@ -137,7 +137,7 @@ export function LeadDetail({
           <CardContent className="space-y-3">
             <div className="space-y-1.5">
               <p className="text-sm text-muted-foreground">Status</p>
-              <Select value={lead.status} onValueChange={updateStatus}>
+              <Select value={lead.status} onValueChange={(v) => v && updateStatus(v)}>
                 <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
                 <SelectContent>
                   {STATUSES.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}
@@ -146,7 +146,7 @@ export function LeadDetail({
             </div>
             <div className="space-y-1.5">
               <p className="text-sm text-muted-foreground">Assignee</p>
-              <Select value={lead.assigneeId ?? "unassigned"} onValueChange={assignTo}>
+              <Select value={lead.assigneeId ?? "unassigned"} onValueChange={(v) => v && assignTo(v)}>
                 <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="unassigned">Unassigned</SelectItem>

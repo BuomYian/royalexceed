@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Check, Loader2, Plus, Star, Trash2, X } from "lucide-react";
 import type { Testimonial } from "@prisma/client";
-import { testimonialInputSchema, type TestimonialInput } from "@/lib/validations/testimonial";
+import { testimonialInputSchema } from "@/lib/validations/testimonial";
 import { createTestimonial, deleteTestimonial, toggleTestimonialApproval } from "@/lib/actions/testimonials";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -27,12 +27,12 @@ export function TestimonialsManager({ testimonials }: { testimonials: Testimonia
   const [pending, startTransition] = useTransition();
   const [open, setOpen] = useState(false);
 
-  const form = useForm<TestimonialInput>({
+  const form = useForm({
     resolver: zodResolver(testimonialInputSchema),
     defaultValues: { authorName: "", quote: "", rating: 5, isApproved: false, sortOrder: 0 },
   });
 
-  function onCreate(values: TestimonialInput) {
+  const onCreate = form.handleSubmit((values) => {
     startTransition(async () => {
       const result = await createTestimonial(values);
       if (!result.success) toast.error(result.error);
@@ -43,7 +43,7 @@ export function TestimonialsManager({ testimonials }: { testimonials: Testimonia
         router.refresh();
       }
     });
-  }
+  });
 
   return (
     <div className="space-y-4">
@@ -51,7 +51,7 @@ export function TestimonialsManager({ testimonials }: { testimonials: Testimonia
         <DialogTrigger render={<Button><Plus className="h-4 w-4" /> New testimonial</Button>} />
         <DialogContent>
           <DialogHeader><DialogTitle>New testimonial</DialogTitle></DialogHeader>
-          <form onSubmit={form.handleSubmit(onCreate)} className="space-y-3">
+          <form onSubmit={onCreate} className="space-y-3">
             <Input placeholder="Author name" {...form.register("authorName")} />
             <Input placeholder="Title / role (optional)" {...form.register("authorTitle")} />
             <Input placeholder="Company (optional)" {...form.register("company")} />

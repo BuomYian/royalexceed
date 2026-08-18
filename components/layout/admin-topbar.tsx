@@ -39,11 +39,11 @@ export function AdminTopbar({
             </Button>
           }
         />
-        <SheetContent side="start" className="w-64 p-0">
+        <SheetContent side="left" className="w-64 p-0">
           <SheetTitle className="sr-only">Admin navigation</SheetTitle>
           <div className="flex h-16 items-center gap-2 border-b border-border px-5">
             <span className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-sm font-bold text-primary-foreground">
-              FBM
+              EL
             </span>
             <span className="font-heading text-sm font-bold">Admin</span>
           </div>

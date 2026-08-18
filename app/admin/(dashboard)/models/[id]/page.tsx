@@ -33,7 +33,10 @@ export default async function EditModelPage({ params }: PageProps<"/admin/models
     colors: model.colors,
     images: model.images.map((i) => ({ ...i, category: i.category as "exterior" | "interior" | "detail" })),
     features: model.features.map((f) => ({ ...f, layout: f.layout as "image-right" | "image-left" | "full-bleed" })),
-    specGroups: model.specGroups,
+    specGroups: model.specGroups.map((g) => ({
+      ...g,
+      specs: g.specs.map((s) => ({ ...s, unit: s.unit ?? undefined })),
+    })),
   };
 
   return (

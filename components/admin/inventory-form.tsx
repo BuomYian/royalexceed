@@ -32,7 +32,7 @@ export function InventoryForm({
   const router = useRouter();
   const [pending, startTransition] = useTransition();
 
-  const form = useForm<InventoryInput>({
+  const form = useForm({
     resolver: zodResolver(inventoryInputSchema),
     defaultValues: {
       stockNumber: "",
@@ -50,7 +50,7 @@ export function InventoryForm({
   const selectedModelId = form.watch("modelId");
   const variants = models.find((m) => m.id === selectedModelId)?.variants ?? [];
 
-  function onSubmit(values: InventoryInput) {
+  const onSubmit = form.handleSubmit((values) => {
     startTransition(async () => {
       const action = values.id ? updateInventoryUnit : createInventoryUnit;
       const result = await action(values);
@@ -63,10 +63,10 @@ export function InventoryForm({
       router.push("/admin/inventory");
       router.refresh();
     });
-  }
+  });
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className="max-w-2xl space-y-4">
+    <form onSubmit={onSubmit} className="max-w-2xl space-y-4">
       <UnsavedChangesGuard dirty={form.formState.isDirty} />
 
       <div className="grid gap-4 sm:grid-cols-2">

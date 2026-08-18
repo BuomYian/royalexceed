@@ -14,7 +14,7 @@
     "menu": "Menu"
   },
   "footer": {
-    "tagline": "The sole authorized Soueast Motor partner in South Sudan.",
+    "tagline": "Sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan, in partnership with FBM International Co.",
     "explore": "Explore",
     "company": "Company",
     "support": "Support",
@@ -51,30 +51,30 @@
   "home": {
     "heroCta1": "Book a Test Drive",
     "heroCta2": "Explore the Range",
-    "trustBar": "Sole authorized Soueast partner in South Sudan",
-    "rangeTitle": "The Soueast Range",
-    "rangeSubtitle": "Built for South Sudan's roads, backed by genuine parts and factory warranty",
+    "trustBar": "Sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan",
+    "rangeTitle": "The Soueast & 212 Range",
+    "rangeSubtitle": "Built for South Sudan and Sudan's roads, backed by genuine parts and factory warranty",
     "arrivingTitle": "Featured & Arriving Soon",
-    "whyTitle": "Why FBM International",
+    "whyTitle": "Why Exceed Limited",
     "whySubtitle": "Everything you need for total peace of mind ownership",
     "servicesTitle": "Our Services",
     "testimonialsTitle": "What Our Clients Say",
     "newsTitle": "Latest News & Offers",
     "locationTitle": "Visit Our Showroom",
-    "leadBandTitle": "Ready to find your next Soueast?",
+    "leadBandTitle": "Ready to find your next Soueast or 212?",
     "leadBandSubtitle": "Talk to our sales team on WhatsApp or book a test drive today.",
     "whyGenuineParts": "Genuine Parts",
-    "whyGenuinePartsBody": "Every part is sourced directly from Soueast Motor — no grey-market substitutes, ever.",
+    "whyGenuinePartsBody": "Every part is sourced directly from the manufacturer — no grey-market substitutes, ever.",
     "whyWarranty": "Factory-Backed Warranty",
     "whyWarrantyBody": "Full manufacturer warranty honored locally at our Juba service center.",
     "whyTechnicians": "Trained Technicians",
-    "whyTechniciansBody": "Our workshop team is factory-trained on every Soueast model we sell.",
+    "whyTechniciansBody": "Our workshop team is factory-trained on every Soueast and 212 model we sell.",
     "whyService": "Juba Service Center",
-    "whyServiceBody": "A dedicated after-sales facility in Juba Town — no need to ship parts or vehicles abroad."
+    "whyServiceBody": "A dedicated after-sales facility in Juba Town, serving South Sudan and Sudan — no need to ship parts or vehicles abroad."
   },
   "models": {
     "title": "Model Range",
-    "subtitle": "Explore the full Soueast lineup available in South Sudan",
+    "subtitle": "Explore the full Soueast and 212 lineup available in South Sudan and Sudan",
     "filterBodyType": "Body type",
     "filterFuelType": "Fuel type",
     "filterPrice": "Price range",
@@ -105,7 +105,7 @@
   },
   "compare": {
     "title": "Compare Models",
-    "subtitle": "Compare up to 3 Soueast models side by side",
+    "subtitle": "Compare up to 3 models side by side",
     "selectModel": "Select a model",
     "empty": "Add models to start comparing"
   },
@@ -127,7 +127,7 @@
   },
   "testDrive": {
     "title": "Book a Test Drive",
-    "subtitle": "Experience a Soueast for yourself at our Juba Town showroom",
+    "subtitle": "Experience a Soueast or 212 for yourself at our Juba Town showroom",
     "fullName": "Full name",
     "phone": "Phone number",
     "email": "Email (optional)",
@@ -159,7 +159,7 @@
   },
   "parts": {
     "title": "Genuine Parts",
-    "subtitle": "Order genuine Soueast parts and accessories through FBM International",
+    "subtitle": "Order genuine Soueast and 212 parts and accessories through Exceed Limited",
     "partName": "Part name",
     "partNumber": "Part number (optional)",
     "vin": "VIN (optional)",
@@ -174,16 +174,16 @@
     "documentsTitle": "Documents typically required"
   },
   "about": {
-    "title": "About FBM International",
+    "title": "About Exceed Limited",
     "storyTitle": "Our Story",
-    "partnershipTitle": "The Soueast Partnership",
+    "partnershipTitle": "Our Partnership with FBM International Co.",
     "leadershipTitle": "Leadership",
     "facilitiesTitle": "Our Facilities",
     "csrTitle": "Community & CSR"
   },
   "news": {
     "title": "News & Offers",
-    "subtitle": "The latest from FBM International and Soueast Motor",
+    "subtitle": "The latest from Exceed Limited, Soueast, and 212",
     "by": "By",
     "publishedOn": "Published on"
   },
@@ -211,14 +211,10 @@
   },
   "whatsapp": {
     "floatingLabel": "Chat on WhatsApp",
-    "genericMessage": "Hello FBM, I'd like some information."
-  },
-  "price": {
-    "usd": "USD",
-    "ssp": "SSP"
+    "genericMessage": "Hello Exceed Limited, I'd like some information."
   },
   "maintenance": {
     "title": "We'll be right back",
-    "body": "FBM International's website is undergoing scheduled maintenance. Please check back shortly, or reach us directly on WhatsApp."
+    "body": "Exceed Limited's website is undergoing scheduled maintenance. Please check back shortly, or reach us directly on WhatsApp."
   }
 }

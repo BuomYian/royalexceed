@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import {
   flexRender,
@@ -45,6 +45,14 @@ export function AdminDataTable<T>({
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const searchDebounce = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Controlled, not defaultValue: this component re-renders whenever the URL
+  // changes, including the router.push that this same field triggers on
+  // every debounced keystroke — an uncontrolled Input would then receive a
+  // new `defaultValue` after mount, which Base UI's FieldControl treats as a
+  // bug and warns about. Local state sidesteps that (same one-way
+  // input-drives-URL flow the previous `defaultValue` had; it never synced
+  // back from the URL either, e.g. on browser back/forward).
+  const [searchValue, setSearchValue] = useState(searchParams.get("q") ?? "");
 
   const table = useReactTable({
     data,
@@ -90,10 +98,11 @@ export function AdminDataTable<T>({
         {searchPlaceholder && (
           <Input
             placeholder={searchPlaceholder}
-            defaultValue={searchParams.get("q") ?? ""}
+            value={searchValue}
             className="max-w-xs"
             onChange={(e) => {
               const value = e.target.value;
+              setSearchValue(value);
               if (searchDebounce.current) clearTimeout(searchDebounce.current);
               searchDebounce.current = setTimeout(() => updateParam("q", value || null), 350);
             }}

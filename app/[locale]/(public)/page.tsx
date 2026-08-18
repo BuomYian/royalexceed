@@ -52,11 +52,9 @@ export default async function HomePage() {
       <TrustBar />
       <ModelRangeGrid
         models={models.map((m) => ({ ...m, startingPriceUsd: m.startingPriceUsd ? Number(m.startingPriceUsd) : null }))}
-        usdToSsp={settings.usdToSsp}
       />
       <FeaturedInventoryStrip
         units={inventory.map((u) => ({ ...u, priceUsd: u.priceUsd ? Number(u.priceUsd) : null }))}
-        usdToSsp={settings.usdToSsp}
       />
       <WhyFbm />
       <ServicesOverview />

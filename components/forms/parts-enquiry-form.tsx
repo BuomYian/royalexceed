@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { Loader2, CheckCircle2 } from "lucide-react";
-import { partsLeadSchema, type PartsLeadInput } from "@/lib/validations/lead";
+import { partsLeadSchema } from "@/lib/validations/lead";
 import { submitPartsLead } from "@/lib/actions/leads";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,12 +24,12 @@ export function PartsEnquiryForm() {
   const [done, setDone] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
 
-  const form = useForm<PartsLeadInput>({
+  const form = useForm({
     resolver: zodResolver(partsLeadSchema),
     defaultValues: { fullName: "", phone: "", email: "", partName: "", quantity: 1, honeypot: "", pageUrl: pathname },
   });
 
-  function onSubmit(values: PartsLeadInput) {
+  const onSubmit = form.handleSubmit((values) => {
     setServerError(null);
     startTransition(async () => {
       const result = await submitPartsLead({ ...values, pageUrl: pathname });
@@ -39,7 +39,7 @@ export function PartsEnquiryForm() {
       }
       setDone(true);
     });
-  }
+  });
 
   if (done) {
     return (
@@ -53,7 +53,7 @@ export function PartsEnquiryForm() {
   }
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className="mx-auto max-w-lg space-y-4">
+    <form onSubmit={onSubmit} className="mx-auto max-w-lg space-y-4">
       <Honeypot register={form.register("honeypot")} />
 
       <div className="space-y-1.5">

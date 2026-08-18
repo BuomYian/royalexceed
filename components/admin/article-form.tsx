@@ -23,12 +23,12 @@ export function ArticleForm({ defaultValues }: { defaultValues?: Partial<Article
   const [pending, startTransition] = useTransition();
   const [tagInput, setTagInput] = useState("");
 
-  const form = useForm<ArticleInput>({
+  const form = useForm({
     resolver: zodResolver(articleInputSchema),
-    defaultValues: { title: "", body: "", tags: [], status: "DRAFT", ...defaultValues },
+    defaultValues: { title: "", body: "", tags: [] as string[], status: "DRAFT" as const, ...defaultValues },
   });
 
-  const tags = form.watch("tags");
+  const tags = form.watch("tags") ?? [];
 
   function addTag() {
     const value = tagInput.trim();
@@ -38,7 +38,7 @@ export function ArticleForm({ defaultValues }: { defaultValues?: Partial<Article
     setTagInput("");
   }
 
-  function onSubmit(values: ArticleInput) {
+  const onSubmit = form.handleSubmit((values) => {
     startTransition(async () => {
       const action = values.id ? updateArticle : createArticle;
       const result = await action(values);
@@ -51,10 +51,10 @@ export function ArticleForm({ defaultValues }: { defaultValues?: Partial<Article
       router.push("/admin/news");
       router.refresh();
     });
-  }
+  });
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className="max-w-3xl space-y-4">
+    <form onSubmit={onSubmit} className="max-w-3xl space-y-4">
       <UnsavedChangesGuard dirty={form.formState.isDirty} />
 
       <div className="space-y-1.5">

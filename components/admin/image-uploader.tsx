@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Loader2, Upload, X } from "lucide-react";
 import { toast } from "sonner";
 import { uploadMediaAction } from "@/lib/actions/media";
-import type { MediaFolder } from "@/lib/media";
+import type { MediaFolder } from "@/lib/media-folders";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 

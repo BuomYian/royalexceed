@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { getSiteSettings } from "@/lib/settings";
 import { getInventory } from "@/lib/data/inventory";
 import { inventoryFilterSchema } from "@/lib/validations/inventory";
 import { InventoryCard } from "@/components/vehicle/inventory-card";
@@ -18,7 +17,7 @@ export default async function InventoryPage({ searchParams }: PageProps<"/[local
   const sp = await searchParams;
   const filters = inventoryFilterSchema.parse({ status: sp.status });
 
-  const [settings, units] = await Promise.all([getSiteSettings(), getInventory(filters)]);
+  const units = await getInventory(filters);
 
   return (
     <div className="container-brand py-10 sm:py-14">
@@ -38,7 +37,6 @@ export default async function InventoryPage({ searchParams }: PageProps<"/[local
             <InventoryCard
               key={unit.stockNumber}
               unit={{ ...unit, priceUsd: unit.priceUsd ? Number(unit.priceUsd) : null }}
-              usdToSsp={settings.usdToSsp}
             />
           ))}
         </div>

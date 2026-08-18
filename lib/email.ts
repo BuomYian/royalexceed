@@ -20,7 +20,7 @@ type SendEmailInput = {
  */
 export async function sendEmail({ to, subject, html }: SendEmailInput) {
   const resend = getResend();
-  const from = process.env.EMAIL_FROM ?? "FBM International <onboarding@resend.dev>";
+  const from = process.env.EMAIL_FROM ?? "Exceed Limited <onboarding@resend.dev>";
 
   if (!resend) {
     console.info(`[email:dev-transport] to=${JSON.stringify(to)} subject="${subject}"\n${html}`);
@@ -58,13 +58,13 @@ export function leadNotificationEmail(params: {
 
 export function autoresponderEmail(params: { fullName: string; reference?: string }) {
   return {
-    subject: "We've received your enquiry — FBM International",
+    subject: "We've received your enquiry — Exceed Limited",
     html: `
       <p>Hi ${params.fullName},</p>
-      <p>Thank you for contacting FBM International, the sole authorized Soueast Motor partner in South Sudan.
+      <p>Thank you for contacting Exceed Limited, the sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan.
       ${params.reference ? `Your reference number is <strong>${params.reference}</strong>.` : ""}
       Our team will be in touch shortly, or you can reach us directly on WhatsApp for a faster response.</p>
-      <p>— FBM International</p>
+      <p>— Exceed Limited</p>
     `,
   };
 }

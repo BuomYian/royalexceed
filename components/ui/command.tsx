@@ -60,7 +60,16 @@ function CommandDialog({
         )}
         showCloseButton={showCloseButton}
       >
-        {children}
+        {/*
+          shadcn's base-nova `command` registry item omits this wrapper —
+          CommandInput/CommandList/CommandItem are all `cmdk` primitives that
+          read from the store Context that only <Command> (cmdk's root)
+          creates. Without it, mounting any of them throws
+          "Cannot read properties of undefined (reading 'subscribe')".
+          (CommandGroup already styles [cmdk-group-heading], so no extra
+          className is needed here.)
+        */}
+        <Command>{children}</Command>
       </DialogContent>
     </Dialog>
   )

@@ -98,7 +98,7 @@ export function LeadsView({
             variant="ghost"
             size="icon"
             render={
-              <a href={buildWhatsAppLink(row.original.phone, `Hi ${row.original.fullName}, this is FBM International.`)} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+              <a href={buildWhatsAppLink(row.original.phone, `Hi ${row.original.fullName}, this is Exceed Limited.`)} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
                 <MessageCircle className="h-4 w-4" />
               </a>
             }
@@ -111,7 +111,7 @@ export function LeadsView({
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-2">
-        <Select value={typeFilter} onValueChange={setTypeFilter}>
+        <Select value={typeFilter} onValueChange={(v) => setTypeFilter(v ?? "all")}>
           <SelectTrigger className="w-40"><SelectValue placeholder="Type" /></SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All types</SelectItem>
@@ -120,7 +120,7 @@ export function LeadsView({
             ))}
           </SelectContent>
         </Select>
-        <Select value={assigneeFilter} onValueChange={setAssigneeFilter}>
+        <Select value={assigneeFilter} onValueChange={(v) => setAssigneeFilter(v ?? "all")}>
           <SelectTrigger className="w-44"><SelectValue placeholder="Assignee" /></SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All assignees</SelectItem>

@@ -17,14 +17,19 @@ test.describe("Test drive booking", () => {
     await page.getByRole("combobox", { name: "Preferred model" }).click();
     await page.getByRole("option").first().click();
 
-    // Pick a date a week out to avoid same-day slot collisions across test runs.
+    // Randomize the date (1-90 days out) and time slot so repeated local runs
+    // don't collide with a previous run's booking — the DB enforces a real
+    // @@unique([preferredDate, timeSlot]) constraint, so a fixed date+slot
+    // would only succeed once per database.
     const date = new Date();
-    date.setDate(date.getDate() + 7);
+    date.setDate(date.getDate() + 1 + Math.floor(Math.random() * 90));
     const iso = date.toISOString().slice(0, 10);
     await page.locator('input[type="date"]').fill(iso);
 
     await page.getByRole("combobox", { name: "Preferred time" }).click();
-    await page.getByRole("option").first().click();
+    const options = page.getByRole("option");
+    const count = await options.count();
+    await options.nth(Math.floor(Math.random() * count)).click();
 
     await page.getByText(/I agree to be contacted/).click();
 

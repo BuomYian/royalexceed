@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { optionalNumber } from "./common";
 
 export const bodyTypeSchema = z.enum([
   "SUV",
@@ -23,10 +24,10 @@ export const publishStatusSchema = z.enum(["DRAFT", "PUBLISHED", "ARCHIVED"]);
 export const variantInputSchema = z.object({
   id: z.string().optional(), // present = update, absent = create
   name: z.string().trim().min(1, "Variant name is required"),
-  priceUsd: z.coerce.number().positive().optional().nullable(),
+  priceUsd: optionalNumber(z.number().positive()).nullable(),
   engine: z.string().trim().optional(),
-  powerHp: z.coerce.number().int().positive().optional().nullable(),
-  torqueNm: z.coerce.number().int().positive().optional().nullable(),
+  powerHp: optionalNumber(z.number().int().positive()).nullable(),
+  torqueNm: optionalNumber(z.number().int().positive()).nullable(),
   fuelType: fuelTypeSchema,
   transmission: transmissionSchema,
   drivetrain: drivetrainSchema,
@@ -89,7 +90,7 @@ export const modelInputSchema = z.object({
   description: z.string().trim().min(1, "Description is required"),
   bodyType: bodyTypeSchema,
   seats: z.coerce.number().int().min(1).max(23),
-  startingPriceUsd: z.coerce.number().positive().optional().nullable(),
+  startingPriceUsd: optionalNumber(z.number().positive()).nullable(),
   priceOnRequest: z.boolean().default(false),
   year: z.coerce.number().int().min(2000).max(2100),
   heroImageUrl: z.string().optional().nullable(),

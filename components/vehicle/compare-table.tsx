@@ -15,7 +15,7 @@ type CompareModel = {
   specGroups: { title: string; specs: { label: string; value: string; unit: string | null }[] }[];
 };
 
-export function CompareTable({ models, usdToSsp }: { models: CompareModel[]; usdToSsp: number }) {
+export function CompareTable({ models }: { models: CompareModel[] }) {
   const groupTitles = [...new Set(models.flatMap((m) => m.specGroups.map((g) => g.title)))];
   const labelsByGroup = new Map<string, string[]>();
   for (const title of groupTitles) {
@@ -51,7 +51,7 @@ export function CompareTable({ models, usdToSsp }: { models: CompareModel[]; usd
                   </div>
                   <p className="font-heading font-bold">{m.displayName}</p>
                 </Link>
-                <PriceDisplay usdAmount={m.startingPriceUsd} usdToSsp={usdToSsp} priceOnRequest={m.priceOnRequest} size="sm" className="mt-1" />
+                <PriceDisplay usdAmount={m.startingPriceUsd} priceOnRequest={m.priceOnRequest} size="sm" className="mt-1" />
               </th>
             ))}
           </tr>

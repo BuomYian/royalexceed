@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { getSiteSettings } from "@/lib/settings";
 import { getModelsForCompare, listModelOptions } from "@/lib/data/models";
 import { CompareTable } from "@/components/vehicle/compare-table";
 import { CompareModelPicker } from "@/components/vehicle/compare-model-picker";
@@ -17,8 +16,7 @@ export default async function ComparePage({ searchParams }: PageProps<"/[locale]
   const slugsParam = typeof sp.slugs === "string" ? sp.slugs : "";
   const slugs = slugsParam.split(",").filter(Boolean).slice(0, 3);
 
-  const [settings, allModels, models] = await Promise.all([
-    getSiteSettings(),
+  const [allModels, models] = await Promise.all([
     listModelOptions(),
     slugs.length ? getModelsForCompare(slugs) : Promise.resolve([]),
   ]);
@@ -42,7 +40,6 @@ export default async function ComparePage({ searchParams }: PageProps<"/[locale]
                 ...m,
                 startingPriceUsd: m.startingPriceUsd ? Number(m.startingPriceUsd) : null,
               }))}
-            usdToSsp={settings.usdToSsp}
           />
         </div>
       ) : (

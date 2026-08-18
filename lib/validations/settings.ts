@@ -28,7 +28,7 @@ export const departmentContactSchema = z.object({
 });
 
 export const siteSettingsDataSchema = z.object({
-  companyName: z.string().default("FBM International"),
+  companyName: z.string().default("Exceed Limited"),
   phone: z.string(),
   whatsappNumber: z.string(), // digits-only intl format for wa.me, e.g. "211912345678"
   email: z.string().email(),
@@ -64,8 +64,8 @@ export const siteSettingsDataSchema = z.object({
 
 export type SiteSettingsData = z.infer<typeof siteSettingsDataSchema>;
 
-export const updateSiteSettingsSchema = siteSettingsDataSchema.extend({
-  usdToSsp: z.coerce.number().positive(),
-});
+// Site currency is USD only — no exchange-rate field needed, so this is just
+// an alias kept for call-site clarity (admin settings form vs. public reads).
+export const updateSiteSettingsSchema = siteSettingsDataSchema;
 
 export type UpdateSiteSettingsInput = z.infer<typeof updateSiteSettingsSchema>;

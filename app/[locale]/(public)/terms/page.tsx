@@ -14,17 +14,17 @@ export default async function TermsPage() {
         <h1>Terms of Service</h1>
         <p>Last updated: August 2026</p>
 
-        <h2>About FBM International</h2>
+        <h2>About Exceed Limited</h2>
         <p>
-          FBM International is the sole authorized partner of Soueast Motor in South Sudan, operating a showroom
-          and service center at {settings.address.line}, {settings.address.city}, {settings.address.country}.
+          Exceed Limited, in partnership with FBM International Co., is the sole authorized distributor of Soueast
+          and 212 vehicles in South Sudan and Sudan, operating a showroom and service center at{" "}
+          {settings.address.line}, {settings.address.city}, {settings.address.country}.
         </p>
 
         <h2>Website use</h2>
         <p>
-          This website provides information about our vehicle range, inventory, and services. Prices shown in USD
-          are indicative and subject to confirmation at the time of purchase; SSP-equivalent prices use an
-          exchange rate set periodically by FBM International and may not reflect the rate at time of sale.
+          This website provides information about our vehicle range, inventory, and services. All prices are shown
+          in US Dollars (USD) and are indicative, subject to confirmation at the time of purchase.
         </p>
 
         <h2>No online purchase</h2>
@@ -36,9 +36,9 @@ export default async function TermsPage() {
 
         <h2>Warranty and genuine parts</h2>
         <p>
-          All new vehicles sold by FBM International carry the manufacturer warranty described on the relevant
-          model page. Warranty coverage is contingent on the use of genuine Soueast parts and service performed by
-          an authorized FBM International technician.
+          All new vehicles sold by Exceed Limited carry the manufacturer warranty described on the relevant
+          model page. Warranty coverage is contingent on the use of genuine Soueast or 212 parts and service
+          performed by an authorized Exceed Limited technician.
         </p>
 
         <h2>Limitation of liability</h2>
@@ -50,7 +50,7 @@ export default async function TermsPage() {
 
         <h2>Contact</h2>
         <p>
-          For questions about these terms, contact FBM International at {settings.email} or {settings.phone}.
+          For questions about these terms, contact Exceed Limited at {settings.email} or {settings.phone}.
         </p>
       </div>
     </div>

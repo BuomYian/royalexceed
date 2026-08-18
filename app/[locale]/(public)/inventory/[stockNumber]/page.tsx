@@ -66,7 +66,7 @@ export default async function InventoryDetailPage({ params }: PageProps<"/[local
             </p>
           </div>
 
-          <PriceDisplay usdAmount={unit.priceUsd} usdToSsp={settings.usdToSsp} size="lg" />
+          <PriceDisplay usdAmount={unit.priceUsd ? Number(unit.priceUsd) : null} size="lg" />
 
           <dl className="grid grid-cols-2 gap-3 rounded-lg border border-border p-4 text-sm">
             <div>

@@ -33,12 +33,17 @@ export function TestDriveForm({
   const [reference, setReference] = useState<string | null>(null);
   const [serverError, setServerError] = useState<string | null>(null);
 
-  const form = useForm<TestDriveBookingInput>({
+  const form = useForm({
     resolver: zodResolver(testDriveBookingSchema),
     defaultValues: {
       fullName: "",
       phone: "",
       email: "",
+      // Explicit empty-string starting values (not `undefined`) so the Select
+      // components stay controlled from the first render — Base UI warns
+      // when a Select flips from uncontrolled to controlled.
+      modelId: "" as unknown as TestDriveBookingInput["modelId"],
+      timeSlot: "" as unknown as TestDriveBookingInput["timeSlot"],
       notes: "",
       location: "Showroom - Juba Town",
       honeypot: "",
@@ -46,7 +51,7 @@ export function TestDriveForm({
     },
   });
 
-  function onSubmit(values: TestDriveBookingInput) {
+  const onSubmit = form.handleSubmit((values) => {
     setServerError(null);
     startTransition(async () => {
       const result = await submitTestDriveBooking({ ...values, pageUrl: pathname });
@@ -57,7 +62,7 @@ export function TestDriveForm({
       }
       setReference(result.data.reference);
     });
-  }
+  });
 
   if (reference) {
     return (
@@ -79,7 +84,7 @@ export function TestDriveForm({
   }
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className="mx-auto max-w-lg space-y-4">
+    <form onSubmit={onSubmit} className="mx-auto max-w-lg space-y-4">
       <Honeypot register={form.register("honeypot")} />
 
       <div className="space-y-1.5">
@@ -102,7 +107,7 @@ export function TestDriveForm({
 
       <div className="space-y-1.5">
         <Label htmlFor="td-model">{t("model")}</Label>
-        <Select value={form.watch("modelId")} onValueChange={(v) => form.setValue("modelId", v, { shouldValidate: true })}>
+        <Select value={form.watch("modelId")} onValueChange={(v) => form.setValue("modelId", v ?? "", { shouldValidate: true })}>
           <SelectTrigger id="td-model" className="w-full"><SelectValue placeholder={t("model")} /></SelectTrigger>
           <SelectContent>
             {models.map((m) => <SelectItem key={m.id} value={m.id}>{m.displayName}</SelectItem>)}

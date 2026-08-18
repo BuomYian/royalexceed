@@ -1,24 +1,25 @@
 import { describe, expect, it } from "vitest";
-import { convertPrice, formatMoney } from "@/lib/currency";
+import { toUsdAmount, formatMoney, formatPrice } from "@/lib/currency";
 
 describe("currency", () => {
-  it("returns USD rounded to 2dp", () => {
-    expect(convertPrice(20500, 1300, "USD")).toBe(20500);
-    expect(convertPrice("20500.005", 1300, "USD")).toBeCloseTo(20500.01, 2);
-  });
-
-  it("converts USD to SSP using the given rate, rounded to whole units", () => {
-    expect(convertPrice(100, 1300, "SSP")).toBe(130000);
-    expect(convertPrice(100.5, 1300.25, "SSP")).toBe(Math.round(100.5 * 1300.25));
+  it("rounds a USD amount to 2dp", () => {
+    expect(toUsdAmount(20500)).toBe(20500);
+    expect(toUsdAmount("20500.005")).toBeCloseTo(20500.01, 2);
   });
 
   it("returns null for missing amounts (price on request)", () => {
-    expect(convertPrice(null, 1300, "USD")).toBeNull();
-    expect(convertPrice(undefined, 1300, "USD")).toBeNull();
+    expect(toUsdAmount(null)).toBeNull();
+    expect(toUsdAmount(undefined)).toBeNull();
   });
 
-  it("formats money with the correct currency code", () => {
-    expect(formatMoney(20500, "USD")).toContain("20,500");
-    expect(formatMoney(1300000, "SSP")).toContain("SSP");
+  it("formats money as USD", () => {
+    expect(formatMoney(20500)).toContain("20,500");
+    expect(formatMoney(20500)).toContain("$");
+  });
+
+  it("formatPrice formats a raw amount directly, or empty string when absent", () => {
+    expect(formatPrice(20500)).toContain("20,500");
+    expect(formatPrice(null)).toBe("");
+    expect(formatPrice(undefined)).toBe("");
   });
 });

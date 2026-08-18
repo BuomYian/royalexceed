@@ -33,7 +33,12 @@ export function ModelForm({ defaultValues }: { defaultValues?: Partial<ModelInpu
   const [pending, startTransition] = useTransition();
   const [tab, setTab] = useState("general");
 
-  const form = useForm<ModelInput>({
+  // No explicit useForm<T> generic: let it infer from the resolver. Zod v4's
+  // z.coerce/preprocess fields (see lib/validations/common.ts optionalNumber)
+  // give the schema distinct input/output types, and forcing the output type
+  // (ModelInput) as the form's pre-validation TFieldValues breaks the
+  // resolver's own type — see README "Known gaps" for the full explanation.
+  const form = useForm({
     resolver: zodResolver(modelInputSchema),
     defaultValues: {
       name: "",
@@ -61,7 +66,7 @@ export function ModelForm({ defaultValues }: { defaultValues?: Partial<ModelInpu
   const specGroups = useFieldArray({ control: form.control, name: "specGroups" });
   const features = useFieldArray({ control: form.control, name: "features" });
 
-  function onSubmit(values: ModelInput) {
+  const onSubmit = form.handleSubmit((values) => {
     startTransition(async () => {
       const action = values.id ? updateModel : createModel;
       const result = await action(values);
@@ -74,10 +79,10 @@ export function ModelForm({ defaultValues }: { defaultValues?: Partial<ModelInpu
       router.push(`/admin/models/${result.data.id}`);
       router.refresh();
     });
-  }
+  });
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+    <form onSubmit={onSubmit} className="space-y-6">
       <UnsavedChangesGuard dirty={form.formState.isDirty} />
 
       <div className="flex items-center justify-between">
@@ -150,18 +155,24 @@ export function ModelForm({ defaultValues }: { defaultValues?: Partial<ModelInpu
                   control={form.control}
                   name="status"
                   render={({ field }) => (
-                    <Switch checked={field.value === "PUBLISHED"} onCheckedChange={(v) => field.onChange(v ? "PUBLISHED" : "DRAFT")} />
+                    <Switch
+                      id="model-published"
+                      checked={field.value === "PUBLISHED"}
+                      onCheckedChange={(v) => field.onChange(v ? "PUBLISHED" : "DRAFT")}
+                    />
                   )}
                 />
-                <Label>Published</Label>
+                <Label htmlFor="model-published">Published</Label>
               </div>
               <div className="flex items-center gap-2">
                 <Controller
                   control={form.control}
                   name="isFeatured"
-                  render={({ field }) => <Switch checked={field.value} onCheckedChange={field.onChange} />}
+                  render={({ field }) => (
+                    <Switch id="model-featured" checked={field.value} onCheckedChange={field.onChange} />
+                  )}
                 />
-                <Label>Featured on homepage</Label>
+                <Label htmlFor="model-featured">Featured on homepage</Label>
               </div>
             </div>
             <Field label="Hero image (16:9)">

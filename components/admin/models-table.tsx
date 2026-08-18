@@ -73,7 +73,7 @@ export function ModelsTable({
       cell: ({ row }) =>
         row.original.priceOnRequest || row.original.startingPriceUsd === null
           ? "On request"
-          : formatMoney(row.original.startingPriceUsd, "USD"),
+          : formatMoney(row.original.startingPriceUsd),
     },
     { header: "In stock", cell: ({ row }) => row.original._count.inventory },
     { accessorKey: "status", header: "Status", cell: ({ row }) => <StatusBadge status={row.original.status} /> },

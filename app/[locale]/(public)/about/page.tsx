@@ -23,9 +23,9 @@ export default async function AboutPage() {
         <section className="mt-10">
           <h2 className="font-heading text-2xl font-bold">{t("storyTitle")}</h2>
           <p className="mt-3 text-muted-foreground">
-            FBM International was founded to bring reliable, genuine, factory-backed vehicles to South Sudan.
+            Exceed Limited was founded to bring reliable, genuine, factory-backed vehicles to South Sudan and Sudan.
             From our showroom in Juba Town, near Muduria Roundabout, we serve individual buyers, NGOs,
-            government agencies, and corporate fleets across Central Equatoria and beyond.
+            government agencies, and corporate fleets across both countries.
           </p>
         </section>
 
@@ -35,9 +35,11 @@ export default async function AboutPage() {
             <div>
               <h2 className="font-heading text-2xl font-bold">{t("partnershipTitle")}</h2>
               <p className="mt-3 text-muted-foreground">
-                FBM International is the <strong className="text-foreground">sole authorized partner of Soueast Motor in South Sudan</strong>.
-                This means every vehicle we sell is factory-genuine, every part is sourced directly from Soueast,
-                and our technicians are factory-trained — a level of assurance no unauthorized reseller can match.
+                Exceed Limited is the <strong className="text-foreground">sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan</strong>,
+                operating in partnership with FBM International Co., our principal in-market partner.
+                This means every vehicle we sell is factory-genuine, every part is sourced directly from the
+                manufacturer, and our technicians are factory-trained — a level of assurance no unauthorized
+                reseller can match.
               </p>
             </div>
           </div>
@@ -75,7 +77,7 @@ export default async function AboutPage() {
             <div>
               <h2 className="font-heading text-2xl font-bold">{t("csrTitle")}</h2>
               <p className="mt-3 text-muted-foreground">
-                FBM International is committed to supporting local communities in Juba through employment,
+                Exceed Limited is committed to supporting local communities in Juba through employment,
                 technician training programs, and partnerships with local organizations.
               </p>
             </div>

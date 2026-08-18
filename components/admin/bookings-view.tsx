@@ -95,7 +95,7 @@ export function BookingsView({
                       variant="ghost"
                       size="icon"
                       render={
-                        <a href={buildWhatsAppLink(booking.phone, `Hi ${booking.fullName}, this is FBM International regarding your booking.`)} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+                        <a href={buildWhatsAppLink(booking.phone, `Hi ${booking.fullName}, this is Exceed Limited regarding your booking.`)} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
                           <MessageCircle className="h-4 w-4" />
                         </a>
                       }
@@ -112,7 +112,7 @@ export function BookingsView({
                       {salesUsers.map((u) => <SelectItem key={u.id} value={u.id}>{u.fullName}</SelectItem>)}
                     </SelectContent>
                   </Select>
-                  <Select value={booking.status} onValueChange={(v) => updateBooking(booking.id, { status: v })} disabled={pending}>
+                  <Select value={booking.status} onValueChange={(v) => v && updateBooking(booking.id, { status: v })} disabled={pending}>
                     <SelectTrigger className="w-36"><SelectValue /></SelectTrigger>
                     <SelectContent>
                       {STATUSES.map((s) => <SelectItem key={s} value={s}>{s.replace("_", " ")}</SelectItem>)}

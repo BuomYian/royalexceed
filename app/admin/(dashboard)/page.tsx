@@ -87,7 +87,7 @@ export default async function AdminDashboardPage() {
     <div className="space-y-6">
       <div>
         <h1 className="font-heading text-2xl font-bold">Welcome back, {user.fullName.split(" ")[0]}</h1>
-        <p className="text-sm text-muted-foreground">Here&apos;s what&apos;s happening across FBM International.</p>
+        <p className="text-sm text-muted-foreground">Here&apos;s what&apos;s happening across Exceed Limited.</p>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">

@@ -38,9 +38,9 @@ export function Header({ settings }: { settings: ResolvedSiteSettings }) {
       <div className="container-brand flex h-16 items-center justify-between gap-4">
         <Link href="/" className="flex items-center gap-2 font-heading text-lg font-bold tracking-tight">
           <span className="flex h-9 w-9 items-center justify-center rounded-md bg-primary text-primary-foreground">
-            FBM
+            EL
           </span>
-          <span className="hidden sm:inline">FBM International</span>
+          <span className="hidden sm:inline">Exceed Limited</span>
         </Link>
 
         <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
@@ -80,10 +80,11 @@ export function Header({ settings }: { settings: ResolvedSiteSettings }) {
                 </Button>
               }
             />
-            <SheetContent side="end" className="w-[300px] sm:w-[360px]">
+            {/* "right" — the Sheet's own CSS already flips this for RTL (rtl:data-[side=right]:...) */}
+            <SheetContent side="right" className="w-[300px] sm:w-[360px]">
               <SheetHeader>
                 <div className="flex items-center justify-between">
-                  <SheetTitle className="font-heading">FBM International</SheetTitle>
+                  <SheetTitle className="font-heading">Exceed Limited</SheetTitle>
                   <SheetClose
                     render={
                       <Button variant="ghost" size="icon" aria-label="Close menu">

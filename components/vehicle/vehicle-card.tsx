@@ -7,7 +7,6 @@ import { Badge } from "@/components/ui/badge";
 
 export function VehicleCard({
   model,
-  usdToSsp,
 }: {
   model: {
     slug: string;
@@ -19,7 +18,6 @@ export function VehicleCard({
     priceOnRequest: boolean;
     thumbnailUrl: string | null;
   };
-  usdToSsp: number;
 }) {
   const t = useTranslations("common");
 
@@ -48,7 +46,7 @@ export function VehicleCard({
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs text-muted-foreground">{t("startingFrom")}</p>
-              <PriceDisplay usdAmount={model.startingPriceUsd} usdToSsp={usdToSsp} priceOnRequest={model.priceOnRequest} size="sm" />
+              <PriceDisplay usdAmount={model.startingPriceUsd} priceOnRequest={model.priceOnRequest} size="sm" />
             </div>
             <p className="text-sm text-muted-foreground">{model.seats} {t("seats")}</p>
           </div>

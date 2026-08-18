@@ -13,7 +13,7 @@ export default async function AdminSettingsPage() {
       <div>
         <h1 className="font-heading text-2xl font-bold">Site Settings</h1>
         <p className="text-sm text-muted-foreground">
-          Contact details, hours, socials, and the USD→SSP exchange rate used across the public site.
+          Contact details, hours, socials, and SEO defaults used across the public site.
         </p>
       </div>
       <SettingsForm defaultValues={settings} />

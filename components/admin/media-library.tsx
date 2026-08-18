@@ -6,7 +6,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { toast } from "sonner";
 import { Loader2, Trash2, Upload, Copy } from "lucide-react";
 import { uploadMediaAction, deleteMediaAction } from "@/lib/actions/media";
-import { MEDIA_FOLDERS, type MediaFolder } from "@/lib/media";
+import { MEDIA_FOLDERS, type MediaFolder } from "@/lib/media-folders";
 import type { MediaFile } from "@/lib/data/media";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";

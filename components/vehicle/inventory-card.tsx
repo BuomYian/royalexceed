@@ -15,7 +15,6 @@ const STATUS_VARIANT: Record<string, string> = {
 
 export function InventoryCard({
   unit,
-  usdToSsp,
 }: {
   unit: {
     stockNumber: string;
@@ -29,7 +28,6 @@ export function InventoryCard({
     model: { slug: string; displayName: string };
     images: { url: string; alt: string | null }[];
   };
-  usdToSsp: number;
 }) {
   const t = useTranslations("inventory");
   const image = unit.images[0];
@@ -56,7 +54,7 @@ export function InventoryCard({
           <p className="text-xs text-muted-foreground">
             {t("stockNumber")}: {unit.stockNumber} · {t("vin")}: <VinMasked vin={unit.vin} />
           </p>
-          <PriceDisplay usdAmount={unit.priceUsd} usdToSsp={usdToSsp} size="sm" />
+          <PriceDisplay usdAmount={unit.priceUsd} size="sm" />
         </CardContent>
       </Card>
     </Link>

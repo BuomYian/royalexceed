@@ -1,19 +1,20 @@
 /**
  * Idempotent seed script — safe to re-run (`npm run db:seed`). Creates:
  * one SUPER_ADMIN (mirrored from a real Supabase Auth user), site settings,
- * the five Soueast models with variants/colors/specs/features, 6-10 inventory
- * units, 3 news articles, and 4 testimonials — per spec §9.
+ * the five Soueast models plus two 212 off-road models with variants/colors/
+ * specs/features, inventory units, news articles, and testimonials — per
+ * spec §9.
  *
  * Placeholder imagery uses placehold.co so the seed has no dependency on real
- * car photography; replace with genuine Supabase Storage-hosted photos before
- * go-live (see README "Before go-live").
+ * car photography; replace with genuine photos before go-live (see README
+ * "Before go-live").
  */
 import { createClient } from "@supabase/supabase-js";
 import { PrismaClient, type Prisma } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const SUPER_ADMIN_EMAIL = process.env.SEED_SUPER_ADMIN_EMAIL ?? "admin@fbminternational.com";
+const SUPER_ADMIN_EMAIL = process.env.SEED_SUPER_ADMIN_EMAIL ?? "admin@exceedlimited.com";
 const SUPER_ADMIN_PASSWORD = process.env.SEED_SUPER_ADMIN_PASSWORD ?? "ChangeMe123!";
 
 function placeholderImage(text: string, hex = "1a1d21", fg = "ffffff") {
@@ -59,7 +60,7 @@ async function seedSuperAdmin() {
     create: {
       id: authUserId,
       email: SUPER_ADMIN_EMAIL,
-      fullName: "FBM Super Admin",
+      fullName: "Exceed Limited Admin",
       role: "SUPER_ADMIN",
     },
   });
@@ -70,10 +71,10 @@ async function seedSuperAdmin() {
 
 async function seedSiteSettings() {
   const data: Prisma.InputJsonValue = {
-    companyName: "FBM International",
+    companyName: "Exceed Limited",
     phone: "+211 92 000 0000",
     whatsappNumber: "211920000000",
-    email: "info@fbminternational.com",
+    email: "info@exceedlimited.com",
     address: {
       line: "Juba Town, near Muduria Roundabout",
       city: "Juba",
@@ -84,10 +85,10 @@ async function seedSiteSettings() {
     },
     hours: { monFri: "8:00 AM – 6:00 PM", saturday: "8:00 AM – 6:00 PM", sunday: "Closed" },
     socials: {
-      facebook: "https://facebook.com/fbminternational",
-      instagram: "https://instagram.com/fbminternational",
-      tiktok: "https://tiktok.com/@fbminternational",
-      x: "https://x.com/fbminternational",
+      facebook: "https://facebook.com/exceedlimited",
+      instagram: "https://instagram.com/exceedlimited",
+      tiktok: "https://tiktok.com/@exceedlimited",
+      x: "https://x.com/exceedlimited",
     },
     heroSlides: [
       {
@@ -95,7 +96,14 @@ async function seedSiteSettings() {
         modelSlug: "s07",
         imageUrl: placeholderImage("Soueast S07"),
         headline: "The Soueast S07",
-        subheadline: "Family-ready. ADAS-equipped. Built for Juba's roads.",
+        subheadline: "Family-ready. ADAS-equipped. Built for the region's roads.",
+      },
+      {
+        id: "hero-212-t02",
+        modelSlug: "212-t02",
+        imageUrl: placeholderImage("212 T02"),
+        headline: "The 212 T02",
+        subheadline: "Flagship off-road SUV, built for South Sudan and Sudan.",
       },
       {
         id: "hero-s09",
@@ -106,25 +114,25 @@ async function seedSiteSettings() {
       },
     ],
     departments: {
-      sales: { label: "Sales", phone: "+211 92 000 0001", email: "sales@fbminternational.com" },
-      service: { label: "Service", phone: "+211 92 000 0002", email: "service@fbminternational.com" },
-      parts: { label: "Parts", phone: "+211 92 000 0003", email: "parts@fbminternational.com" },
-      fleet: { label: "Fleet & Corporate", phone: "+211 92 000 0004", email: "fleet@fbminternational.com" },
+      sales: { label: "Sales", phone: "+211 92 000 0001", email: "sales@exceedlimited.com" },
+      service: { label: "Service", phone: "+211 92 000 0002", email: "service@exceedlimited.com" },
+      parts: { label: "Parts", phone: "+211 92 000 0003", email: "parts@exceedlimited.com" },
+      fleet: { label: "Fleet & Corporate", phone: "+211 92 000 0004", email: "fleet@exceedlimited.com" },
     },
     seoDefaults: {
-      title: "FBM International | Soueast Motor South Sudan",
+      title: "Exceed Limited | Soueast & 212 Vehicles — South Sudan & Sudan",
       description:
-        "Sole authorized Soueast Motor dealer in South Sudan. New vehicles, genuine parts, and factory-backed service in Juba.",
+        "Exceed Limited, in partnership with FBM International Co., is the sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan. New vehicles, genuine parts, and factory-backed service in Juba.",
     },
     maintenanceMode: false,
   };
 
   await prisma.siteSetting.upsert({
     where: { id: "singleton" },
-    update: { data, usdToSsp: 1300 },
-    create: { id: "singleton", data, usdToSsp: 1300 },
+    update: { data },
+    create: { id: "singleton", data },
   });
-  console.log("✔ Site settings seeded (usdToSsp = 1300, placeholder contact info)");
+  console.log("✔ Site settings seeded (placeholder contact info)");
 }
 
 type ModelSeed = Prisma.ModelCreateInput & {
@@ -215,7 +223,7 @@ function buildModels(): ModelSeed[] {
       displayName: "Soueast S05",
       tagline: "Compact urban SUV",
       description:
-        "The Soueast S05 is a nimble, efficient compact SUV built for Juba's streets — easy to park, easy to maintain, and backed by genuine Soueast parts.",
+        "The Soueast S05 is a nimble, efficient compact SUV built for South Sudan and Sudan's streets — easy to park, easy to maintain, and backed by genuine Soueast parts.",
       bodyType: "SUV",
       seats: 5,
       startingPriceUsd: 20500,
@@ -226,8 +234,8 @@ function buildModels(): ModelSeed[] {
       sortOrder: 0,
       heroImageUrl: placeholderImage("Soueast S05"),
       thumbnailUrl: placeholderImage("S05", "24272c"),
-      metaTitle: "Soueast S05 South Sudan | Compact SUV | FBM International",
-      metaDescription: "Explore the Soueast S05 compact SUV, available now in Juba from FBM International, the sole authorized Soueast dealer in South Sudan.",
+      metaTitle: "Soueast S05 | Compact SUV | Exceed Limited",
+      metaDescription: "Explore the Soueast S05 compact SUV, available now from Exceed Limited, the sole authorized Soueast distributor in South Sudan and Sudan.",
       variants: [
         {
           name: "Comfort 1.5L 2WD",
@@ -278,8 +286,8 @@ function buildModels(): ModelSeed[] {
         warranty: "3 years / 100,000 km",
       }),
       features: [
-        { title: "Genuine Parts, Always", description: "Every S05 sold by FBM International is backed by factory-sourced genuine parts — no grey-market substitutes.", imageUrl: placeholderImage("S05 Feature Parts"), layout: "image-right", sortOrder: 0 },
-        { title: "Built for Juba's Roads", description: "Reinforced suspension tuning and generous ground clearance handle Juba's roads with ease.", imageUrl: placeholderImage("S05 Feature Suspension"), layout: "image-left", sortOrder: 1 },
+        { title: "Genuine Parts, Always", description: "Every S05 sold by Exceed Limited is backed by factory-sourced genuine parts — no grey-market substitutes.", imageUrl: placeholderImage("S05 Feature Parts"), layout: "image-right", sortOrder: 0 },
+        { title: "Built for the Region's Roads", description: "Reinforced suspension tuning and generous ground clearance handle South Sudan and Sudan's roads with ease.", imageUrl: placeholderImage("S05 Feature Suspension"), layout: "image-left", sortOrder: 1 },
       ],
     },
     {
@@ -299,8 +307,8 @@ function buildModels(): ModelSeed[] {
       sortOrder: 1,
       heroImageUrl: placeholderImage("Soueast S06"),
       thumbnailUrl: placeholderImage("S06", "24272c"),
-      metaTitle: "Soueast S06 South Sudan | 1.6T Crossover SUV | FBM International",
-      metaDescription: "The Soueast S06 1.6T crossover SUV — available in Juba from FBM International, the sole authorized Soueast dealer in South Sudan.",
+      metaTitle: "Soueast S06 | 1.6T Crossover SUV | Exceed Limited",
+      metaDescription: "The Soueast S06 1.6T crossover SUV — available from Exceed Limited, the sole authorized Soueast distributor in South Sudan and Sudan.",
       variants: [
         {
           name: "Comfort 1.6T 2WD",
@@ -371,8 +379,8 @@ function buildModels(): ModelSeed[] {
       sortOrder: 2,
       heroImageUrl: placeholderImage("Soueast S06 DM"),
       thumbnailUrl: placeholderImage("S06 DM", "24272c"),
-      metaTitle: "Soueast S06 DM South Sudan | Plug-in Hybrid SUV | FBM International",
-      metaDescription: "The Soueast S06 DM plug-in hybrid crossover — available in Juba from FBM International, the sole authorized Soueast dealer in South Sudan.",
+      metaTitle: "Soueast S06 DM | Plug-in Hybrid SUV | Exceed Limited",
+      metaDescription: "The Soueast S06 DM plug-in hybrid crossover — available from Exceed Limited, the sole authorized Soueast distributor in South Sudan and Sudan.",
       variants: [
         {
           name: "DM Flagship",
@@ -409,7 +417,7 @@ function buildModels(): ModelSeed[] {
         warranty: "3 years / 100,000 km (8 years / 150,000 km battery)",
       }),
       features: [
-        { title: "Plug In, Save More", description: "A full electric-only range covers most daily commutes in Juba before the engine ever needs to run.", imageUrl: placeholderImage("S06 DM Feature Charging"), layout: "image-right", sortOrder: 0 },
+        { title: "Plug In, Save More", description: "A full electric-only range covers most daily commutes before the engine ever needs to run.", imageUrl: placeholderImage("S06 DM Feature Charging"), layout: "image-right", sortOrder: 0 },
         { title: "480 Nm, Instantly", description: "Electric torque delivers instant response for effortless overtaking.", imageUrl: placeholderImage("S06 DM Feature Torque"), layout: "image-left", sortOrder: 1 },
       ],
     },
@@ -430,8 +438,8 @@ function buildModels(): ModelSeed[] {
       sortOrder: 3,
       heroImageUrl: placeholderImage("Soueast S07"),
       thumbnailUrl: placeholderImage("S07", "24272c"),
-      metaTitle: "Soueast S07 South Sudan | Family SUV with ADAS | FBM International",
-      metaDescription: "The Soueast S07 family SUV with 12.3\" connected screens and ADAS — available in Juba from FBM International, the sole authorized Soueast dealer in South Sudan.",
+      metaTitle: "Soueast S07 | Family SUV with ADAS | Exceed Limited",
+      metaDescription: "The Soueast S07 family SUV with 12.3\" connected screens and ADAS — available from Exceed Limited, the sole authorized Soueast distributor in South Sudan and Sudan.",
       variants: [
         {
           name: "Comfort 1.5T 2WD",
@@ -505,8 +513,8 @@ function buildModels(): ModelSeed[] {
       sortOrder: 4,
       heroImageUrl: placeholderImage("Soueast S09"),
       thumbnailUrl: placeholderImage("S09", "24272c"),
-      metaTitle: "Soueast S09 South Sudan | Flagship 7-Seat SUV | FBM International",
-      metaDescription: "The Soueast S09 flagship 7-seat SUV with a 2.0T engine — available in Juba from FBM International, the sole authorized Soueast dealer in South Sudan.",
+      metaTitle: "Soueast S09 | Flagship 7-Seat SUV | Exceed Limited",
+      metaDescription: "The Soueast S09 flagship 7-seat SUV with a 2.0T engine — available from Exceed Limited, the sole authorized Soueast distributor in South Sudan and Sudan.",
       variants: [
         {
           name: "Comfort 2.0T 2WD",
@@ -559,7 +567,151 @@ function buildModels(): ModelSeed[] {
       features: [
         { title: "Seats Seven, Comfortably", description: "Three full rows of seating make the S09 the natural choice for large families and fleet operators.", imageUrl: placeholderImage("S09 Feature Seating"), layout: "image-right", sortOrder: 0 },
         { title: "AWD Capability", description: "The Flagship AWD variant adds confident all-weather, all-terrain traction.", imageUrl: placeholderImage("S09 Feature AWD"), layout: "image-left", sortOrder: 1 },
-        { title: "Built for Fleets", description: "NGOs, government agencies, and corporates rely on the S09 for durability and after-sales support across South Sudan.", imageUrl: placeholderImage("S09 Feature Fleet"), layout: "image-right", sortOrder: 2 },
+        { title: "Built for Fleets", description: "NGOs, government agencies, and corporates rely on the S09 for durability and after-sales support across South Sudan and Sudan.", imageUrl: placeholderImage("S09 Feature Fleet"), layout: "image-right", sortOrder: 2 },
+      ],
+    },
+    {
+      slug: "212-t01",
+      name: "T01",
+      displayName: "212 T01",
+      tagline: "Retro-styled off-road SUV",
+      description:
+        "The 212 T01 revives classic off-road styling with modern engineering — a rugged, boxy SUV with low-range 4WD, built for South Sudan and Sudan's toughest roads and backed by genuine parts and factory warranty.",
+      bodyType: "SUV",
+      seats: 5,
+      startingPriceUsd: 31000,
+      priceOnRequest: false,
+      year: 2025,
+      status: "PUBLISHED",
+      isFeatured: true,
+      sortOrder: 5,
+      heroImageUrl: placeholderImage("212 T01"),
+      thumbnailUrl: placeholderImage("212 T01", "24272c"),
+      metaTitle: "212 T01 | Off-Road SUV | Exceed Limited",
+      metaDescription: "The 212 T01 retro-styled off-road SUV — available from Exceed Limited, the sole authorized 212 distributor in South Sudan and Sudan.",
+      variants: [
+        {
+          name: "Explorer 2.0T 4WD",
+          priceUsd: 31000,
+          engine: "2.0L Turbo GDI",
+          powerHp: 224,
+          torqueNm: 380,
+          fuelType: "PETROL",
+          transmission: "AUTOMATIC",
+          drivetrain: "FOUR_WD",
+          sortOrder: 0,
+        },
+        {
+          name: "Adventure 2.0T 4WD",
+          priceUsd: 34500,
+          engine: "2.0L Turbo GDI",
+          powerHp: 224,
+          torqueNm: 380,
+          fuelType: "PETROL",
+          transmission: "AUTOMATIC",
+          drivetrain: "FOUR_WD",
+          sortOrder: 1,
+        },
+      ],
+      colors: [
+        { name: "Military Green", hexCode: "#4B5320", sortOrder: 0, imageUrl: placeholderImage("212 T01 Military Green", "4b5320") },
+        { name: "Sand Beige", hexCode: "#C2B280", sortOrder: 1, imageUrl: placeholderImage("212 T01 Sand Beige", "c2b280", "111111") },
+        { name: "Obsidian Black", hexCode: "#15171A", sortOrder: 2, imageUrl: placeholderImage("212 T01 Obsidian Black", "15171a") },
+      ],
+      images: [
+        { url: placeholderImage("212 T01 Exterior Front"), alt: "212 T01 front three-quarter exterior view", category: "exterior", sortOrder: 0 },
+        { url: placeholderImage("212 T01 Exterior Rear"), alt: "212 T01 rear exterior view", category: "exterior", sortOrder: 1 },
+        { url: placeholderImage("212 T01 Interior Dashboard"), alt: "212 T01 dashboard and infotainment", category: "interior", sortOrder: 2 },
+      ],
+      specGroups: standardSpecGroups({
+        engine: "2.0L Turbocharged GDI, 4-cylinder",
+        power: "224 hp @ 5200 rpm",
+        torque: "380 Nm @ 1800-4000 rpm",
+        accel: "9.8 sec",
+        topSpeed: "170",
+        length: "4380",
+        width: "1900",
+        height: "1900",
+        wheelbase: "2650",
+        cargo: "506",
+        airbags: "6",
+        warranty: "3 years / 100,000 km",
+      }),
+      features: [
+        { title: "Built for Off-Road", description: "Low-range 4WD and a locking rear differential give the T01 serious capability off the tarmac.", imageUrl: placeholderImage("212 T01 Feature 4WD"), layout: "image-right", sortOrder: 0 },
+        { title: "Retro Styling, Modern Tech", description: "Classic boxy proportions outside, a 10.25\" touchscreen and full driver-assist suite inside.", imageUrl: placeholderImage("212 T01 Feature Tech"), layout: "image-left", sortOrder: 1 },
+      ],
+    },
+    {
+      slug: "212-t02",
+      name: "T02",
+      displayName: "212 T02",
+      tagline: "Flagship off-road SUV",
+      description:
+        "The 212 T02 is the flagship of the 212 range — a ladder-frame off-road SUV with serious capability for fleet, NGO, and expedition use across South Sudan and Sudan.",
+      bodyType: "SUV",
+      seats: 5,
+      startingPriceUsd: 39500,
+      priceOnRequest: false,
+      year: 2025,
+      status: "PUBLISHED",
+      isFeatured: true,
+      sortOrder: 6,
+      heroImageUrl: placeholderImage("212 T02"),
+      thumbnailUrl: placeholderImage("212 T02", "24272c"),
+      metaTitle: "212 T02 | Flagship Off-Road SUV | Exceed Limited",
+      metaDescription: "The 212 T02 flagship ladder-frame off-road SUV — available from Exceed Limited, the sole authorized 212 distributor in South Sudan and Sudan.",
+      variants: [
+        {
+          name: "Field 2.0T 4WD",
+          priceUsd: 39500,
+          engine: "2.0L Turbo GDI",
+          powerHp: 238,
+          torqueNm: 400,
+          fuelType: "PETROL",
+          transmission: "AUTOMATIC",
+          drivetrain: "FOUR_WD",
+          sortOrder: 0,
+        },
+        {
+          name: "Expedition 2.0T 4WD",
+          priceUsd: 44000,
+          engine: "2.0L Turbo GDI",
+          powerHp: 238,
+          torqueNm: 400,
+          fuelType: "PETROL",
+          transmission: "AUTOMATIC",
+          drivetrain: "FOUR_WD",
+          sortOrder: 1,
+        },
+      ],
+      colors: [
+        { name: "Obsidian Black", hexCode: "#15171A", sortOrder: 0, imageUrl: placeholderImage("212 T02 Obsidian Black", "15171a") },
+        { name: "Sand Beige", hexCode: "#C2B280", sortOrder: 1, imageUrl: placeholderImage("212 T02 Sand Beige", "c2b280", "111111") },
+        { name: "Convoy Grey", hexCode: "#5B6167", sortOrder: 2, imageUrl: placeholderImage("212 T02 Convoy Grey", "5b6167") },
+      ],
+      images: [
+        { url: placeholderImage("212 T02 Exterior Front"), alt: "212 T02 front three-quarter exterior view", category: "exterior", sortOrder: 0 },
+        { url: placeholderImage("212 T02 Exterior Rear"), alt: "212 T02 rear exterior view", category: "exterior", sortOrder: 1 },
+        { url: placeholderImage("212 T02 Interior Dashboard"), alt: "212 T02 dashboard", category: "interior", sortOrder: 2 },
+      ],
+      specGroups: standardSpecGroups({
+        engine: "2.0L Turbocharged GDI, 4-cylinder",
+        power: "238 hp @ 5200 rpm",
+        torque: "400 Nm @ 1900-4200 rpm",
+        accel: "9.1 sec",
+        topSpeed: "175",
+        length: "4750",
+        width: "1920",
+        height: "1930",
+        wheelbase: "2800",
+        cargo: "590",
+        airbags: "6",
+        warranty: "3 years / 100,000 km",
+      }),
+      features: [
+        { title: "Ladder-Frame Toughness", description: "A body-on-frame chassis built to handle unpaved roads, river crossings, and heavy loads.", imageUrl: placeholderImage("212 T02 Feature Chassis"), layout: "image-right", sortOrder: 0 },
+        { title: "Built for Fleets Across Two Countries", description: "NGOs and government fleets rely on the T02 for durability and after-sales support across South Sudan and Sudan.", imageUrl: placeholderImage("212 T02 Feature Fleet"), layout: "image-left", sortOrder: 1 },
       ],
     },
   ];
@@ -605,14 +757,14 @@ async function seedModels() {
     modelIds[m.slug] = { id: model.id, variantIds: model.variants.map((v) => v.id) };
   }
 
-  console.log(`✔ Seeded ${Object.keys(modelIds).length} Soueast models`);
+  console.log(`✔ Seeded ${Object.keys(modelIds).length} models (5 Soueast + 2 212)`);
   return modelIds;
 }
 
 async function seedInventory(modelIds: Record<string, { id: string; variantIds: string[] }>) {
   const units: Prisma.InventoryUnitCreateInput[] = [
     {
-      stockNumber: "FBM-S05-0001",
+      stockNumber: "EXL-S05-0001",
       vin: "LSVAX0R47NA000001",
       model: { connect: { id: modelIds.s05.id } },
       variant: { connect: { id: modelIds.s05.variantIds[0] } },
@@ -624,7 +776,7 @@ async function seedInventory(modelIds: Record<string, { id: string; variantIds: 
       arrivalDate: new Date("2026-06-01"),
     },
     {
-      stockNumber: "FBM-S05-0002",
+      stockNumber: "EXL-S05-0002",
       vin: "LSVAX0R47NA000002",
       model: { connect: { id: modelIds.s05.id } },
       variant: { connect: { id: modelIds.s05.variantIds[1] } },
@@ -636,7 +788,7 @@ async function seedInventory(modelIds: Record<string, { id: string; variantIds: 
       arrivalDate: new Date("2026-06-15"),
     },
     {
-      stockNumber: "FBM-S06-0001",
+      stockNumber: "EXL-S06-0001",
       vin: "LSVAX0R47NA000101",
       model: { connect: { id: modelIds.s06.id } },
       variant: { connect: { id: modelIds.s06.variantIds[0] } },
@@ -648,7 +800,7 @@ async function seedInventory(modelIds: Record<string, { id: string; variantIds: 
       arrivalDate: new Date("2026-06-10"),
     },
     {
-      stockNumber: "FBM-S06-0002",
+      stockNumber: "EXL-S06-0002",
       vin: "LSVAX0R47NA000102",
       model: { connect: { id: modelIds.s06.id } },
       variant: { connect: { id: modelIds.s06.variantIds[1] } },
@@ -660,7 +812,7 @@ async function seedInventory(modelIds: Record<string, { id: string; variantIds: 
       arrivalDate: new Date("2026-07-01"),
     },
     {
-      stockNumber: "FBM-S06DM-0001",
+      stockNumber: "EXL-S06DM-0001",
       vin: "LSVAX0R47NA000201",
       model: { connect: { id: modelIds["s06-dm"].id } },
       variant: { connect: { id: modelIds["s06-dm"].variantIds[0] } },
@@ -672,7 +824,7 @@ async function seedInventory(modelIds: Record<string, { id: string; variantIds: 
       arrivalDate: new Date("2026-09-01"),
     },
     {
-      stockNumber: "FBM-S07-0001",
+      stockNumber: "EXL-S07-0001",
       vin: "LSVAX0R47NA000301",
       model: { connect: { id: modelIds.s07.id } },
       variant: { connect: { id: modelIds.s07.variantIds[0] } },
@@ -684,7 +836,7 @@ async function seedInventory(modelIds: Record<string, { id: string; variantIds: 
       arrivalDate: new Date("2026-05-20"),
     },
     {
-      stockNumber: "FBM-S07-0002",
+      stockNumber: "EXL-S07-0002",
       vin: "LSVAX0R47NA000302",
       model: { connect: { id: modelIds.s07.id } },
       variant: { connect: { id: modelIds.s07.variantIds[1] } },
@@ -697,7 +849,7 @@ async function seedInventory(modelIds: Record<string, { id: string; variantIds: 
       soldAt: new Date("2026-05-02"),
     },
     {
-      stockNumber: "FBM-S09-0001",
+      stockNumber: "EXL-S09-0001",
       vin: "LSVAX0R47NA000401",
       model: { connect: { id: modelIds.s09.id } },
       variant: { connect: { id: modelIds.s09.variantIds[0] } },
@@ -709,7 +861,7 @@ async function seedInventory(modelIds: Record<string, { id: string; variantIds: 
       arrivalDate: new Date("2026-06-25"),
     },
     {
-      stockNumber: "FBM-S09-0002",
+      stockNumber: "EXL-S09-0002",
       vin: "LSVAX0R47NA000402",
       model: { connect: { id: modelIds.s09.id } },
       variant: { connect: { id: modelIds.s09.variantIds[1] } },
@@ -719,6 +871,30 @@ async function seedInventory(modelIds: Record<string, { id: string; variantIds: 
       status: "IN_TRANSIT",
       priceUsd: 41500,
       arrivalDate: new Date("2026-10-01"),
+    },
+    {
+      stockNumber: "EXL-212T1-0001",
+      vin: "LSVAX0R47NA000501",
+      model: { connect: { id: modelIds["212-t01"].id } },
+      variant: { connect: { id: modelIds["212-t01"].variantIds[0] } },
+      year: 2025,
+      colorName: "Military Green",
+      condition: "NEW",
+      status: "AVAILABLE",
+      priceUsd: 31000,
+      arrivalDate: new Date("2026-06-20"),
+    },
+    {
+      stockNumber: "EXL-212T2-0001",
+      vin: "LSVAX0R47NA000601",
+      model: { connect: { id: modelIds["212-t02"].id } },
+      variant: { connect: { id: modelIds["212-t02"].variantIds[1] } },
+      year: 2025,
+      colorName: "Convoy Grey",
+      condition: "NEW",
+      status: "IN_TRANSIT",
+      priceUsd: 44000,
+      arrivalDate: new Date("2026-11-01"),
     },
   ];
 
@@ -743,11 +919,11 @@ async function seedInventory(modelIds: Record<string, { id: string; variantIds: 
 async function seedArticles(authorId: string) {
   const articles = [
     {
-      slug: "fbm-international-now-open-in-juba-town",
-      title: "FBM International Now Open in Juba Town",
-      excerpt: "FBM International proudly opens its doors as the sole authorized Soueast Motor dealer in South Sudan.",
-      body: "<p>We are excited to announce the opening of our new showroom in Juba Town, near Muduria Roundabout. As the sole authorized partner of Soueast Motor in South Sudan, FBM International brings genuine new vehicles, factory-backed warranty, and trained after-sales technicians to Juba for the first time.</p><p>Visit our showroom to explore the full Soueast range, including the S05, S06, S06 DM, S07, and flagship S09.</p>",
-      coverImageUrl: placeholderImage("FBM Showroom Opening"),
+      slug: "exceed-limited-now-open-in-juba-town",
+      title: "Exceed Limited Now Open in Juba Town",
+      excerpt: "Exceed Limited proudly opens its doors as the sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan.",
+      body: "<p>We are excited to announce the opening of our new showroom in Juba Town, near Muduria Roundabout. In partnership with FBM International Co., Exceed Limited is the sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan, bringing genuine new vehicles, factory-backed warranty, and trained after-sales technicians to the region for the first time.</p><p>Visit our showroom to explore the full Soueast range — S05, S06, S06 DM, S07, and flagship S09 — alongside the rugged 212 T01 and T02 off-roaders.</p>",
+      coverImageUrl: placeholderImage("Exceed Limited Showroom Opening"),
       tags: ["announcement", "showroom"],
       status: "PUBLISHED" as const,
       publishedAt: new Date("2026-05-01"),
@@ -755,18 +931,28 @@ async function seedArticles(authorId: string) {
     {
       slug: "introducing-the-soueast-s07",
       title: "Introducing the Soueast S07",
-      excerpt: "Dual 12.3\" connected screens and a full ADAS suite arrive in South Sudan with the Soueast S07.",
-      body: "<p>The Soueast S07 brings class-leading technology to the South Sudanese market — dual 12.3\" connected screens, a full ADAS suite, and generous family space. Book a test drive at our Juba Town showroom today.</p>",
+      excerpt: "Dual 12.3\" connected screens and a full ADAS suite arrive with the Soueast S07.",
+      body: "<p>The Soueast S07 brings class-leading technology to South Sudan and Sudan — dual 12.3\" connected screens, a full ADAS suite, and generous family space. Book a test drive at our Juba Town showroom today.</p>",
       coverImageUrl: placeholderImage("Soueast S07 Launch"),
       tags: ["new-model", "S07"],
       status: "PUBLISHED" as const,
       publishedAt: new Date("2026-06-10"),
     },
     {
+      slug: "212-off-road-range-arrives",
+      title: "The 212 Off-Road Range Arrives at Exceed Limited",
+      excerpt: "Retro styling, serious 4WD capability — the 212 T01 and T02 join the Exceed Limited range.",
+      body: "<p>Exceed Limited is proud to introduce the 212 range to South Sudan and Sudan: the compact 212 T01 and flagship ladder-frame 212 T02. Built for unpaved roads, river crossings, and heavy-duty fleet use, both models are backed by the same genuine-parts guarantee and factory warranty as every Soueast vehicle we sell.</p>",
+      coverImageUrl: placeholderImage("212 Range Launch"),
+      tags: ["new-model", "212"],
+      status: "PUBLISHED" as const,
+      publishedAt: new Date("2026-08-01"),
+    },
+    {
       slug: "genuine-parts-why-it-matters",
-      title: "Genuine Parts: Why It Matters in South Sudan",
-      excerpt: "Grey-market parts can cost you more in the long run. Here's why FBM International only sources genuine Soueast parts.",
-      body: "<p>One of the most common questions we hear from buyers in Juba is about parts availability. As the sole authorized Soueast partner in South Sudan, FBM International guarantees every part fitted to your vehicle is factory-sourced — never a grey-market substitute.</p>",
+      title: "Genuine Parts: Why It Matters",
+      excerpt: "Grey-market parts can cost you more in the long run. Here's why Exceed Limited only sources genuine Soueast and 212 parts.",
+      body: "<p>One of the most common questions we hear from buyers is about parts availability. As the sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan, Exceed Limited guarantees every part fitted to your vehicle is factory-sourced — never a grey-market substitute.</p>",
       coverImageUrl: placeholderImage("Genuine Parts"),
       tags: ["service", "parts"],
       status: "PUBLISHED" as const,
@@ -790,7 +976,7 @@ async function seedTestimonials() {
       authorName: "Achol Deng",
       authorTitle: "Operations Director",
       company: "South Sudan Relief Network (NGO)",
-      quote: "FBM International's fleet support has been outstanding. Genuine parts and fast turnaround keep our vehicles on the road when it matters most.",
+      quote: "Exceed Limited's fleet support has been outstanding. Genuine parts and fast turnaround keep our vehicles on the road when it matters most.",
       rating: 5,
       isApproved: true,
       sortOrder: 0,
@@ -808,16 +994,16 @@ async function seedTestimonials() {
       authorName: "Nyandeng Mabior",
       authorTitle: "Private buyer",
       company: null,
-      quote: "My S07 has been reliable and comfortable on the school run. The team at FBM made the whole buying process easy.",
+      quote: "My S07 has been reliable and comfortable on the school run. The team at Exceed Limited made the whole buying process easy.",
       rating: 5,
       isApproved: true,
       sortOrder: 2,
     },
     {
       authorName: "Peter Garang",
-      authorTitle: "Managing Director",
+      authorTitle: "Field Operations Manager",
       company: "Nile Logistics Ltd",
-      quote: "Corporate fleet purchasing with dedicated account support — exactly what we needed for our S06 fleet expansion.",
+      quote: "Our 212 T02s handle the unpaved routes between Juba and our upcountry sites without complaint. Exceed Limited's fleet team has been a genuine partner.",
       rating: 4,
       isApproved: true,
       sortOrder: 3,

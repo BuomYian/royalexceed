@@ -10,12 +10,12 @@ export function buildWhatsAppLink(phone: string, message: string): string {
 }
 
 export function modelEnquiryMessage(modelDisplayName: string): string {
-  return `Hello FBM, I'm interested in the ${modelDisplayName}`;
+  return `Hello Exceed Limited, I'm interested in the ${modelDisplayName}`;
 }
 
 export function inventoryEnquiryMessage(
   modelDisplayName: string,
   stockNumber: string,
 ): string {
-  return `Hello FBM, I'm interested in the ${modelDisplayName} (Stock #${stockNumber})`;
+  return `Hello Exceed Limited, I'm interested in the ${modelDisplayName} (Stock #${stockNumber})`;
 }

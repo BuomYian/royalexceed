@@ -96,11 +96,6 @@ enum BookingStatus {
   NO_SHOW
 }
 
-enum Currency {
-  USD
-  SSP
-}
-
 model User {
   id          String    @id @db.Uuid // mirrors Supabase auth.users.id
   email       String    @unique
@@ -189,13 +184,13 @@ model ModelColor {
 }
 
 model ModelImage {
-  id        String  @id @default(cuid())
+  id        String @id @default(cuid())
   modelId   String
-  model     Model   @relation(fields: [modelId], references: [id], onDelete: Cascade)
+  model     Model  @relation(fields: [modelId], references: [id], onDelete: Cascade)
   url       String
   alt       String
-  category  String  @default("exterior") // exterior | interior | detail
-  sortOrder Int     @default(0)
+  category  String @default("exterior") // exterior | interior | detail
+  sortOrder Int    @default(0)
 }
 
 model SpecGroup {
@@ -372,7 +367,6 @@ model Testimonial {
 model SiteSetting {
   id        String   @id @default("singleton")
   data      Json // contact, hours, socials, hero slides, SEO defaults
-  usdToSsp  Decimal  @db.Decimal(12, 4)
   updatedAt DateTime @updatedAt
 }
 

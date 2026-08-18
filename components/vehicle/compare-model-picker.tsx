@@ -32,7 +32,7 @@ export function CompareModelPicker({
         const current = selectedSlugs[index];
         return (
           <div key={index} className="flex items-center gap-2">
-            <Select value={current ?? "none"} onValueChange={(v) => setSlot(index, v)}>
+            <Select value={current ?? "none"} onValueChange={(v) => setSlot(index, v ?? "none")}>
               <SelectTrigger className="w-full"><SelectValue placeholder={t("selectModel")} /></SelectTrigger>
               <SelectContent>
                 <SelectItem value="none">{t("selectModel")}</SelectItem>

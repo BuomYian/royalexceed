@@ -12,8 +12,8 @@ const interTight = Inter_Tight({
 const inter = Inter({ variable: "--font-sans-family", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: { default: "Admin | FBM International", template: "%s | FBM Admin" },
-  description: "FBM International admin dashboard.",
+  title: { default: "Admin | Exceed Limited", template: "%s | Exceed Limited Admin" },
+  description: "Exceed Limited admin dashboard.",
   robots: { index: false, follow: false },
 };
 
@@ -33,7 +33,7 @@ export default function AdminRootLayout({ children }: LayoutProps<"/admin">) {
       }
     >
       <body className="min-h-full bg-background text-foreground">
-        <TooltipProvider delayDuration={150}>
+        <TooltipProvider delay={150}>
           {children}
           <Toaster richColors position="top-right" />
         </TooltipProvider>

@@ -58,6 +58,11 @@ export function vehicleProductJsonLd(model: {
   bodyType: string;
   seats: number;
 }) {
+  // Brand is the first word of the display name ("Soueast S07" -> "Soueast",
+  // "212 T01" -> "212") — avoids hardcoding a single manufacturer now that
+  // Exceed Limited distributes two brands.
+  const brand = model.displayName.split(" ")[0];
+
   return {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -65,14 +70,14 @@ export function vehicleProductJsonLd(model: {
     description: model.description,
     image: model.heroImageUrl ? [model.heroImageUrl] : undefined,
     url: `${siteUrl()}/models/${model.slug}`,
-    brand: { "@type": "Brand", name: "Soueast" },
+    brand: { "@type": "Brand", name: brand },
     ...(model.startingPriceUsd !== null && {
       offers: {
         "@type": "Offer",
         priceCurrency: "USD",
         price: model.startingPriceUsd,
         availability: "https://schema.org/InStock",
-        seller: { "@type": "AutoDealer", name: "FBM International" },
+        seller: { "@type": "AutoDealer", name: "Exceed Limited" },
       },
     }),
     additionalProperty: [

@@ -30,7 +30,7 @@ export default async function PrivacyPage() {
         <h2>How we store it</h2>
         <p>
           Your information is stored securely in our database, hosted on Supabase infrastructure, and is only
-          accessible to authorized FBM International staff.
+          accessible to authorized Exceed Limited staff.
         </p>
 
         <h2>Your rights</h2>
@@ -48,7 +48,7 @@ export default async function PrivacyPage() {
 
         <h2>Contact</h2>
         <p>
-          Questions about this policy can be directed to FBM International at {settings.address.line},{" "}
+          Questions about this policy can be directed to Exceed Limited at {settings.address.line},{" "}
           {settings.address.city}, {settings.address.country}, or via {settings.email}.
         </p>
       </div>

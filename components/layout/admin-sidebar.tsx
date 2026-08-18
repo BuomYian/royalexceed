@@ -43,7 +43,7 @@ export function AdminSidebar({ role }: { role: Role }) {
     <aside className="hidden w-64 shrink-0 border-e border-border bg-sidebar lg:flex lg:flex-col">
       <div className="flex h-16 items-center gap-2 border-b border-sidebar-border px-5">
         <span className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-sm font-bold text-primary-foreground">
-          FBM
+          EL
         </span>
         <span className="font-heading text-sm font-bold text-sidebar-foreground">Admin</span>
       </div>

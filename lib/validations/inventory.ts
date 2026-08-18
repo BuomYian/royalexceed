@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { optionalNumber } from "./common";
 
 export const conditionSchema = z.enum(["NEW", "CERTIFIED_PRE_OWNED", "USED"]);
 export const stockStatusSchema = z.enum(["IN_TRANSIT", "AVAILABLE", "RESERVED", "SOLD"]);
@@ -11,10 +12,10 @@ export const inventoryInputSchema = z.object({
   variantId: z.string().optional().nullable(),
   year: z.coerce.number().int().min(2000).max(2100),
   colorName: z.string().trim().min(1, "Color is required"),
-  mileageKm: z.coerce.number().int().min(0).default(0),
+  mileageKm: optionalNumber(z.number().int().min(0)).default(0),
   condition: conditionSchema.default("NEW"),
   status: stockStatusSchema.default("IN_TRANSIT"),
-  priceUsd: z.coerce.number().positive().optional().nullable(),
+  priceUsd: optionalNumber(z.number().positive()).nullable(),
   arrivalDate: z.string().optional().nullable(),
   notes: z.string().trim().max(2000).optional(),
   images: z

@@ -32,7 +32,7 @@ export function ModelsFilterBar() {
 
   return (
     <div className="mb-8 flex flex-wrap items-center gap-2">
-      <Select value={searchParams.get("bodyType") ?? "all"} onValueChange={(v) => setParam("bodyType", v === "all" ? undefined : v)}>
+      <Select value={searchParams.get("bodyType") ?? "all"} onValueChange={(v) => setParam("bodyType", !v || v === "all" ? undefined : v)}>
         <SelectTrigger className="w-40"><SelectValue placeholder={t("filterBodyType")} /></SelectTrigger>
         <SelectContent>
           <SelectItem value="all">{t("allBodyTypes")}</SelectItem>
@@ -40,7 +40,7 @@ export function ModelsFilterBar() {
         </SelectContent>
       </Select>
 
-      <Select value={searchParams.get("fuelType") ?? "all"} onValueChange={(v) => setParam("fuelType", v === "all" ? undefined : v)}>
+      <Select value={searchParams.get("fuelType") ?? "all"} onValueChange={(v) => setParam("fuelType", !v || v === "all" ? undefined : v)}>
         <SelectTrigger className="w-40"><SelectValue placeholder={t("filterFuelType")} /></SelectTrigger>
         <SelectContent>
           <SelectItem value="all">{t("filterFuelType")}</SelectItem>
@@ -51,7 +51,7 @@ export function ModelsFilterBar() {
       <Select
         value={searchParams.get("minPrice") ? `${searchParams.get("minPrice")}-${searchParams.get("maxPrice")}` : "all"}
         onValueChange={(v) => {
-          if (v === "all") {
+          if (!v || v === "all") {
             setParam("minPrice", undefined);
             setParam("maxPrice", undefined);
             return;
@@ -70,7 +70,7 @@ export function ModelsFilterBar() {
         </SelectContent>
       </Select>
 
-      <Select value={searchParams.get("transmission") ?? "all"} onValueChange={(v) => setParam("transmission", v === "all" ? undefined : v)}>
+      <Select value={searchParams.get("transmission") ?? "all"} onValueChange={(v) => setParam("transmission", !v || v === "all" ? undefined : v)}>
         <SelectTrigger className="w-40"><SelectValue placeholder={t("filterTransmission")} /></SelectTrigger>
         <SelectContent>
           <SelectItem value="all">{t("filterTransmission")}</SelectItem>
@@ -78,7 +78,7 @@ export function ModelsFilterBar() {
         </SelectContent>
       </Select>
 
-      <Select value={searchParams.get("sort") ?? "newest"} onValueChange={(v) => setParam("sort", v)}>
+      <Select value={searchParams.get("sort") ?? "newest"} onValueChange={(v) => setParam("sort", v ?? undefined)}>
         <SelectTrigger className="w-44"><SelectValue placeholder={t("sortBy")} /></SelectTrigger>
         <SelectContent>
           <SelectItem value="newest">{t("sortNewest")}</SelectItem>

@@ -17,10 +17,10 @@ export default async function AdminLoginPage({
       <div className="w-full max-w-sm space-y-6 rounded-xl border border-border bg-card p-8 shadow-sm">
         <div className="space-y-1 text-center">
           <div className="mx-auto flex h-11 w-11 items-center justify-center rounded-md bg-primary text-primary-foreground font-heading font-bold">
-            FBM
+            EL
           </div>
           <h1 className="font-heading text-xl font-bold">Admin sign in</h1>
-          <p className="text-sm text-muted-foreground">FBM International dashboard</p>
+          <p className="text-sm text-muted-foreground">Exceed Limited dashboard</p>
         </div>
         <LoginForm next={typeof next === "string" ? next : undefined} />
       </div>

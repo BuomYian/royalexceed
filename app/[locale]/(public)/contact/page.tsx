@@ -65,7 +65,7 @@ export default async function ContactPage() {
           </div>
 
           <iframe
-            title="FBM International location"
+            title="Exceed Limited location"
             src={mapSrc}
             className="h-64 w-full rounded-lg border border-border"
             loading="lazy"

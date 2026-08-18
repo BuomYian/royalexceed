@@ -1,7 +1,5 @@
 import { Decimal } from "@prisma/client/runtime/library";
 
-export type CurrencyCode = "USD" | "SSP";
-
 /** Accepts a Prisma Decimal, string, or number — never a Float in storage, but display math is fine as JS numbers. */
 export type Money = Decimal | string | number | null | undefined;
 
@@ -12,40 +10,26 @@ function toNumber(value: Money): number | null {
   return value.toNumber();
 }
 
-/** USD is shown to 2dp; SSP is shown as whole units (no fractional SSP in everyday use). */
-export function convertPrice(
-  usdAmount: Money,
-  usdToSsp: number,
-  currency: CurrencyCode,
-): number | null {
-  const usd = toNumber(usdAmount);
+/** Site currency is USD only. Rounds to 2dp for display. */
+export function toUsdAmount(value: Money): number | null {
+  const usd = toNumber(value);
   if (usd === null) return null;
-  if (currency === "USD") return Math.round(usd * 100) / 100;
-  return Math.round(usd * usdToSsp);
+  return Math.round(usd * 100) / 100;
 }
 
-export function formatMoney(amount: number, currency: CurrencyCode): string {
-  if (currency === "SSP") {
-    // Intl has no real symbol for SSP and silently substitutes an unrelated one
-    // (observed: "£") depending on the JS engine's CLDR data, so SSP is
-    // formatted manually rather than trusting Intl's currency resolution.
-    return `SSP ${Math.round(amount).toLocaleString("en-US")}`;
-  }
+export function formatMoney(amount: number): string {
   return new Intl.NumberFormat("en-US", {
     style: "currency",
-    currency,
+    currency: "USD",
     currencyDisplay: "narrowSymbol",
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }).format(amount);
 }
 
-export function formatPrice(
-  usdAmount: Money,
-  usdToSsp: number,
-  currency: CurrencyCode,
-): string {
-  const converted = convertPrice(usdAmount, usdToSsp, currency);
-  if (converted === null) return "";
-  return formatMoney(converted, currency);
+/** Formats a raw USD amount (Decimal/string/number) directly, or "" if absent (price on request). */
+export function formatPrice(usdAmount: Money): string {
+  const amount = toUsdAmount(usdAmount);
+  if (amount === null) return "";
+  return formatMoney(amount);
 }

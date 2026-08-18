@@ -29,6 +29,13 @@ export async function proxy(request: NextRequest) {
     return response;
   }
 
+  // Route handlers under /api/* live outside app/[locale] — never hand these
+  // to next-intl's middleware, which would otherwise try to locale-rewrite
+  // them (looking for a nonexistent app/[locale]/api/... route) and 404.
+  if (pathname.startsWith("/api")) {
+    return NextResponse.next();
+  }
+
   // Public site: locale detection/redirects only. No auth needed here.
   return handleIntl(request);
 }

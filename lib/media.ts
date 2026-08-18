@@ -1,5 +1,8 @@
 import { v2 as cloudinary } from "cloudinary";
 import { prisma } from "@/lib/prisma";
+import { MEDIA_FOLDERS, type MediaFolder } from "@/lib/media-folders";
+
+export { MEDIA_FOLDERS, type MediaFolder };
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -17,10 +20,6 @@ export function isCloudinaryConfigured(): boolean {
       process.env.CLOUDINARY_API_SECRET,
   );
 }
-
-/** Cloudinary folders under the `fbm/` root — mirrors the spec's original bucket split by content type. */
-export const MEDIA_FOLDERS = ["vehicles", "inventory", "news", "brand", "documents"] as const;
-export type MediaFolder = (typeof MEDIA_FOLDERS)[number];
 
 const IMAGE_MIME_TYPES = ["image/png", "image/jpeg", "image/webp", "image/avif"];
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024; // 5MB, spec §10

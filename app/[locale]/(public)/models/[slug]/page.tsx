@@ -88,7 +88,7 @@ export default async function ModelDetailPage({ params }: PageProps<"/[locale]/m
               {model.tagline && <p className="mt-1 text-lg text-muted-foreground">{model.tagline}</p>}
             </div>
 
-            <PriceDisplay usdAmount={startingPrice} usdToSsp={settings.usdToSsp} priceOnRequest={model.priceOnRequest} size="lg" />
+            <PriceDisplay usdAmount={startingPrice} priceOnRequest={model.priceOnRequest} size="lg" />
 
             <ColorSwitcher
               colors={model.colors.map((c) => ({ id: c.id, name: c.name, hexCode: c.hexCode, imageUrl: c.imageUrl }))}
@@ -173,7 +173,6 @@ export default async function ModelDetailPage({ params }: PageProps<"/[locale]/m
                 <VehicleCard
                   key={m.slug}
                   model={{ ...m, startingPriceUsd: m.startingPriceUsd ? Number(m.startingPriceUsd) : null }}
-                  usdToSsp={settings.usdToSsp}
                 />
               ))}
             </div>

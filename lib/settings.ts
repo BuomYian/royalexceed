@@ -13,10 +13,10 @@ import {
  * exact coordinates) were not provided in the spec — see README "Before go-live".
  */
 export const DEFAULT_SITE_SETTINGS: SiteSettingsData = {
-  companyName: "FBM International",
+  companyName: "Exceed Limited",
   phone: "+211 92 000 0000",
   whatsappNumber: "211920000000",
-  email: "info@fbminternational.com",
+  email: "info@exceedlimited.com",
   address: {
     line: "Juba Town, near Muduria Roundabout",
     city: "Juba",
@@ -31,32 +31,28 @@ export const DEFAULT_SITE_SETTINGS: SiteSettingsData = {
     sunday: "Closed",
   },
   socials: {
-    facebook: "https://facebook.com/fbminternational",
-    instagram: "https://instagram.com/fbminternational",
-    tiktok: "https://tiktok.com/@fbminternational",
-    x: "https://x.com/fbminternational",
+    facebook: "https://facebook.com/exceedlimited",
+    instagram: "https://instagram.com/exceedlimited",
+    tiktok: "https://tiktok.com/@exceedlimited",
+    x: "https://x.com/exceedlimited",
   },
   heroSlides: [],
   departments: {
-    sales: { label: "Sales", phone: "+211 92 000 0001", email: "sales@fbminternational.com" },
-    service: { label: "Service", phone: "+211 92 000 0002", email: "service@fbminternational.com" },
-    parts: { label: "Parts", phone: "+211 92 000 0003", email: "parts@fbminternational.com" },
-    fleet: { label: "Fleet & Corporate", phone: "+211 92 000 0004", email: "fleet@fbminternational.com" },
+    sales: { label: "Sales", phone: "+211 92 000 0001", email: "sales@exceedlimited.com" },
+    service: { label: "Service", phone: "+211 92 000 0002", email: "service@exceedlimited.com" },
+    parts: { label: "Parts", phone: "+211 92 000 0003", email: "parts@exceedlimited.com" },
+    fleet: { label: "Fleet & Corporate", phone: "+211 92 000 0004", email: "fleet@exceedlimited.com" },
   },
   seoDefaults: {
-    title: "FBM International | Soueast Motor South Sudan",
+    title: "Exceed Limited | Soueast & 212 Vehicles — South Sudan & Sudan",
     description:
-      "Sole authorized Soueast Motor dealer in South Sudan. New vehicles, genuine parts, and factory-backed service in Juba.",
+      "Exceed Limited, in partnership with FBM International Co., is the sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan. New vehicles, genuine parts, and factory-backed service in Juba.",
   },
   maintenanceMode: false,
   googleBusinessProfileUrl: undefined,
 };
 
-export const DEFAULT_USD_TO_SSP = 1300;
-
-export type ResolvedSiteSettings = SiteSettingsData & {
-  usdToSsp: number;
-};
+export type ResolvedSiteSettings = SiteSettingsData;
 
 const readSiteSettings = unstable_cache(
   async (): Promise<ResolvedSiteSettings> => {
@@ -65,13 +61,11 @@ const readSiteSettings = unstable_cache(
     });
 
     if (!row) {
-      return { ...DEFAULT_SITE_SETTINGS, usdToSsp: DEFAULT_USD_TO_SSP };
+      return DEFAULT_SITE_SETTINGS;
     }
 
     const parsed = siteSettingsDataSchema.safeParse(row.data);
-    const data = parsed.success ? parsed.data : DEFAULT_SITE_SETTINGS;
-
-    return { ...data, usdToSsp: Number(row.usdToSsp) };
+    return parsed.success ? parsed.data : DEFAULT_SITE_SETTINGS;
   },
   ["site-settings"],
   { tags: ["site-settings"] },

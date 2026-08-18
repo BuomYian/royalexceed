@@ -26,12 +26,22 @@ export function ServiceBookingForm() {
   const [reference, setReference] = useState<string | null>(null);
   const [serverError, setServerError] = useState<string | null>(null);
 
-  const form = useForm<ServiceBookingInput>({
+  const form = useForm({
     resolver: zodResolver(serviceBookingSchema),
-    defaultValues: { fullName: "", phone: "", email: "", vehicleModel: "", description: "", honeypot: "", pageUrl: pathname },
+    defaultValues: {
+      fullName: "",
+      phone: "",
+      email: "",
+      vehicleModel: "",
+      // Empty-string starting value (not `undefined`) keeps the Select controlled from the first render.
+      serviceType: "" as unknown as ServiceBookingInput["serviceType"],
+      description: "",
+      honeypot: "",
+      pageUrl: pathname,
+    },
   });
 
-  function onSubmit(values: ServiceBookingInput) {
+  const onSubmit = form.handleSubmit((values) => {
     setServerError(null);
     startTransition(async () => {
       const result = await submitServiceBooking({ ...values, pageUrl: pathname });
@@ -41,7 +51,7 @@ export function ServiceBookingForm() {
       }
       setReference(result.data.reference);
     });
-  }
+  });
 
   if (reference) {
     return (
@@ -56,7 +66,7 @@ export function ServiceBookingForm() {
   }
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className="mx-auto max-w-lg space-y-4">
+    <form onSubmit={onSubmit} className="mx-auto max-w-lg space-y-4">
       <Honeypot register={form.register("honeypot")} />
 
       <div className="space-y-1.5">

@@ -29,12 +29,12 @@ export function ContactForm() {
 
   const initialDept = (searchParams.get("department") as GeneralLeadInput["department"]) || "general";
 
-  const form = useForm<GeneralLeadInput>({
+  const form = useForm({
     resolver: zodResolver(generalLeadSchema),
     defaultValues: { fullName: "", phone: "", email: "", message: "", department: initialDept, honeypot: "", pageUrl: pathname },
   });
 
-  function onSubmit(values: GeneralLeadInput) {
+  const onSubmit = form.handleSubmit((values) => {
     setServerError(null);
     startTransition(async () => {
       const result = await submitGeneralLead({ ...values, pageUrl: pathname, source: `contact-${values.department}` });
@@ -44,7 +44,7 @@ export function ContactForm() {
       }
       setDone(true);
     });
-  }
+  });
 
   if (done) {
     return (
@@ -58,7 +58,7 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className="mx-auto max-w-lg space-y-4">
+    <form onSubmit={onSubmit} className="mx-auto max-w-lg space-y-4">
       <Honeypot register={form.register("honeypot")} />
 
       <div className="space-y-1.5">

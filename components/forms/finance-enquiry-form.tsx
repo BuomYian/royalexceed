@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { Loader2, CheckCircle2 } from "lucide-react";
-import { financeLeadSchema, type FinanceLeadInput } from "@/lib/validations/lead";
+import { financeLeadSchema } from "@/lib/validations/lead";
 import { submitFinanceLead } from "@/lib/actions/leads";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,12 +25,12 @@ export function FinanceEnquiryForm() {
   const [done, setDone] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
 
-  const form = useForm<FinanceLeadInput>({
+  const form = useForm({
     resolver: zodResolver(financeLeadSchema),
     defaultValues: { fullName: "", phone: "", email: "", message: "", isFleetEnquiry: false, honeypot: "", pageUrl: pathname },
   });
 
-  function onSubmit(values: FinanceLeadInput) {
+  const onSubmit = form.handleSubmit((values) => {
     setServerError(null);
     startTransition(async () => {
       const result = await submitFinanceLead({ ...values, pageUrl: pathname });
@@ -40,7 +40,7 @@ export function FinanceEnquiryForm() {
       }
       setDone(true);
     });
-  }
+  });
 
   if (done) {
     return (
@@ -54,7 +54,7 @@ export function FinanceEnquiryForm() {
   }
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className="mx-auto max-w-lg space-y-4">
+    <form onSubmit={onSubmit} className="mx-auto max-w-lg space-y-4">
       <Honeypot register={form.register("honeypot")} />
 
       <div className="space-y-1.5">

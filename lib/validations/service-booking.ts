@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { baseLeadFieldsSchema } from "./common";
+import { baseLeadFieldsSchema, optionalNumber } from "./common";
 
 export const SERVICE_TYPES = [
   "Scheduled maintenance",
@@ -16,7 +16,7 @@ export const serviceBookingSchema = baseLeadFieldsSchema.extend({
   vehicleModel: z.string().trim().min(1, "forms.requiredField").max(100),
   plateNumber: z.string().trim().max(30).optional(),
   vin: z.string().trim().max(50).optional(),
-  mileageKm: z.coerce.number().int().min(0).max(2_000_000).optional(),
+  mileageKm: optionalNumber(z.number().int().min(0).max(2_000_000)),
   serviceType: z.enum(SERVICE_TYPES),
   preferredDate: z.string().min(1, "forms.requiredField"),
   description: z.string().trim().max(2000).optional(),

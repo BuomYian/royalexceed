@@ -18,7 +18,7 @@ export function InventoryStatusFilter() {
         value={searchParams.get("status") ?? "all"}
         onValueChange={(v) => {
           const params = new URLSearchParams(searchParams.toString());
-          if (v === "all") params.delete("status");
+          if (!v || v === "all") params.delete("status");
           else params.set("status", v);
           router.push(`${pathname}?${params.toString()}`);
         }}

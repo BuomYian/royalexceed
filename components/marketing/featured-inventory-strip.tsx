@@ -14,7 +14,7 @@ type Unit = {
   images: { url: string; alt: string | null }[];
 };
 
-export function FeaturedInventoryStrip({ units, usdToSsp }: { units: Unit[]; usdToSsp: number }) {
+export function FeaturedInventoryStrip({ units }: { units: Unit[] }) {
   const t = useTranslations("home");
   if (units.length === 0) return null;
 
@@ -24,7 +24,7 @@ export function FeaturedInventoryStrip({ units, usdToSsp }: { units: Unit[]; usd
         <h2 className="mb-10 font-heading text-3xl font-bold sm:text-4xl">{t("arrivingTitle")}</h2>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {units.map((unit) => (
-            <InventoryCard key={unit.stockNumber} unit={unit} usdToSsp={usdToSsp} />
+            <InventoryCard key={unit.stockNumber} unit={unit} />
           ))}
         </div>
       </div>
