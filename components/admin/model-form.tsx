@@ -175,15 +175,26 @@ export function ModelForm({ defaultValues }: { defaultValues?: Partial<ModelInpu
                 <Label htmlFor="model-featured">Featured on homepage</Label>
               </div>
             </div>
-            <Field label="Hero image (16:9)">
-              <Controller
-                control={form.control}
-                name="heroImageUrl"
-                render={({ field }) => (
-                  <ImageUploader folder="vehicles" value={field.value} onChange={field.onChange} aspectHint="16:9 exterior" />
-                )}
-              />
-            </Field>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Field label="Hero image (16:9)">
+                <Controller
+                  control={form.control}
+                  name="heroImageUrl"
+                  render={({ field }) => (
+                    <ImageUploader folder="vehicles" value={field.value} onChange={field.onChange} aspectHint="16:9 exterior" />
+                  )}
+                />
+              </Field>
+              <Field label="Thumbnail (used on home page & /models cards)">
+                <Controller
+                  control={form.control}
+                  name="thumbnailUrl"
+                  render={({ field }) => (
+                    <ImageUploader folder="vehicles" value={field.value} onChange={field.onChange} aspectHint="16:9, card crop" />
+                  )}
+                />
+              </Field>
+            </div>
           </TabsContent>
 
           <TabsContent value="variants" className="space-y-3 pt-4">

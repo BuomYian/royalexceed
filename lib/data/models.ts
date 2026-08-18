@@ -12,22 +12,39 @@ export async function listModelOptions() {
 
 const publishedWhere = { status: "PUBLISHED" as const };
 
+// Card-grid list queries (home, /models, related models) select both image
+// fields and fall back to heroImageUrl when thumbnailUrl is unset — the admin
+// model form didn't expose a thumbnail uploader until this field existed, so
+// older/existing models may only have a hero image. New models get both set
+// explicitly going forward, but this keeps already-published ones from
+// rendering a blank card in the meantime.
+function withThumbnailFallback<T extends { thumbnailUrl: string | null; heroImageUrl: string | null }>(
+  model: T,
+): Omit<T, "heroImageUrl"> {
+  const { heroImageUrl, ...rest } = model;
+  return { ...rest, thumbnailUrl: model.thumbnailUrl ?? heroImageUrl };
+}
+
+const cardSelect = {
+  slug: true,
+  displayName: true,
+  tagline: true,
+  bodyType: true,
+  seats: true,
+  startingPriceUsd: true,
+  priceOnRequest: true,
+  thumbnailUrl: true,
+  heroImageUrl: true,
+} as const;
+
 export async function getFeaturedModels(limit = 6) {
-  return prisma.model.findMany({
+  const models = await prisma.model.findMany({
     where: { ...publishedWhere, isFeatured: true },
     orderBy: { sortOrder: "asc" },
     take: limit,
-    select: {
-      slug: true,
-      displayName: true,
-      tagline: true,
-      bodyType: true,
-      seats: true,
-      startingPriceUsd: true,
-      priceOnRequest: true,
-      thumbnailUrl: true,
-    },
+    select: cardSelect,
   });
+  return models.map(withThumbnailFallback);
 }
 
 export async function getPublishedModels(filters: Partial<ModelFilterInput> = {}) {
@@ -56,20 +73,12 @@ export async function getPublishedModels(filters: Partial<ModelFilterInput> = {}
         ? { startingPriceUsd: "desc" }
         : { createdAt: "desc" };
 
-  return prisma.model.findMany({
+  const models = await prisma.model.findMany({
     where,
     orderBy,
-    select: {
-      slug: true,
-      displayName: true,
-      tagline: true,
-      bodyType: true,
-      seats: true,
-      startingPriceUsd: true,
-      priceOnRequest: true,
-      thumbnailUrl: true,
-    },
+    select: cardSelect,
   });
+  return models.map(withThumbnailFallback);
 }
 
 export async function getModelBySlug(slug: string) {
@@ -86,20 +95,12 @@ export async function getModelBySlug(slug: string) {
 }
 
 export async function getRelatedModels(currentSlug: string, bodyType: BodyType, limit = 3) {
-  return prisma.model.findMany({
+  const models = await prisma.model.findMany({
     where: { ...publishedWhere, bodyType, slug: { not: currentSlug } },
     take: limit,
-    select: {
-      slug: true,
-      displayName: true,
-      tagline: true,
-      bodyType: true,
-      seats: true,
-      startingPriceUsd: true,
-      priceOnRequest: true,
-      thumbnailUrl: true,
-    },
+    select: cardSelect,
   });
+  return models.map(withThumbnailFallback);
 }
 
 export async function getModelsForCompare(slugs: string[]) {
