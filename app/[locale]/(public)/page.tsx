@@ -36,14 +36,23 @@ export default async function HomePage() {
     getLatestArticles(3),
   ]);
 
-  const heroSlides = settings.heroSlides.length
-    ? settings.heroSlides
-    : models.slice(0, 3).map((m) => ({
-        id: m.slug,
-        imageUrl: m.thumbnailUrl ?? "",
-        headline: m.displayName,
-        subheadline: m.tagline ?? undefined,
-      }));
+  // Prefer live model data for the hero banner: `SiteSetting.heroSlides` has
+  // no admin UI to manage it (nothing writes to it after the initial seed),
+  // so treating it as the primary source lets it silently go stale — a
+  // model's hero image gets updated in the CMS but the homepage banner never
+  // reflects it. Featured models' own `heroImageUrl` is what admins actually
+  // maintain, so build slides from that; `heroSlides` remains available as a
+  // manual override for whenever curated (non-model) banner copy is needed.
+  const modelHeroSlides = models
+    .filter((m) => m.heroImageUrl)
+    .slice(0, 3)
+    .map((m) => ({
+      id: m.slug,
+      imageUrl: m.heroImageUrl!,
+      headline: m.displayName,
+      subheadline: m.tagline ?? undefined,
+    }));
+  const heroSlides = modelHeroSlides.length ? modelHeroSlides : settings.heroSlides;
 
   return (
     <>

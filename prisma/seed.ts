@@ -90,29 +90,15 @@ async function seedSiteSettings() {
       tiktok: "https://tiktok.com/@exceedlimited",
       x: "https://x.com/exceedlimited",
     },
-    heroSlides: [
-      {
-        id: "hero-s07",
-        modelSlug: "s07",
-        imageUrl: placeholderImage("Soueast S07"),
-        headline: "The Soueast S07",
-        subheadline: "Family-ready. ADAS-equipped. Built for the region's roads.",
-      },
-      {
-        id: "hero-212-t02",
-        modelSlug: "212-t02",
-        imageUrl: placeholderImage("212 T02"),
-        headline: "The 212 T02",
-        subheadline: "Flagship off-road SUV, built for South Sudan and Sudan.",
-      },
-      {
-        id: "hero-s09",
-        modelSlug: "s09",
-        imageUrl: placeholderImage("Soueast S09"),
-        headline: "The Soueast S09",
-        subheadline: "Flagship 7-seat SUV, 2.0T power.",
-      },
-    ],
+    // Left empty on purpose: the home page builds its hero banner from
+    // featured models' own `heroImageUrl` (live CMS data) whenever any are
+    // set, and only falls back to this array otherwise — see the comment in
+    // app/[locale]/(public)/page.tsx. There's no admin UI to maintain this
+    // field, so seeding it with hardcoded slides just goes stale the moment
+    // a model's hero image changes. Populate it manually (e.g. via Prisma
+    // Studio) only if curated banner copy independent of any model is ever
+    // needed.
+    heroSlides: [],
     departments: {
       sales: { label: "Sales", phone: "+211 92 000 0001", email: "sales@exceedlimited.com" },
       service: { label: "Service", phone: "+211 92 000 0002", email: "service@exceedlimited.com" },
@@ -439,7 +425,7 @@ function buildModels(): ModelSeed[] {
       heroImageUrl: placeholderImage("Soueast S07"),
       thumbnailUrl: placeholderImage("S07", "24272c"),
       metaTitle: "Soueast S07 | Family SUV with ADAS | Exceed Limited",
-      metaDescription: "The Soueast S07 family SUV with 12.3\" connected screens and ADAS — available from Exceed Limited, the sole authorized Soueast distributor in South Sudan and Sudan.",
+      metaDescription: "The Soueast S07 family SUV with 12.3\" connected screens and ADAS — from Exceed Limited, sole authorized Soueast distributor in South Sudan and Sudan.",
       variants: [
         {
           name: "Comfort 1.5T 2WD",

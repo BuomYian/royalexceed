@@ -15,6 +15,7 @@ import {
   Settings,
   Users,
   History,
+  ExternalLink,
 } from "lucide-react";
 import type { Role } from "@prisma/client";
 import { can, type Resource } from "@/lib/rbac";
@@ -66,6 +67,23 @@ export function AdminSidebar({ role }: { role: Role }) {
           );
         })}
       </nav>
+      {/*
+        Not part of NAV/ADMIN_NAV: it has no `resource`, so it's outside the
+        RBAC read-gating every other item goes through — every signed-in
+        admin role can view the live public site. Opens in a new tab so the
+        dashboard session/state isn't lost.
+      */}
+      <div className="border-t border-sidebar-border px-3 py-3">
+        <a
+          href="/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2.5 rounded-md px-3 py-2 text-sm font-medium text-sidebar-foreground/75 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+        >
+          <ExternalLink className="h-4 w-4 shrink-0" />
+          View website
+        </a>
+      </div>
     </aside>
   );
 }

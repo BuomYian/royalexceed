@@ -13,16 +13,15 @@ export async function listModelOptions() {
 const publishedWhere = { status: "PUBLISHED" as const };
 
 // Card-grid list queries (home, /models, related models) select both image
-// fields and fall back to heroImageUrl when thumbnailUrl is unset — the admin
+// fields. `thumbnailUrl` falls back to `heroImageUrl` when unset — the admin
 // model form didn't expose a thumbnail uploader until this field existed, so
 // older/existing models may only have a hero image. New models get both set
 // explicitly going forward, but this keeps already-published ones from
-// rendering a blank card in the meantime.
-function withThumbnailFallback<T extends { thumbnailUrl: string | null; heroImageUrl: string | null }>(
-  model: T,
-): Omit<T, "heroImageUrl"> {
-  const { heroImageUrl, ...rest } = model;
-  return { ...rest, thumbnailUrl: model.thumbnailUrl ?? heroImageUrl };
+// rendering a blank card in the meantime. `heroImageUrl` itself is kept on
+// the returned object (not stripped) since the home page's Hero banner reads
+// it directly to build its slides from live model data.
+function withThumbnailFallback<T extends { thumbnailUrl: string | null; heroImageUrl: string | null }>(model: T): T {
+  return { ...model, thumbnailUrl: model.thumbnailUrl ?? model.heroImageUrl };
 }
 
 const cardSelect = {

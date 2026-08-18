@@ -24,6 +24,31 @@ const FUEL_TYPES = ["PETROL", "DIESEL", "HYBRID", "PLUGIN_HYBRID", "ELECTRIC"] a
 const TRANSMISSIONS = ["MANUAL", "AUTOMATIC", "DCT", "CVT"] as const;
 const DRIVETRAINS = ["FWD", "RWD", "AWD", "FOUR_WD"] as const;
 
+// Which tab each top-level schema field's error should surface on — used so a
+// validation failure on, say, the SEO tab's metaDescription can jump the user
+// there and flag the tab, instead of silently doing nothing while they sit on
+// a different tab (see the onSubmit invalid-handler below).
+const FIELD_TAB: Record<string, string> = {
+  name: "general",
+  displayName: "general",
+  tagline: "general",
+  description: "general",
+  bodyType: "general",
+  seats: "general",
+  year: "general",
+  startingPriceUsd: "general",
+  heroImageUrl: "general",
+  thumbnailUrl: "general",
+  variants: "variants",
+  colors: "colors",
+  images: "gallery",
+  specGroups: "specs",
+  features: "features",
+  metaTitle: "seo",
+  metaDescription: "seo",
+  slug: "seo",
+};
+
 function tempId() {
   return `tmp-${crypto.randomUUID()}`;
 }
@@ -66,20 +91,43 @@ export function ModelForm({ defaultValues }: { defaultValues?: Partial<ModelInpu
   const specGroups = useFieldArray({ control: form.control, name: "specGroups" });
   const features = useFieldArray({ control: form.control, name: "features" });
 
-  const onSubmit = form.handleSubmit((values) => {
-    startTransition(async () => {
-      const action = values.id ? updateModel : createModel;
-      const result = await action(values);
-      if (!result.success) {
-        toast.error(result.error);
-        return;
-      }
-      toast.success(values.id ? "Model updated" : "Model created");
-      form.reset(values);
-      router.push(`/admin/models/${result.data.id}`);
-      router.refresh();
-    });
-  });
+  const onSubmit = form.handleSubmit(
+    (values) => {
+      startTransition(async () => {
+        const action = values.id ? updateModel : createModel;
+        const result = await action(values);
+        if (!result.success) {
+          toast.error(result.error);
+          return;
+        }
+        toast.success(values.id ? "Model updated" : "Model created");
+        form.reset(values);
+        router.push(`/admin/models/${result.data.id}`);
+        router.refresh();
+      });
+    },
+    (errors) => {
+      // Without this, a validation failure just silently no-ops the submit —
+      // RHF never calls the valid-handler above, but nothing else happens
+      // either, and most fields outside the General tab's first three don't
+      // render their own error text. Jump to whichever tab the first invalid
+      // field lives on and say what's wrong, so "Save" always gives feedback.
+      const firstField = Object.keys(errors)[0];
+      const firstError = errors[firstField as keyof typeof errors];
+      const message =
+        (firstError && typeof firstError === "object" && "message" in firstError && firstError.message) ||
+        `Check the ${FIELD_TAB[firstField] ?? "form"} tab`;
+      setTab(FIELD_TAB[firstField] ?? "general");
+      toast.error(typeof message === "string" ? message : "Please fix the highlighted fields before saving.");
+    },
+  );
+
+  // Powers the red dot on each TabsTrigger below — several tabs (variants,
+  // colors, gallery, specs, features) hold array fields with no per-item
+  // error text at all, so this dot is the only in-page signal something in
+  // them is invalid until the tab is opened.
+  const errorFields = Object.keys(form.formState.errors);
+  const tabHasError = (tabKey: string) => errorFields.some((f) => FIELD_TAB[f] === tabKey);
 
   return (
     <form onSubmit={onSubmit} className="space-y-6">
@@ -88,13 +136,13 @@ export function ModelForm({ defaultValues }: { defaultValues?: Partial<ModelInpu
       <div className="flex items-center justify-between">
         <Tabs value={tab} onValueChange={setTab} className="w-full">
           <TabsList className="flex-wrap">
-            <TabsTrigger value="general">General</TabsTrigger>
-            <TabsTrigger value="variants">Variants ({variants.fields.length})</TabsTrigger>
-            <TabsTrigger value="colors">Colors ({colors.fields.length})</TabsTrigger>
-            <TabsTrigger value="gallery">Gallery ({images.fields.length})</TabsTrigger>
-            <TabsTrigger value="specs">Specs</TabsTrigger>
-            <TabsTrigger value="features">Features ({features.fields.length})</TabsTrigger>
-            <TabsTrigger value="seo">SEO</TabsTrigger>
+            <TabsTrigger value="general">General{tabHasError("general") && <ErrorDot />}</TabsTrigger>
+            <TabsTrigger value="variants">Variants ({variants.fields.length}){tabHasError("variants") && <ErrorDot />}</TabsTrigger>
+            <TabsTrigger value="colors">Colors ({colors.fields.length}){tabHasError("colors") && <ErrorDot />}</TabsTrigger>
+            <TabsTrigger value="gallery">Gallery ({images.fields.length}){tabHasError("gallery") && <ErrorDot />}</TabsTrigger>
+            <TabsTrigger value="specs">Specs{tabHasError("specs") && <ErrorDot />}</TabsTrigger>
+            <TabsTrigger value="features">Features ({features.fields.length}){tabHasError("features") && <ErrorDot />}</TabsTrigger>
+            <TabsTrigger value="seo">SEO{tabHasError("seo") && <ErrorDot />}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="general" className="space-y-4 pt-4">
@@ -106,7 +154,7 @@ export function ModelForm({ defaultValues }: { defaultValues?: Partial<ModelInpu
                 <Input {...form.register("displayName")} placeholder="Soueast S07" />
               </Field>
             </div>
-            <Field label="Tagline">
+            <Field label="Tagline" error={form.formState.errors.tagline?.message}>
               <Input {...form.register("tagline")} placeholder="C-segment family SUV" />
             </Field>
             <Field label="Description" error={form.formState.errors.description?.message}>
@@ -129,15 +177,15 @@ export function ModelForm({ defaultValues }: { defaultValues?: Partial<ModelInpu
                   )}
                 />
               </Field>
-              <Field label="Seats">
+              <Field label="Seats" error={form.formState.errors.seats?.message}>
                 <Input type="number" {...form.register("seats", { valueAsNumber: true })} />
               </Field>
-              <Field label="Year">
+              <Field label="Year" error={form.formState.errors.year?.message}>
                 <Input type="number" {...form.register("year", { valueAsNumber: true })} />
               </Field>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
-              <Field label="Starting price (USD)">
+              <Field label="Starting price (USD)" error={form.formState.errors.startingPriceUsd?.message}>
                 <Input type="number" step="0.01" {...form.register("startingPriceUsd", { valueAsNumber: true })} />
               </Field>
               <div className="flex items-center gap-2 pt-6">
@@ -369,13 +417,13 @@ export function ModelForm({ defaultValues }: { defaultValues?: Partial<ModelInpu
           </TabsContent>
 
           <TabsContent value="seo" className="space-y-4 pt-4">
-            <Field label="Meta title">
+            <Field label="Meta title (max 70 characters)" error={form.formState.errors.metaTitle?.message}>
               <Input {...form.register("metaTitle")} />
             </Field>
-            <Field label="Meta description">
+            <Field label="Meta description (max 160 characters)" error={form.formState.errors.metaDescription?.message}>
               <Textarea rows={3} {...form.register("metaDescription")} />
             </Field>
-            <Field label="Slug (leave blank to auto-generate)">
+            <Field label="Slug (leave blank to auto-generate)" error={form.formState.errors.slug?.message}>
               <Input {...form.register("slug")} placeholder="s07" />
             </Field>
           </TabsContent>
@@ -405,6 +453,10 @@ function Field({ label, error, children }: { label: string; error?: string; chil
       {error && <p className="text-sm text-destructive">{error}</p>}
     </div>
   );
+}
+
+function ErrorDot() {
+  return <span className="ms-1.5 inline-block h-1.5 w-1.5 rounded-full bg-destructive align-middle" aria-hidden />;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, LogOut, Search } from "lucide-react";
+import { Menu, LogOut, Search, ExternalLink } from "lucide-react";
 import type { Role } from "@prisma/client";
 import { logoutAction } from "@/lib/actions/auth";
 import { Button } from "@/components/ui/button";
@@ -67,6 +67,19 @@ export function AdminTopbar({
               );
             })}
           </nav>
+          {/* Same reasoning as admin-sidebar.tsx: not RBAC-gated, visible to every role. */}
+          <div className="border-t border-border p-3">
+            <a
+              href="/"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setOpen(false)}
+              className="flex items-center gap-2.5 rounded-md px-3 py-2 text-sm font-medium hover:bg-accent"
+            >
+              <ExternalLink className="h-4 w-4" />
+              View website
+            </a>
+          </div>
         </SheetContent>
       </Sheet>
 
