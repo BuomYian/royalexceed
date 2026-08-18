@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { createServerClient } from "@supabase/ssr";
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
+import { SUPABASE_PUBLISHABLE_KEY } from "@/lib/supabase/env";
 
 /** Server Component / Server Action client — reads the user's session from cookies, respects RLS as `anon`/`authenticated`. */
 export async function createClient() {
@@ -8,7 +9,7 @@ export async function createClient() {
 
   return createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    SUPABASE_PUBLISHABLE_KEY,
     {
       cookies: {
         getAll() {

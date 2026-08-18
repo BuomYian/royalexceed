@@ -23,26 +23,30 @@ export async function createModel(input: ModelInput): Promise<ActionResult<{ id:
       async (candidate) => (await prisma.model.count({ where: { slug: candidate } })) > 0,
     );
 
-    const model = await prisma.$transaction(async (tx) => {
-      const maxSort = await tx.model.aggregate({ _max: { sortOrder: true } });
-      return tx.model.create({
-        data: {
-          ...omitNested(parsed),
-          slug,
-          sortOrder: parsed.sortOrder ?? (maxSort._max.sortOrder ?? 0) + 1,
-          variants: { create: parsed.variants.map(({ id: _id, ...v }) => v) },
-          colors: { create: parsed.colors.map(({ id: _id, ...c }) => c) },
-          images: { create: parsed.images.map(({ id: _id, ...i }) => i) },
-          features: { create: parsed.features.map(({ id: _id, ...f }) => f) },
-          specGroups: {
-            create: parsed.specGroups.map(({ id: _id, specs, ...g }) => ({
-              ...g,
-              specs: { create: specs.map(({ id: _sid, ...s }) => s) },
-            })),
+    const model = await prisma.$transaction(
+      async (tx) => {
+        const maxSort = await tx.model.aggregate({ _max: { sortOrder: true } });
+        return tx.model.create({
+          data: {
+            ...omitNested(parsed),
+            slug,
+            sortOrder: parsed.sortOrder ?? (maxSort._max.sortOrder ?? 0) + 1,
+            variants: { create: parsed.variants.map(({ id: _id, ...v }) => v) },
+            colors: { create: parsed.colors.map(({ id: _id, ...c }) => c) },
+            images: { create: parsed.images.map(({ id: _id, ...i }) => i) },
+            features: { create: parsed.features.map(({ id: _id, ...f }) => f) },
+            specGroups: {
+              create: parsed.specGroups.map(({ id: _id, specs, ...g }) => ({
+                ...g,
+                specs: { create: specs.map(({ id: _sid, ...s }) => s) },
+              })),
+            },
           },
-        },
-      });
-    });
+        });
+      },
+      // See the comment on the same option in updateModel below.
+      { timeout: 20_000, maxWait: 10_000 },
+    );
 
     await writeAuditLog({ actorId: user.id, action: "CREATE", entity: "Model", entityId: model.id, changes: { slug } });
     revalidatePath("/admin/models");
@@ -71,40 +75,56 @@ export async function updateModel(input: ModelInput): Promise<ActionResult<{ id:
       });
     }
 
-    await prisma.$transaction(async (tx) => {
-      await tx.model.update({ where: { id: parsed.id }, data: { ...omitNested(parsed), slug } });
+    await prisma.$transaction(
+      async (tx) => {
+        await tx.model.update({ where: { id: parsed.id }, data: { ...omitNested(parsed), slug } });
 
-      // Nested collections are fully replaced on save — simplest correct approach for
-      // an admin form that submits the whole tree each time (drag-sort included).
-      await tx.variant.deleteMany({ where: { modelId: parsed.id } });
-      await tx.modelColor.deleteMany({ where: { modelId: parsed.id } });
-      await tx.modelImage.deleteMany({ where: { modelId: parsed.id } });
-      await tx.featureBlock.deleteMany({ where: { modelId: parsed.id } });
-      await tx.specGroup.deleteMany({ where: { modelId: parsed.id } }); // cascades SpecItem
+        // Nested collections are fully replaced on save — simplest correct approach for
+        // an admin form that submits the whole tree each time (drag-sort included).
+        await tx.variant.deleteMany({ where: { modelId: parsed.id } });
+        await tx.modelColor.deleteMany({ where: { modelId: parsed.id } });
+        await tx.modelImage.deleteMany({ where: { modelId: parsed.id } });
+        await tx.featureBlock.deleteMany({ where: { modelId: parsed.id } });
+        await tx.specGroup.deleteMany({ where: { modelId: parsed.id } }); // cascades SpecItem
 
-      if (parsed.variants.length) {
-        await tx.variant.createMany({ data: parsed.variants.map(({ id: _id, ...v }) => ({ ...v, modelId: parsed.id! })) });
-      }
-      if (parsed.colors.length) {
-        await tx.modelColor.createMany({ data: parsed.colors.map(({ id: _id, ...c }) => ({ ...c, modelId: parsed.id! })) });
-      }
-      if (parsed.images.length) {
-        await tx.modelImage.createMany({ data: parsed.images.map(({ id: _id, ...i }) => ({ ...i, modelId: parsed.id! })) });
-      }
-      if (parsed.features.length) {
-        await tx.featureBlock.createMany({ data: parsed.features.map(({ id: _id, ...f }) => ({ ...f, modelId: parsed.id! })) });
-      }
-      for (const group of parsed.specGroups) {
-        await tx.specGroup.create({
-          data: {
-            modelId: parsed.id!,
-            title: group.title,
-            sortOrder: group.sortOrder,
-            specs: { create: group.specs.map(({ id: _sid, ...s }) => s) },
-          },
-        });
-      }
-    });
+        if (parsed.variants.length) {
+          await tx.variant.createMany({ data: parsed.variants.map(({ id: _id, ...v }) => ({ ...v, modelId: parsed.id! })) });
+        }
+        if (parsed.colors.length) {
+          await tx.modelColor.createMany({ data: parsed.colors.map(({ id: _id, ...c }) => ({ ...c, modelId: parsed.id! })) });
+        }
+        if (parsed.images.length) {
+          await tx.modelImage.createMany({ data: parsed.images.map(({ id: _id, ...i }) => ({ ...i, modelId: parsed.id! })) });
+        }
+        if (parsed.features.length) {
+          await tx.featureBlock.createMany({ data: parsed.features.map(({ id: _id, ...f }) => ({ ...f, modelId: parsed.id! })) });
+        }
+        if (parsed.specGroups.length) {
+          // One createManyAndReturn (1 round trip) instead of one tx.specGroup.create()
+          // per group, then a single createMany for every group's specs flattened
+          // together (1 more round trip) instead of a nested `create` per group. The
+          // previous per-group loop was fine against localhost but, against a hosted
+          // DB where every query is a real network round trip, a model with several
+          // spec groups could blow past the interactive transaction's timeout — see
+          // the `timeout` option below, which also gives real headroom for this.
+          const groups = await tx.specGroup.createManyAndReturn({
+            data: parsed.specGroups.map(({ id: _id, specs: _specs, ...g }) => ({ ...g, modelId: parsed.id! })),
+          });
+          const specs = parsed.specGroups.flatMap((group, i) =>
+            group.specs.map(({ id: _sid, ...s }) => ({ ...s, groupId: groups[i].id })),
+          );
+          if (specs.length) {
+            await tx.specItem.createMany({ data: specs });
+          }
+        }
+      },
+      // Every query above is now a real network round trip to the hosted Supabase
+      // pooler rather than a localhost call, so the 5s default interactive-transaction
+      // timeout was getting exceeded on models with a few spec groups (P2028). 20s
+      // gives real headroom; maxWait is how long to wait for a transaction slot to
+      // open, separate from the timeout itself.
+      { timeout: 20_000, maxWait: 10_000 },
+    );
 
     await writeAuditLog({ actorId: user.id, action: "UPDATE", entity: "Model", entityId: parsed.id, changes: { slug } });
     revalidatePath("/admin/models");

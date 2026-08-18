@@ -167,8 +167,12 @@ app itself.
 2. `npx supabase link --project-ref <ref>`, then `npx prisma migrate deploy` against the
    project's **direct** connection string (port 5432) to apply all migrations, including the
    RLS-enable migration.
-3. Copy the hosted project's `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, and
-   `SUPABASE_SERVICE_ROLE_KEY` into your production env.
+3. Copy the hosted project's `NEXT_PUBLIC_SUPABASE_URL` and service-role secret into your
+   production env as `SUPABASE_SERVICE_ROLE_KEY`. For the public key, newer projects'
+   dashboards (Project Settings → API Keys) issue a "Publishable key" (`sb_publishable_…`)
+   rather than the legacy "anon key" — set it as `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` if
+   so (or `NEXT_PUBLIC_SUPABASE_ANON_KEY` for the legacy naming); `lib/supabase/env.ts`
+   accepts either.
 4. Set `DATABASE_URL` to the **pooler** connection string (port 6543, `?pgbouncer=true&connection_limit=1`)
    and `DIRECT_URL` to the **direct** connection string (port 5432) — this split matters in
    serverless (Vercel) deployments to avoid exhausting Postgres connections.
