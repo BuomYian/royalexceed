@@ -180,6 +180,11 @@ export async function updateLead(raw: unknown): Promise<ActionResult> {
   const parsed = updateLeadSchema.safeParse(raw);
   if (!parsed.success) return { success: false, error: "Validation failed" };
 
+  const existing = await prisma.lead.findUnique({ where: { id: parsed.data.id } });
+  if (!existing) {
+    return { success: false, error: "This lead no longer exists — it may have been deleted. Refresh the page." };
+  }
+
   await prisma.lead.update({
     where: { id: parsed.data.id },
     data: { status: parsed.data.status, assigneeId: parsed.data.assigneeId },

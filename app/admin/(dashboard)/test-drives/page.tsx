@@ -32,12 +32,15 @@ export default async function AdminTestDrivesPage() {
           reference: b.reference,
           fullName: b.fullName,
           phone: b.phone,
+          email: b.email,
           subtitle: b.model?.displayName ?? "Any model",
           date: b.preferredDate,
           timeSlot: b.timeSlot,
           status: b.status,
           assigneeId: b.assigneeId,
           assigneeName: b.assignee?.fullName ?? null,
+          message: b.notes,
+          details: [{ label: "Location", value: b.location }],
         }))}
       />
     </div>

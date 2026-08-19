@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useTransition } from "react";
+import { useMemo, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { format, isSameDay } from "date-fns";
@@ -11,6 +11,13 @@ import { buildWhatsAppLink } from "@/lib/whatsapp";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { StatusBadge } from "@/components/admin/status-badge";
 
 const STATUSES = ["PENDING", "CONFIRMED", "RESCHEDULED", "COMPLETED", "CANCELLED", "NO_SHOW"] as const;
@@ -20,12 +27,20 @@ export type BookingRow = {
   reference: string;
   fullName: string;
   phone: string;
+  email?: string | null;
   subtitle: string;
   date: Date;
   timeSlot?: string;
   status: string;
   assigneeId: string | null;
   assigneeName: string | null;
+  /** The customer's own free-text note (TestDriveBooking.notes /
+   * ServiceBooking.description) — previously queried nowhere in the admin
+   * pages, so there was no way to read what the customer actually wrote. */
+  message?: string | null;
+  /** Extra kind-specific fields (location; plate/VIN/mileage) worth showing
+   * in the detail view but not worth cluttering the compact card with. */
+  details?: { label: string; value: string }[];
 };
 
 export function BookingsView({
@@ -39,6 +54,7 @@ export function BookingsView({
 }) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
+  const [openBooking, setOpenBooking] = useState<BookingRow | null>(null);
 
   const groups = useMemo(() => {
     const map = new Map<string, BookingRow[]>();
@@ -79,11 +95,20 @@ export function BookingsView({
               <Card key={booking.id}>
                 <CardContent className="flex flex-wrap items-center gap-4 py-4">
                   <div className="min-w-[160px] flex-1">
-                    <p className="font-medium">{booking.fullName}</p>
+                    <button
+                      type="button"
+                      onClick={() => setOpenBooking(booking)}
+                      className="font-medium hover:underline"
+                    >
+                      {booking.fullName}
+                    </button>
                     <p className="text-sm text-muted-foreground">
                       {booking.subtitle} {booking.timeSlot && `· ${booking.timeSlot}`}
                     </p>
                     <p className="text-xs text-muted-foreground">{booking.reference}</p>
+                    {booking.message && (
+                      <p className="mt-1 line-clamp-1 text-xs text-foreground/80">“{booking.message}”</p>
+                    )}
                   </div>
                   <div className="flex gap-1">
                     <Button
@@ -125,6 +150,47 @@ export function BookingsView({
           </div>
         </div>
       ))}
+
+      <Dialog open={!!openBooking} onOpenChange={(open) => !open && setOpenBooking(null)}>
+        <DialogContent>
+          {openBooking && (
+            <>
+              <DialogHeader>
+                <DialogTitle>{openBooking.fullName}</DialogTitle>
+                <DialogDescription>
+                  {openBooking.reference} · {format(openBooking.date, "EEEE, MMMM d, yyyy")}
+                  {openBooking.timeSlot && ` · ${openBooking.timeSlot}`}
+                </DialogDescription>
+              </DialogHeader>
+              <div className="space-y-3 text-sm">
+                <div className="grid grid-cols-2 gap-3">
+                  <Field label="Phone" value={openBooking.phone} />
+                  {openBooking.email && <Field label="Email" value={openBooking.email} />}
+                  <Field label={kind === "test-drive" ? "Model" : "Vehicle"} value={openBooking.subtitle} />
+                  <Field label="Status" value={openBooking.status.replace("_", " ")} />
+                  <Field label="Assignee" value={openBooking.assigneeName ?? "Unassigned"} />
+                  {openBooking.details?.map((d) => <Field key={d.label} label={d.label} value={d.value} />)}
+                </div>
+                <div>
+                  <p className="mb-1 text-xs font-medium text-muted-foreground">Message</p>
+                  <p className="whitespace-pre-wrap rounded-md border border-border bg-muted/40 p-3">
+                    {openBooking.message || "No message left."}
+                  </p>
+                </div>
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+}
+
+function Field({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <p className="text-xs font-medium text-muted-foreground">{label}</p>
+      <p>{value}</p>
     </div>
   );
 }

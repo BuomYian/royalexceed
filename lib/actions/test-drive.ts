@@ -85,6 +85,14 @@ export async function updateTestDrive(raw: unknown): Promise<ActionResult> {
   const parsed = updateTestDriveSchema.safeParse(raw);
   if (!parsed.success) return { success: false, error: "Validation failed" };
 
+  const existing = await prisma.testDriveBooking.findUnique({ where: { id: parsed.data.id } });
+  if (!existing) {
+    // Someone else deleted it (or it's a stale client-side row from before a
+    // delete) — a friendly result instead of Prisma's raw "record to update
+    // not found" crashing the whole page. Caller should just refresh.
+    return { success: false, error: "This booking no longer exists — it may have been deleted. Refresh the page." };
+  }
+
   await prisma.testDriveBooking.update({
     where: { id: parsed.data.id },
     data: {

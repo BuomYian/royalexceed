@@ -77,6 +77,11 @@ export async function updateServiceBooking(raw: unknown): Promise<ActionResult> 
   const parsed = updateServiceBookingSchema.safeParse(raw);
   if (!parsed.success) return { success: false, error: "Validation failed" };
 
+  const existing = await prisma.serviceBooking.findUnique({ where: { id: parsed.data.id } });
+  if (!existing) {
+    return { success: false, error: "This booking no longer exists — it may have been deleted. Refresh the page." };
+  }
+
   await prisma.serviceBooking.update({
     where: { id: parsed.data.id },
     data: { status: parsed.data.status, assigneeId: parsed.data.assigneeId },

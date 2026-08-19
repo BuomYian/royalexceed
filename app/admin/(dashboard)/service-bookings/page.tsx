@@ -29,11 +29,18 @@ export default async function AdminServiceBookingsPage() {
           reference: b.reference,
           fullName: b.fullName,
           phone: b.phone,
+          email: b.email,
           subtitle: `${b.vehicleModel} — ${b.serviceType}`,
           date: b.preferredDate,
           status: b.status,
           assigneeId: b.assigneeId,
           assigneeName: b.assignee?.fullName ?? null,
+          message: b.description,
+          details: [
+            b.plateNumber ? { label: "Plate number", value: b.plateNumber } : null,
+            b.vin ? { label: "VIN", value: b.vin } : null,
+            b.mileageKm != null ? { label: "Mileage", value: `${b.mileageKm.toLocaleString()} km` } : null,
+          ].filter((d) => d !== null),
         }))}
       />
     </div>
