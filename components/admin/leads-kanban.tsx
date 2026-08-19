@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   DndContext,
@@ -112,9 +113,27 @@ function DraggableLead({ lead }: { lead: LeadWithRelations }) {
 function LeadCard({ lead, dragging }: { lead: LeadWithRelations; dragging?: boolean }) {
   return (
     <Card className={cn("cursor-grab gap-1.5 p-3 active:cursor-grabbing", dragging && "shadow-lg")}>
-      <p className="text-sm font-medium">{lead.fullName}</p>
+      {/*
+        Not a whole-card onClick: the card's drag listeners live on its
+        *parent* (DraggableLead's div, below), and relying on dnd-kit's
+        activationConstraint alone to still let a plain click through turned
+        out unreliable in practice. stopPropagation on pointerdown here
+        guarantees dnd-kit's ancestor listener never starts tracking a drag
+        that began on this link, so the click always makes it through —
+        regardless of dnd-kit's internal pointer-capture details. The rest of
+        the card (padding, other fields) stays drag-only, matching the
+        existing whole-card-drag UX.
+      */}
+      <Link
+        href={`/admin/leads/${lead.id}`}
+        onPointerDown={(e) => e.stopPropagation()}
+        className="text-sm font-medium hover:underline"
+      >
+        {lead.fullName}
+      </Link>
       <p className="text-xs text-muted-foreground">{lead.phone}</p>
       {lead.model && <p className="text-xs text-muted-foreground">{lead.model.displayName}</p>}
+      {lead.message && <p className="line-clamp-2 text-xs text-foreground/80">{lead.message}</p>}
       <p className="text-xs text-muted-foreground">{lead.assignee?.fullName ?? "Unassigned"}</p>
     </Card>
   );

@@ -25,6 +25,10 @@ const NAV: { href: string; label: string; icon: React.ElementType; resource: Res
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard, resource: "dashboard" },
   { href: "/admin/models", label: "Models", icon: Car, resource: "models" },
   { href: "/admin/inventory", label: "Inventory", icon: Warehouse, resource: "inventory" },
+  // Contact-form messages are Lead rows too (type: "GENERAL", per the schema's
+  // "encode department routing into Lead.source rather than a new table"
+  // decision — see README) — filter this list by Type to find them, rather
+  // than maintaining a second nav item/page pointing at the same data.
   { href: "/admin/leads", label: "Leads", icon: Inbox, resource: "leads" },
   { href: "/admin/test-drives", label: "Test Drives", icon: CalendarClock, resource: "testDrives" },
   { href: "/admin/service-bookings", label: "Service Bookings", icon: Wrench, resource: "serviceBookings" },
