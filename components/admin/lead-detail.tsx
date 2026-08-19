@@ -97,7 +97,7 @@ export function LeadDetail({
           <Button
             variant="outline"
             render={
-              <a href={buildWhatsAppLink(lead.phone, `Hi ${lead.fullName}, this is Exceed Limited.`)} target="_blank" rel="noopener noreferrer">
+              <a href={buildWhatsAppLink(lead.phone, `Hi ${lead.fullName}, this is Royal Exceed Co. Ltd.`)} target="_blank" rel="noopener noreferrer">
                 <MessageCircle className="h-4 w-4" /> WhatsApp
               </a>
             }

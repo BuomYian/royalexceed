@@ -42,6 +42,7 @@ export function Hero({ slides }: { slides: HeroSlide[] }) {
 
       <div className="container-brand relative z-10 pb-14 sm:pb-20">
         <div className="max-w-2xl space-y-5">
+          <p className="text-xs font-semibold tracking-[0.25em] text-primary uppercase">Art of Quality</p>
           <h1 className="font-heading text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl">
             {slide.headline}
           </h1>

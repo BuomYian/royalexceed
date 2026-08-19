@@ -5,6 +5,7 @@ import { getFeaturedInventory } from "@/lib/data/inventory";
 import { getApprovedTestimonials } from "@/lib/data/testimonials";
 import { getLatestArticles } from "@/lib/data/articles";
 import { Hero } from "@/components/marketing/hero";
+import { AboutTeaser } from "@/components/marketing/about-teaser";
 import { TrustBar } from "@/components/marketing/trust-bar";
 import { ModelRangeGrid } from "@/components/marketing/model-range-grid";
 import { FeaturedInventoryStrip } from "@/components/marketing/featured-inventory-strip";
@@ -56,6 +57,7 @@ export default async function HomePage() {
     <>
       <StructuredData data={autoDealerJsonLd(settings)} />
       <Hero slides={heroSlides.filter((s) => s.imageUrl)} />
+      <AboutTeaser />
       <TrustBar />
       <ModelRangeGrid
         models={models.map((m) => ({ ...m, startingPriceUsd: m.startingPriceUsd ? Number(m.startingPriceUsd) : null }))}

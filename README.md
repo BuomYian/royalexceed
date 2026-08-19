@@ -1,13 +1,13 @@
-# Exceed Limited — Website & Admin CMS
+# Royal Exceed Co. Ltd — Website & Admin CMS
 
-Production-ready dealership website and admin dashboard for **Exceed Limited**, the sole
+Production-ready dealership website and admin dashboard for **Royal Exceed Co. Ltd**, the sole
 authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan, operating in
 partnership with FBM International Co. Built with Next.js 16 (App Router), Prisma + Supabase
 (Postgres + Auth), and Cloudinary (media storage).
 
 Full requirements are in [`docs/fbm-international-website-prompt.md`](docs/fbm-international-website-prompt.md)
 (the original spec was written under the working name "FBM International" — the company and
-partner names were finalized as Exceed Limited / FBM International Co. after the initial build;
+partner names were finalized as Royal Exceed Co. Ltd / FBM International Co. after the initial build;
 see "Rebrand notes" below).
 
 ---
@@ -263,9 +263,9 @@ The site was originally built for a company named "FBM International" per the or
 (`docs/fbm-international-website-prompt.md`). Partway through the build, the actual business
 identity was clarified:
 
-- **Exceed Limited** is the company operating this site — sole authorized distributor of
+- **Royal Exceed Co. Ltd** is the company operating this site — sole authorized distributor of
   **Soueast and 212** vehicles in **South Sudan and Sudan**.
-- **FBM International Co.** is Exceed Limited's principal in-market partner (named throughout
+- **FBM International Co.** is Royal Exceed Co. Ltd's principal in-market partner (named throughout
   the trust/partnership copy — hero trust bar, footer tagline, About page, JSON-LD description —
   but not the operating company itself).
 - The vehicle lineup expanded from Soueast-only to **Soueast + 212** (212 is a retro-styled,

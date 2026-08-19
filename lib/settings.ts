@@ -13,7 +13,7 @@ import {
  * exact coordinates) were not provided in the spec — see README "Before go-live".
  */
 export const DEFAULT_SITE_SETTINGS: SiteSettingsData = {
-  companyName: "Exceed Limited",
+  companyName: "Royal Exceed Co. Ltd",
   phone: "+211 92 000 0000",
   whatsappNumber: "211920000000",
   email: "info@exceedlimited.com",
@@ -44,9 +44,9 @@ export const DEFAULT_SITE_SETTINGS: SiteSettingsData = {
     fleet: { label: "Fleet & Corporate", phone: "+211 92 000 0004", email: "fleet@exceedlimited.com" },
   },
   seoDefaults: {
-    title: "Exceed Limited | Soueast & 212 Vehicles — South Sudan & Sudan",
+    title: "Royal Exceed Co. Ltd | Soueast & 212 Vehicles — South Sudan & Sudan",
     description:
-      "Exceed Limited, in partnership with FBM International Co., is the sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan. New vehicles, genuine parts, and factory-backed service in Juba.",
+      "Royal Exceed Co. Ltd, in partnership with FBM International Co., is the sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan. New vehicles, genuine parts, and factory-backed service in Juba.",
   },
   maintenanceMode: false,
   googleBusinessProfileUrl: undefined,

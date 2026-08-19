@@ -65,7 +65,7 @@ export default async function ContactPage() {
           </div>
 
           <iframe
-            title="Exceed Limited location"
+            title="Royal Exceed Co. Ltd location"
             src={mapSrc}
             className="h-64 w-full rounded-lg border border-border"
             loading="lazy"

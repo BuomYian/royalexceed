@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { getTranslations } from "next-intl/server";
-import { Award, Building2, HeartHandshake, Users } from "lucide-react";
+import { Building2, HeartHandshake, Users } from "lucide-react";
 import { getSiteSettings } from "@/lib/settings";
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
 
@@ -23,7 +24,7 @@ export default async function AboutPage() {
         <section className="mt-10">
           <h2 className="font-heading text-2xl font-bold">{t("storyTitle")}</h2>
           <p className="mt-3 text-muted-foreground">
-            Exceed Limited was founded to bring reliable, genuine, factory-backed vehicles to South Sudan and Sudan.
+            Royal Exceed Co. Ltd was founded to bring reliable, genuine, factory-backed vehicles to South Sudan and Sudan.
             From our showroom in Juba Town, near Muduria Roundabout, we serve individual buyers, NGOs,
             government agencies, and corporate fleets across both countries.
           </p>
@@ -31,11 +32,15 @@ export default async function AboutPage() {
 
         <section className="mt-10 rounded-xl border border-primary/30 bg-primary/5 p-6">
           <div className="flex items-start gap-3">
-            <Award className="mt-1 h-7 w-7 shrink-0 text-primary" />
+            {/* Solid white background in the source file — a white tile keeps it
+                legible rather than a raw white square dropped on the tinted card. */}
+            <span className="mt-1 flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-white p-1">
+              <Image src="/fbm_international_co_logo.jpg" alt="FBM International Co." width={40} height={40} className="h-full w-full object-contain" />
+            </span>
             <div>
               <h2 className="font-heading text-2xl font-bold">{t("partnershipTitle")}</h2>
               <p className="mt-3 text-muted-foreground">
-                Exceed Limited is the <strong className="text-foreground">sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan</strong>,
+                Royal Exceed Co. Ltd is the <strong className="text-foreground">sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan</strong>,
                 operating in partnership with FBM International Co., our principal in-market partner.
                 This means every vehicle we sell is factory-genuine, every part is sourced directly from the
                 manufacturer, and our technicians are factory-trained — a level of assurance no unauthorized
@@ -77,7 +82,7 @@ export default async function AboutPage() {
             <div>
               <h2 className="font-heading text-2xl font-bold">{t("csrTitle")}</h2>
               <p className="mt-3 text-muted-foreground">
-                Exceed Limited is committed to supporting local communities in Juba through employment,
+                Royal Exceed Co. Ltd is committed to supporting local communities in Juba through employment,
                 technician training programs, and partnerships with local organizations.
               </p>
             </div>

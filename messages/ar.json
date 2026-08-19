@@ -52,11 +52,16 @@
   "home": {
     "heroCta1": "Book a Test Drive",
     "heroCta2": "Explore the Range",
+    "aboutTeaserTitle": "Who We Are",
+    "aboutTeaserBody": "Royal Exceed Co. Ltd brings reliable, genuine, factory-backed vehicles to South Sudan and Sudan. From our showroom in Juba Town, we serve individual buyers, NGOs, government agencies, and corporate fleets across both countries.",
+    "aboutTeaserCta": "More about us",
+    "aboutTeaserPartnerLabel": "Official partner",
+    "aboutTeaserPartnerBody": "In partnership with FBM International Co., our principal in-market partner — every vehicle is factory-genuine, every part is manufacturer-sourced.",
     "trustBar": "Sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan",
     "rangeTitle": "The Soueast & 212 Range",
     "rangeSubtitle": "Built for South Sudan and Sudan's roads, backed by genuine parts and factory warranty",
     "arrivingTitle": "Featured & Arriving Soon",
-    "whyTitle": "Why Exceed Limited",
+    "whyTitle": "Why Royal Exceed Co. Ltd",
     "whySubtitle": "Everything you need for total peace of mind ownership",
     "servicesTitle": "Our Services",
     "testimonialsTitle": "What Our Clients Say",
@@ -160,7 +165,7 @@
   },
   "parts": {
     "title": "Genuine Parts",
-    "subtitle": "Order genuine Soueast and 212 parts and accessories through Exceed Limited",
+    "subtitle": "Order genuine Soueast and 212 parts and accessories through Royal Exceed Co. Ltd",
     "partName": "Part name",
     "partNumber": "Part number (optional)",
     "vin": "VIN (optional)",
@@ -175,7 +180,7 @@
     "documentsTitle": "Documents typically required"
   },
   "about": {
-    "title": "About Exceed Limited",
+    "title": "About Royal Exceed Co. Ltd",
     "storyTitle": "Our Story",
     "partnershipTitle": "Our Partnership with FBM International Co.",
     "leadershipTitle": "Leadership",
@@ -184,7 +189,7 @@
   },
   "news": {
     "title": "News & Offers",
-    "subtitle": "The latest from Exceed Limited, Soueast, and 212",
+    "subtitle": "The latest from Royal Exceed Co. Ltd, Soueast, and 212",
     "by": "By",
     "publishedOn": "Published on"
   },
@@ -212,10 +217,10 @@
   },
   "whatsapp": {
     "floatingLabel": "Chat on WhatsApp",
-    "genericMessage": "Hello Exceed Limited, I'd like some information."
+    "genericMessage": "Hello Royal Exceed Co. Ltd, I'd like some information."
   },
   "maintenance": {
     "title": "We'll be right back",
-    "body": "Exceed Limited's website is undergoing scheduled maintenance. Please check back shortly, or reach us directly on WhatsApp."
+    "body": "Royal Exceed Co. Ltd's website is undergoing scheduled maintenance. Please check back shortly, or reach us directly on WhatsApp."
   }
 }

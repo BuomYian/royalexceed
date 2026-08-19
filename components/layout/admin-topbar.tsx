@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, LogOut, Search, ExternalLink } from "lucide-react";
 import type { Role } from "@prisma/client";
@@ -42,9 +43,7 @@ export function AdminTopbar({
         <SheetContent side="left" className="w-64 p-0">
           <SheetTitle className="sr-only">Admin navigation</SheetTitle>
           <div className="flex h-16 items-center gap-2 border-b border-border px-5">
-            <span className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-sm font-bold text-primary-foreground">
-              EL
-            </span>
+            <Image src="/logo-favicon.png" alt="Royal Exceed Co. Ltd" width={32} height={32} className="h-8 w-8" />
             <span className="font-heading text-sm font-bold">Admin</span>
           </div>
           <nav className="space-y-0.5 p-3">

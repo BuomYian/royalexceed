@@ -12,8 +12,8 @@ const interTight = Inter_Tight({
 const inter = Inter({ variable: "--font-sans-family", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: { default: "Admin | Exceed Limited", template: "%s | Exceed Limited Admin" },
-  description: "Exceed Limited admin dashboard.",
+  title: { default: "Admin | Royal Exceed Co. Ltd", template: "%s | Royal Exceed Co. Ltd Admin" },
+  description: "Royal Exceed Co. Ltd admin dashboard.",
   robots: { index: false, follow: false },
 };
 

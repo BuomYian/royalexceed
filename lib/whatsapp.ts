@@ -10,12 +10,12 @@ export function buildWhatsAppLink(phone: string, message: string): string {
 }
 
 export function modelEnquiryMessage(modelDisplayName: string): string {
-  return `Hello Exceed Limited, I'm interested in the ${modelDisplayName}`;
+  return `Hello Royal Exceed Co. Ltd, I'm interested in the ${modelDisplayName}`;
 }
 
 export function inventoryEnquiryMessage(
   modelDisplayName: string,
   stockNumber: string,
 ): string {
-  return `Hello Exceed Limited, I'm interested in the ${modelDisplayName} (Stock #${stockNumber})`;
+  return `Hello Royal Exceed Co. Ltd, I'm interested in the ${modelDisplayName} (Stock #${stockNumber})`;
 }

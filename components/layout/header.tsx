@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Menu, X, Phone } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
@@ -36,11 +37,19 @@ export function Header({ settings }: { settings: ResolvedSiteSettings }) {
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70">
       <div className="container-brand flex h-16 items-center justify-between gap-4">
-        <Link href="/" className="flex items-center gap-2 font-heading text-lg font-bold tracking-tight">
-          <span className="flex h-9 w-9 items-center justify-center rounded-md bg-primary text-primary-foreground">
-            EL
-          </span>
-          <span className="hidden sm:inline">Exceed Limited</span>
+        <Link
+          href="/"
+          className="flex items-center gap-2 font-heading text-lg font-bold tracking-tight"
+        >
+          <Image
+            src="/logo-favicon.png"
+            alt="Royal Exceed Co. Ltd"
+            width={36}
+            height={36}
+            className="h-9 w-9"
+            priority
+          />
+          <span className="hidden sm:inline">Royal Exceed Co. Ltd</span>
         </Link>
 
         <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
@@ -60,14 +69,16 @@ export function Header({ settings }: { settings: ResolvedSiteSettings }) {
 
         <div className="hidden items-center gap-2 lg:flex">
           <LocaleSwitcher />
-          <a
+          {/* <a
             href={`tel:${settings.phone.replace(/\s+/g, "")}`}
             className="hidden items-center gap-1.5 text-sm text-foreground/70 hover:text-foreground xl:inline-flex"
           >
             <Phone className="h-4 w-4" aria-hidden="true" />
             {settings.phone}
-          </a>
-          <Button render={<Link href="/test-drive">{t("bookTestDrive")}</Link>} />
+          </a> */}
+          <Button
+            render={<Link href="/test-drive">{t("bookTestDrive")}</Link>}
+          />
         </div>
 
         <div className="flex items-center gap-1 lg:hidden">
@@ -84,10 +95,16 @@ export function Header({ settings }: { settings: ResolvedSiteSettings }) {
             <SheetContent side="right" className="w-[300px] sm:w-[360px]">
               <SheetHeader>
                 <div className="flex items-center justify-between">
-                  <SheetTitle className="font-heading">Exceed Limited</SheetTitle>
+                  <SheetTitle className="font-heading">
+                    Royal Exceed Co. Ltd
+                  </SheetTitle>
                   <SheetClose
                     render={
-                      <Button variant="ghost" size="icon" aria-label="Close menu">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        aria-label="Close menu"
+                      >
                         <X className="h-5 w-5" />
                       </Button>
                     }
@@ -103,7 +120,8 @@ export function Header({ settings }: { settings: ResolvedSiteSettings }) {
                         href={item.href}
                         className={cn(
                           "rounded-md px-3 py-2.5 text-base font-medium text-foreground/85 hover:bg-accent hover:text-accent-foreground",
-                          pathname === item.href && "bg-accent text-accent-foreground",
+                          pathname === item.href &&
+                            "bg-accent text-accent-foreground",
                         )}
                       >
                         {t(item.key)}
@@ -112,12 +130,20 @@ export function Header({ settings }: { settings: ResolvedSiteSettings }) {
                   />
                 ))}
                 <div className="mt-4 flex flex-col gap-2 border-t border-border pt-4">
-                  <a href={`tel:${settings.phone.replace(/\s+/g, "")}`} className="px-3 text-sm text-foreground/70">
+                  <a
+                    href={`tel:${settings.phone.replace(/\s+/g, "")}`}
+                    className="px-3 text-sm text-foreground/70"
+                  >
                     {settings.phone}
                   </a>
                   <SheetClose
                     render={
-                      <Button className="mx-3" render={<Link href="/test-drive">{t("bookTestDrive")}</Link>} />
+                      <Button
+                        className="mx-3"
+                        render={
+                          <Link href="/test-drive">{t("bookTestDrive")}</Link>
+                        }
+                      />
                     }
                   />
                 </div>

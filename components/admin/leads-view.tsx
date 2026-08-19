@@ -98,7 +98,7 @@ export function LeadsView({
             variant="ghost"
             size="icon"
             render={
-              <a href={buildWhatsAppLink(row.original.phone, `Hi ${row.original.fullName}, this is Exceed Limited.`)} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+              <a href={buildWhatsAppLink(row.original.phone, `Hi ${row.original.fullName}, this is Royal Exceed Co. Ltd.`)} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
                 <MessageCircle className="h-4 w-4" />
               </a>
             }

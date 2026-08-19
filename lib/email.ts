@@ -30,7 +30,7 @@ type SendEmailInput = {
  */
 export async function sendEmail({ to, subject, html }: SendEmailInput) {
   const resend = getResend();
-  const from = process.env.EMAIL_FROM ?? "Exceed Limited <onboarding@resend.dev>";
+  const from = process.env.EMAIL_FROM ?? "Royal Exceed Co. Ltd <onboarding@resend.dev>";
 
   if (!resend) {
     console.info(`[email:dev-transport] to=${JSON.stringify(to)} subject="${subject}"\n${html}`);
@@ -68,13 +68,13 @@ export function leadNotificationEmail(params: {
 
 export function autoresponderEmail(params: { fullName: string; reference?: string }) {
   return {
-    subject: "We've received your enquiry — Exceed Limited",
+    subject: "We've received your enquiry — Royal Exceed Co. Ltd",
     html: `
       <p>Hi ${params.fullName},</p>
-      <p>Thank you for contacting Exceed Limited, the sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan.
+      <p>Thank you for contacting Royal Exceed Co. Ltd, the sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan.
       ${params.reference ? `Your reference number is <strong>${params.reference}</strong>.` : ""}
       Our team will be in touch shortly, or you can reach us directly on WhatsApp for a faster response.</p>
-      <p>— Exceed Limited</p>
+      <p>— Royal Exceed Co. Ltd</p>
     `,
   };
 }

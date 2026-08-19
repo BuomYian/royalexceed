@@ -14,9 +14,9 @@ export default async function TermsPage() {
         <h1>Terms of Service</h1>
         <p>Last updated: August 2026</p>
 
-        <h2>About Exceed Limited</h2>
+        <h2>About Royal Exceed Co. Ltd</h2>
         <p>
-          Exceed Limited, in partnership with FBM International Co., is the sole authorized distributor of Soueast
+          Royal Exceed Co. Ltd, in partnership with FBM International Co., is the sole authorized distributor of Soueast
           and 212 vehicles in South Sudan and Sudan, operating a showroom and service center at{" "}
           {settings.address.line}, {settings.address.city}, {settings.address.country}.
         </p>
@@ -36,9 +36,9 @@ export default async function TermsPage() {
 
         <h2>Warranty and genuine parts</h2>
         <p>
-          All new vehicles sold by Exceed Limited carry the manufacturer warranty described on the relevant
+          All new vehicles sold by Royal Exceed Co. Ltd carry the manufacturer warranty described on the relevant
           model page. Warranty coverage is contingent on the use of genuine Soueast or 212 parts and service
-          performed by an authorized Exceed Limited technician.
+          performed by an authorized Royal Exceed Co. Ltd technician.
         </p>
 
         <h2>Limitation of liability</h2>
@@ -50,7 +50,7 @@ export default async function TermsPage() {
 
         <h2>Contact</h2>
         <p>
-          For questions about these terms, contact Exceed Limited at {settings.email} or {settings.phone}.
+          For questions about these terms, contact Royal Exceed Co. Ltd at {settings.email} or {settings.phone}.
         </p>
       </div>
     </div>

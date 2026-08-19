@@ -12,7 +12,7 @@ export function LocationBlock({ settings }: { settings: ResolvedSiteSettings }) 
       <h2 className="mb-10 font-heading text-3xl font-bold sm:text-4xl">{t("locationTitle")}</h2>
       <div className="grid gap-6 overflow-hidden rounded-xl border border-border lg:grid-cols-2">
         <iframe
-          title="Exceed Limited showroom location"
+          title="Royal Exceed Co. Ltd showroom location"
           src={mapSrc}
           className="h-72 w-full border-0 lg:h-full"
           loading="lazy"

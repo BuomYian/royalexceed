@@ -120,7 +120,7 @@ export function BookingsView({
                       variant="ghost"
                       size="icon"
                       render={
-                        <a href={buildWhatsAppLink(booking.phone, `Hi ${booking.fullName}, this is Exceed Limited regarding your booking.`)} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+                        <a href={buildWhatsAppLink(booking.phone, `Hi ${booking.fullName}, this is Royal Exceed Co. Ltd regarding your booking.`)} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
                           <MessageCircle className="h-4 w-4" />
                         </a>
                       }

@@ -32,12 +32,15 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     metadataBase: new URL(siteUrl),
     title: {
-      default: "Exceed Limited | Soueast & 212 Vehicles — South Sudan & Sudan",
-      template: "%s | Exceed Limited",
+      default: "Royal Exceed Co. Ltd | Soueast & 212 Vehicles — South Sudan & Sudan",
+      template: "%s | Royal Exceed Co. Ltd",
     },
     description:
-      "Exceed Limited, in partnership with FBM International Co., is the sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan — new vehicle sales, genuine parts, and factory-backed service in Juba.",
-    icons: { icon: "/favicon.ico" },
+      "Royal Exceed Co. Ltd, in partnership with FBM International Co., is the sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan — new vehicle sales, genuine parts, and factory-backed service in Juba.",
+    // No explicit `icons` field: app/icon.png (Next's file-convention favicon)
+    // is picked up automatically and applies across the whole app, including
+    // the separate admin root layout — an explicit override here would only
+    // shadow it for this one tree and risk a duplicate/conflicting <link>.
   };
 }
 
@@ -79,7 +82,7 @@ export default async function LocaleLayout({
                 <Footer settings={settings} />
                 <WhatsAppButton
                   phone={settings.whatsappNumber}
-                  message="Hello Exceed Limited, I'd like some information."
+                  message="Hello Royal Exceed Co. Ltd, I'd like some information."
                 />
               </>
             )}
@@ -97,7 +100,7 @@ function MaintenanceScreen() {
       <div className="max-w-md space-y-4">
         <h1 className="text-3xl font-bold">We&apos;ll be right back</h1>
         <p className="text-muted-foreground">
-          Exceed Limited&apos;s website is undergoing scheduled
+          Royal Exceed Co. Ltd&apos;s website is undergoing scheduled
           maintenance. Please check back shortly, or reach us directly on
           WhatsApp.
         </p>

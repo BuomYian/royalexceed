@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
 import { MapPin, Clock, Phone, Mail } from "lucide-react";
+import Image from "next/image";
 import NextLink from "next/link";
 import { Link } from "@/i18n/navigation";
 import { FacebookIcon, InstagramIcon, TikTokIcon, XIcon } from "@/components/shared/social-icons";
@@ -30,11 +31,10 @@ export function Footer({ settings }: { settings: ResolvedSiteSettings }) {
       <div className="container-brand grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-5">
         <div className="sm:col-span-2 lg:col-span-2">
           <Link href="/" className="flex items-center gap-2 font-heading text-lg font-bold">
-            <span className="flex h-9 w-9 items-center justify-center rounded-md bg-primary text-primary-foreground">
-              EL
-            </span>
-            Exceed Limited
+            <Image src="/logo-favicon.png" alt="Royal Exceed Co. Ltd" width={36} height={36} className="h-9 w-9" />
+            Royal Exceed Co. Ltd
           </Link>
+          <p className="mt-1.5 text-xs font-semibold tracking-[0.2em] text-muted-foreground uppercase">Art of Quality</p>
           <p className="mt-4 max-w-sm text-sm text-muted-foreground">{tFooter("tagline")}</p>
           <div className="mt-5 flex items-center gap-3">
             {settings.socials.facebook && (
@@ -122,7 +122,7 @@ export function Footer({ settings }: { settings: ResolvedSiteSettings }) {
       <div className="border-t border-border/60">
         <div className="container-brand flex flex-col items-center justify-between gap-3 py-6 text-xs text-muted-foreground sm:flex-row">
           <p>
-            © {year} Exceed Limited. {tFooter("rights")}
+            © {year} Royal Exceed Co. Ltd. {tFooter("rights")}
           </p>
           <div className="flex gap-4">
             {/*

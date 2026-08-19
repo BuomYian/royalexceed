@@ -60,7 +60,7 @@ export function vehicleProductJsonLd(model: {
 }) {
   // Brand is the first word of the display name ("Soueast S07" -> "Soueast",
   // "212 T01" -> "212") — avoids hardcoding a single manufacturer now that
-  // Exceed Limited distributes two brands.
+  // Royal Exceed Co. Ltd distributes two brands.
   const brand = model.displayName.split(" ")[0];
 
   return {
@@ -77,7 +77,7 @@ export function vehicleProductJsonLd(model: {
         priceCurrency: "USD",
         price: model.startingPriceUsd,
         availability: "https://schema.org/InStock",
-        seller: { "@type": "AutoDealer", name: "Exceed Limited" },
+        seller: { "@type": "AutoDealer", name: "Royal Exceed Co. Ltd" },
       },
     }),
     additionalProperty: [
