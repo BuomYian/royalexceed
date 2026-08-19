@@ -43,6 +43,7 @@ export async function createInventoryUnit(raw: InventoryInput): Promise<ActionRe
   await writeAuditLog({ actorId: user.id, action: "CREATE", entity: "InventoryUnit", entityId: unit.id });
   revalidatePath("/admin/inventory");
   revalidatePath("/inventory");
+  revalidatePath("/"); // home page's Featured Inventory Strip
   return { success: true, data: { id: unit.id } };
 }
 
@@ -104,6 +105,9 @@ export async function updateInventoryUnit(raw: InventoryInput): Promise<ActionRe
 
   revalidatePath("/admin/inventory");
   revalidatePath("/inventory");
+  revalidatePath("/"); // home page's Featured Inventory Strip — was missing, which is why edited
+  // photos (and any other field) showed up on /inventory but never on the home page.
+  revalidatePath(`/inventory/${input.stockNumber}`);
   return { success: true, data: { id: raw.id } };
 }
 
@@ -112,6 +116,8 @@ export async function deleteInventoryUnit(id: string): Promise<ActionResult> {
   await prisma.inventoryUnit.delete({ where: { id } });
   await writeAuditLog({ actorId: user.id, action: "DELETE", entity: "InventoryUnit", entityId: id });
   revalidatePath("/admin/inventory");
+  revalidatePath("/inventory");
+  revalidatePath("/");
   return { success: true, data: undefined };
 }
 
@@ -186,5 +192,7 @@ export async function bulkImportInventory(
 
   await writeAuditLog({ actorId: user.id, action: "CREATE", entity: "InventoryUnit", changes: { bulkImport: imported } });
   revalidatePath("/admin/inventory");
+  revalidatePath("/inventory");
+  revalidatePath("/");
   return { success: true, data: { imported, errors } };
 }
