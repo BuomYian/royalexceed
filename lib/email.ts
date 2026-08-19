@@ -17,6 +17,16 @@ type SendEmailInput = {
  * Sends via Resend when RESEND_API_KEY is set; otherwise logs to the console
  * (dev transport) so the lead pipeline completes without a live key — see
  * README "Not verifiable in this sandbox" for the production Resend setup.
+ *
+ * Never throws: every caller treats this as a best-effort notification sent
+ * *after* the actual lead/booking write already succeeded (see
+ * lib/actions/{leads,test-drive,service-booking}.ts), none of them wrap the
+ * call in a try/catch, and none inspect the return value. A delivery failure
+ * — e.g. Resend's sandbox mode rejecting recipients other than the account
+ * owner until a sending domain is verified — must not take down an
+ * already-successful form submission with a full error page. Failures are
+ * still logged server-side (and in the admin AuditLog via the caller) so
+ * they're not silently lost, just non-fatal to the request.
  */
 export async function sendEmail({ to, subject, html }: SendEmailInput) {
   const resend = getResend();
@@ -24,15 +34,15 @@ export async function sendEmail({ to, subject, html }: SendEmailInput) {
 
   if (!resend) {
     console.info(`[email:dev-transport] to=${JSON.stringify(to)} subject="${subject}"\n${html}`);
-    return { id: "dev-transport" };
+    return { id: "dev-transport", ok: true as const };
   }
 
   const { data, error } = await resend.emails.send({ from, to, subject, html });
   if (error) {
     console.error("[email] Resend send failed", error);
-    throw new Error("Failed to send email");
+    return { id: null, ok: false as const, error };
   }
-  return data;
+  return { ...data, ok: true as const };
 }
 
 export function leadNotificationEmail(params: {
