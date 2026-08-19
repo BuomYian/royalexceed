@@ -46,6 +46,20 @@ export async function getFeaturedModels(limit = 6) {
   return models.map(withThumbnailFallback);
 }
 
+/**
+ * Every published model with a hero image, in admin-curated order — powers
+ * the home page's Hero rotation. Deliberately not limited to `isFeatured`
+ * models or capped at a small `take`: the ask is "all models' hero images
+ * should be visible and rotating," not just a featured subset.
+ */
+export async function getModelsForHero() {
+  return prisma.model.findMany({
+    where: { ...publishedWhere, heroImageUrl: { not: null } },
+    orderBy: { sortOrder: "asc" },
+    select: { slug: true, displayName: true, tagline: true, heroImageUrl: true },
+  });
+}
+
 export async function getPublishedModels(filters: Partial<ModelFilterInput> = {}) {
   const where: Prisma.ModelWhereInput = { ...publishedWhere };
   if (filters.bodyType) where.bodyType = filters.bodyType;

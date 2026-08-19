@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getSiteSettings } from "@/lib/settings";
-import { getFeaturedModels } from "@/lib/data/models";
+import { getFeaturedModels, getModelsForHero } from "@/lib/data/models";
 import { getFeaturedInventory } from "@/lib/data/inventory";
 import { getApprovedTestimonials } from "@/lib/data/testimonials";
 import { getLatestArticles } from "@/lib/data/articles";
@@ -28,9 +28,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
-  const [settings, models, inventory, testimonials, articles] = await Promise.all([
+  const [settings, models, heroModels, inventory, testimonials, articles] = await Promise.all([
     getSiteSettings(),
     getFeaturedModels(),
+    getModelsForHero(),
     getFeaturedInventory(),
     getApprovedTestimonials(4),
     getLatestArticles(3),
@@ -40,18 +41,15 @@ export default async function HomePage() {
   // no admin UI to manage it (nothing writes to it after the initial seed),
   // so treating it as the primary source lets it silently go stale — a
   // model's hero image gets updated in the CMS but the homepage banner never
-  // reflects it. Featured models' own `heroImageUrl` is what admins actually
-  // maintain, so build slides from that; `heroSlides` remains available as a
+  // reflects it. Every published model with a hero image rotates through
+  // (not just featured, not capped) — `heroSlides` remains available as a
   // manual override for whenever curated (non-model) banner copy is needed.
-  const modelHeroSlides = models
-    .filter((m) => m.heroImageUrl)
-    .slice(0, 3)
-    .map((m) => ({
-      id: m.slug,
-      imageUrl: m.heroImageUrl!,
-      headline: m.displayName,
-      subheadline: m.tagline ?? undefined,
-    }));
+  const modelHeroSlides = heroModels.map((m) => ({
+    id: m.slug,
+    imageUrl: m.heroImageUrl!,
+    headline: m.displayName,
+    subheadline: m.tagline ?? undefined,
+  }));
   const heroSlides = modelHeroSlides.length ? modelHeroSlides : settings.heroSlides;
 
   return (
