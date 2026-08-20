@@ -46,7 +46,7 @@ export function Header({ settings }: { settings: ResolvedSiteSettings }) {
             alt="Royal Exceed Co. Ltd"
             width={36}
             height={36}
-            className="h-9 w-9"
+            className="h-9 w-9 rounded"
             priority
           />
           <span className="hidden sm:inline">Royal Exceed Co. Ltd</span>

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
-import { Building2, HeartHandshake, Users } from "lucide-react";
+import { Building2, HeartHandshake, Quote, Users } from "lucide-react";
 import { getSiteSettings } from "@/lib/settings";
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
 
@@ -20,6 +20,32 @@ export default async function AboutPage() {
 
       <div className="mx-auto mt-4 max-w-3xl">
         <h1 className="font-heading text-3xl font-bold sm:text-4xl">{t("title")}</h1>
+
+        <section className="mt-10 rounded-xl border border-border bg-muted/30 p-6 sm:p-8">
+          <h2 className="font-heading text-2xl font-bold">{t("founderTitle")}</h2>
+          <div className="mt-5 flex flex-col gap-6 sm:flex-row sm:items-start">
+            <Image
+              src="/Lat.jpeg"
+              alt="Lat Gatkuoth Thian, Founder & Managing Director"
+              width={140}
+              height={140}
+              className="h-32 w-32 shrink-0 rounded-full object-cover ring-2 ring-primary/30 sm:h-36 sm:w-36"
+            />
+            <div>
+              <Quote className="h-6 w-6 text-primary/60" aria-hidden />
+              <p className="mt-2 text-muted-foreground italic">
+                &ldquo;When we opened our doors in Juba, we made a simple promise: every customer would drive away in
+                a genuine, factory-backed vehicle, and never wonder if they&rsquo;d been sold a compromise. That
+                promise is still what guides Royal Exceed Co. Ltd today, and the reason our partnership with FBM
+                International Co. matters so much to us. Whether you are buying your first car or renewing a fleet,
+                our team is here to serve you with honesty and the standard our name is built on — the Art of
+                Quality.&rdquo;
+              </p>
+              <p className="mt-4 font-heading font-bold">Lat Gatkuoth Thian</p>
+              <p className="text-sm text-muted-foreground">Founder &amp; Managing Director</p>
+            </div>
+          </div>
+        </section>
 
         <section className="mt-10">
           <h2 className="font-heading text-2xl font-bold">{t("storyTitle")}</h2>

@@ -3,7 +3,12 @@ import { MapPin, Clock, Phone, Mail } from "lucide-react";
 import Image from "next/image";
 import NextLink from "next/link";
 import { Link } from "@/i18n/navigation";
-import { FacebookIcon, InstagramIcon, TikTokIcon, XIcon } from "@/components/shared/social-icons";
+import {
+  FacebookIcon,
+  InstagramIcon,
+  TikTokIcon,
+  XIcon,
+} from "@/components/shared/social-icons";
 import type { ResolvedSiteSettings } from "@/lib/settings";
 
 const EXPLORE_LINKS = [
@@ -30,30 +35,59 @@ export function Footer({ settings }: { settings: ResolvedSiteSettings }) {
     <footer className="border-t border-border/60 bg-background">
       <div className="container-brand grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-5">
         <div className="sm:col-span-2 lg:col-span-2">
-          <Link href="/" className="flex items-center gap-2 font-heading text-lg font-bold">
-            <Image src="/logo-favicon.png" alt="Royal Exceed Co. Ltd" width={36} height={36} className="h-9 w-9" />
+          <Link
+            href="/"
+            className="flex items-center gap-2 font-heading text-lg font-bold"
+          >
+            <Image
+              src="/logo-favicon.png"
+              alt="Royal Exceed Co. Ltd"
+              width={36}
+              height={36}
+              className="h-9 w-9 rounded"
+            />
             Royal Exceed Co. Ltd
           </Link>
-          <p className="mt-1.5 text-xs font-semibold tracking-[0.2em] text-muted-foreground uppercase">Art of Quality</p>
-          <p className="mt-4 max-w-sm text-sm text-muted-foreground">{tFooter("tagline")}</p>
+          <p className="mt-1.5 text-xs font-semibold tracking-[0.2em] text-muted-foreground uppercase">
+            Art of Quality
+          </p>
+          <p className="mt-4 max-w-sm text-sm text-muted-foreground">
+            {tFooter("tagline")}
+          </p>
           <div className="mt-5 flex items-center gap-3">
             {settings.socials.facebook && (
-              <a href={settings.socials.facebook} aria-label="Facebook" className="text-muted-foreground hover:text-foreground">
+              <a
+                href={settings.socials.facebook}
+                aria-label="Facebook"
+                className="text-muted-foreground hover:text-foreground"
+              >
                 <FacebookIcon className="h-5 w-5" />
               </a>
             )}
             {settings.socials.instagram && (
-              <a href={settings.socials.instagram} aria-label="Instagram" className="text-muted-foreground hover:text-foreground">
+              <a
+                href={settings.socials.instagram}
+                aria-label="Instagram"
+                className="text-muted-foreground hover:text-foreground"
+              >
                 <InstagramIcon className="h-5 w-5" />
               </a>
             )}
             {settings.socials.tiktok && (
-              <a href={settings.socials.tiktok} aria-label="TikTok" className="text-muted-foreground hover:text-foreground">
+              <a
+                href={settings.socials.tiktok}
+                aria-label="TikTok"
+                className="text-muted-foreground hover:text-foreground"
+              >
                 <TikTokIcon className="h-5 w-5" />
               </a>
             )}
             {settings.socials.x && (
-              <a href={settings.socials.x} aria-label="X" className="text-muted-foreground hover:text-foreground">
+              <a
+                href={settings.socials.x}
+                aria-label="X"
+                className="text-muted-foreground hover:text-foreground"
+              >
                 <XIcon className="h-5 w-5" />
               </a>
             )}
@@ -92,7 +126,8 @@ export function Footer({ settings }: { settings: ResolvedSiteSettings }) {
             <li className="flex gap-2">
               <MapPin className="mt-0.5 h-4 w-4 shrink-0" />
               <span>
-                {settings.address.line}, {settings.address.city}, {settings.address.country}
+                {settings.address.line}, {settings.address.city},{" "}
+                {settings.address.country}
               </span>
             </li>
             <li className="flex gap-2">
@@ -105,13 +140,19 @@ export function Footer({ settings }: { settings: ResolvedSiteSettings }) {
             </li>
             <li className="flex gap-2">
               <Phone className="mt-0.5 h-4 w-4 shrink-0" />
-              <a href={`tel:${settings.phone.replace(/\s+/g, "")}`} className="hover:text-foreground">
+              <a
+                href={`tel:${settings.phone.replace(/\s+/g, "")}`}
+                className="hover:text-foreground"
+              >
                 {settings.phone}
               </a>
             </li>
             <li className="flex gap-2">
               <Mail className="mt-0.5 h-4 w-4 shrink-0" />
-              <a href={`mailto:${settings.email}`} className="hover:text-foreground">
+              <a
+                href={`mailto:${settings.email}`}
+                className="hover:text-foreground"
+              >
                 {settings.email}
               </a>
             </li>
