@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { VehicleCard } from "@/components/vehicle/vehicle-card";
 import { Button } from "@/components/ui/button";
+import { Reveal } from "@/components/shared/reveal";
 
 type ModelSummary = {
   slug: string;
@@ -28,8 +29,10 @@ export function ModelRangeGrid({ models }: { models: ModelSummary[] }) {
         <Button variant="outline" render={<Link href="/models">{tCommon("viewDetails")}</Link>} />
       </div>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {models.map((model) => (
-          <VehicleCard key={model.slug} model={model} />
+        {models.map((model, i) => (
+          <Reveal key={model.slug} delay={(i % 3) * 100}>
+            <VehicleCard model={model} />
+          </Reveal>
         ))}
       </div>
     </section>

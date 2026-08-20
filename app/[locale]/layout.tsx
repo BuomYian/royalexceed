@@ -61,6 +61,7 @@ export default async function LocaleLayout({
     <html
       lang={locale}
       dir={dir}
+      data-scroll-behavior="smooth"
       className={`dark ${interTight.variable} ${inter.variable} h-full antialiased`}
       style={
         {
@@ -68,7 +69,6 @@ export default async function LocaleLayout({
           "--font-sans": "var(--font-sans-family)",
         } as React.CSSProperties
       }
-      data-scroll-behavior="smooth"
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <NextIntlClientProvider>

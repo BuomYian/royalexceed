@@ -16,6 +16,7 @@ import { NewsPreview } from "@/components/marketing/news-preview";
 import { LocationBlock } from "@/components/marketing/location-block";
 import { LeadCaptureBand } from "@/components/marketing/lead-capture-band";
 import { StructuredData } from "@/components/shared/structured-data";
+import { Reveal } from "@/components/shared/reveal";
 import { autoDealerJsonLd } from "@/lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -56,21 +57,24 @@ export default async function HomePage() {
   return (
     <>
       <StructuredData data={autoDealerJsonLd(settings)} />
+      {/* Hero animates itself (slide crossfade) — reveal starts from the section after it. */}
       <Hero slides={heroSlides.filter((s) => s.imageUrl)} />
-      <AboutTeaser />
+      <Reveal><AboutTeaser /></Reveal>
       <TrustBar />
+      {/* These two grids stagger-reveal each card individually (inside the
+          component itself) rather than fading in as one block. */}
       <ModelRangeGrid
         models={models.map((m) => ({ ...m, startingPriceUsd: m.startingPriceUsd ? Number(m.startingPriceUsd) : null }))}
       />
       <FeaturedInventoryStrip
         units={inventory.map((u) => ({ ...u, priceUsd: u.priceUsd ? Number(u.priceUsd) : null }))}
       />
-      <WhyFbm />
-      <ServicesOverview />
-      <TestimonialsSection testimonials={testimonials} />
-      <NewsPreview articles={articles} />
-      <LocationBlock settings={settings} />
-      <LeadCaptureBand />
+      <Reveal><WhyFbm /></Reveal>
+      <Reveal><ServicesOverview /></Reveal>
+      <Reveal><TestimonialsSection testimonials={testimonials} /></Reveal>
+      <Reveal><NewsPreview articles={articles} /></Reveal>
+      <Reveal><LocationBlock settings={settings} /></Reveal>
+      <Reveal><LeadCaptureBand /></Reveal>
     </>
   );
 }

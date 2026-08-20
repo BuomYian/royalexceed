@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
 import { InventoryCard } from "@/components/vehicle/inventory-card";
+import { Reveal } from "@/components/shared/reveal";
 
 type Unit = {
   stockNumber: string;
@@ -23,8 +24,10 @@ export function FeaturedInventoryStrip({ units }: { units: Unit[] }) {
       <div className="container-brand">
         <h2 className="mb-10 font-heading text-3xl font-bold sm:text-4xl">{t("arrivingTitle")}</h2>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {units.map((unit) => (
-            <InventoryCard key={unit.stockNumber} unit={unit} />
+          {units.map((unit, i) => (
+            <Reveal key={unit.stockNumber} delay={(i % 4) * 100}>
+              <InventoryCard unit={unit} />
+            </Reveal>
           ))}
         </div>
       </div>

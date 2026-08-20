@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 // page can render standalone.
 export default function AdminRootLayout({ children }: LayoutProps<"/admin">) {
   return (
-    <html lang="en" className={`${interTight.variable} ${inter.variable} h-full antialiased`}
+    <html lang="en" data-scroll-behavior="smooth" className={`${interTight.variable} ${inter.variable} h-full antialiased`}
       style={
         {
           "--font-heading": "var(--font-heading-family)",
