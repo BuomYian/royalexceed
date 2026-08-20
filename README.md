@@ -25,7 +25,7 @@ final values). Search the codebase for these and replace with real values before
 | Social links (Facebook/Instagram/TikTok/X) | same as above |
 | Brand colors (deep burgundy accent on near-black, per spec §5 fallback) | `app/globals.css` |
 | Vehicle photography (currently `placehold.co` placeholders) | reseed via the admin Media Library / Models editor |
-| First admin credentials `admin@exceedlimited.com` / `ChangeMe123!` | change the password immediately after first login |
+| First admin credentials `admin@royalexceed.com` / `Johnlat@2026` | change the password immediately after first login |
 
 All of the above are also editable **without a redeploy** from `/admin/settings`, `/admin/models`,
 and `/admin/media` once the site is live — the seed values just need to exist for first boot.

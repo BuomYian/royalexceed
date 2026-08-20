@@ -14,8 +14,8 @@ import { PrismaClient, type Prisma } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const SUPER_ADMIN_EMAIL = process.env.SEED_SUPER_ADMIN_EMAIL ?? "admin@exceedlimited.com";
-const SUPER_ADMIN_PASSWORD = process.env.SEED_SUPER_ADMIN_PASSWORD ?? "ChangeMe123!";
+const SUPER_ADMIN_EMAIL = process.env.SEED_SUPER_ADMIN_EMAIL ?? "admin@royalexceed.com";
+const SUPER_ADMIN_PASSWORD = process.env.SEED_SUPER_ADMIN_PASSWORD ?? "Johnlat@2026";
 
 function placeholderImage(text: string, hex = "1a1d21", fg = "ffffff") {
   // .png on the fg segment (not the default .svg) so next/image can optimize it
@@ -74,7 +74,7 @@ async function seedSiteSettings() {
     companyName: "Royal Exceed Co. Ltd",
     phone: "+211 92 000 0000",
     whatsappNumber: "211920000000",
-    email: "info@exceedlimited.com",
+    email: "info@royalexceed.com",
     address: {
       line: "Juba Town, near Muduria Roundabout",
       city: "Juba",
@@ -100,10 +100,10 @@ async function seedSiteSettings() {
     // needed.
     heroSlides: [],
     departments: {
-      sales: { label: "Sales", phone: "+211 92 000 0001", email: "sales@exceedlimited.com" },
-      service: { label: "Service", phone: "+211 92 000 0002", email: "service@exceedlimited.com" },
-      parts: { label: "Parts", phone: "+211 92 000 0003", email: "parts@exceedlimited.com" },
-      fleet: { label: "Fleet & Corporate", phone: "+211 92 000 0004", email: "fleet@exceedlimited.com" },
+      sales: { label: "Sales", phone: "+211 91 237 7433", email: "sales@royalexceed.com" },
+      service: { label: "Service", phone: "+211 98 555 6999", email: "service@royalexceed.com" },
+      parts: { label: "Parts", phone: "+211 98 555 6999", email: "parts@royalexceed.com" },
+      fleet: { label: "Fleet & Corporate", phone: "+211 91 237 7433", email: "fleet@royalexceed.com" },
     },
     seoDefaults: {
       title: "Royal Exceed Co. Ltd | Soueast & 212 Vehicles — South Sudan & Sudan",
