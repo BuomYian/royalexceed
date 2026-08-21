@@ -14,6 +14,7 @@ import { StickyMobileCta } from "@/components/vehicle/sticky-mobile-cta";
 import { WhatsAppEnquireButton } from "@/components/shared/whatsapp-enquire-button";
 import { vehicleProductJsonLd } from "@/lib/seo";
 import { Button } from "@/components/ui/button";
+import { QuoteForm } from "@/components/forms/quote-form";
 import { Download } from "lucide-react";
 import Image from "next/image";
 
@@ -59,7 +60,6 @@ export default async function ModelDetailPage({ params }: PageProps<"/[locale]/m
           description: model.description,
           slug: model.slug,
           heroImageUrl: model.heroImageUrl,
-          startingPriceUsd: startingPrice,
           bodyType: model.bodyType,
           seats: model.seats,
         })}
@@ -119,9 +119,8 @@ export default async function ModelDetailPage({ params }: PageProps<"/[locale]/m
                 <p className="mb-2 text-sm font-semibold">Variants</p>
                 <ul className="space-y-1.5 text-sm">
                   {model.variants.map((v) => (
-                    <li key={v.id} className="flex justify-between">
-                      <span className="text-muted-foreground">{v.name}</span>
-                      {v.priceUsd && <span className="font-medium">${Number(v.priceUsd).toLocaleString()}</span>}
+                    <li key={v.id} className="text-muted-foreground">
+                      {v.name}
                     </li>
                   ))}
                 </ul>
@@ -164,6 +163,18 @@ export default async function ModelDetailPage({ params }: PageProps<"/[locale]/m
             <SpecTable groups={model.specGroups} />
           </div>
         )}
+
+        {/* Target of the "Request Quote" button above — that button has always
+            linked to this #quote anchor, but nothing here ever had the id. */}
+        <div id="quote" className="mt-16 scroll-mt-20 rounded-xl border border-border bg-muted/30 p-6 sm:p-10">
+          <div className="mx-auto max-w-lg text-center">
+            <h2 className="font-heading text-2xl font-bold">{t("quoteTitle")}</h2>
+            <p className="mt-2 text-muted-foreground">{t("quoteSubtitle", { model: model.displayName })}</p>
+          </div>
+          <div className="mt-8">
+            <QuoteForm modelId={model.id} />
+          </div>
+        </div>
 
         {related.length > 0 && (
           <div className="mt-16">

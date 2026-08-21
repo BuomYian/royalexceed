@@ -115,6 +115,7 @@ export function Header({ settings }: { settings: ResolvedSiteSettings }) {
                 {NAV_ITEMS.map((item) => (
                   <SheetClose
                     key={item.href}
+                    nativeButton={false}
                     render={
                       <Link
                         href={item.href}
@@ -137,9 +138,11 @@ export function Header({ settings }: { settings: ResolvedSiteSettings }) {
                     {settings.phone}
                   </a>
                   <SheetClose
+                    nativeButton={false}
                     render={
                       <Button
                         className="mx-3"
+                        nativeButton={false}
                         render={
                           <Link href="/test-drive">{t("bookTestDrive")}</Link>
                         }

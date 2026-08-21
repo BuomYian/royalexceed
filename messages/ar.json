@@ -107,7 +107,14 @@
     "comfortSection": "Comfort & Technology",
     "warrantySection": "Warranty",
     "addToCompare": "Add to Compare",
-    "inCompare": "In Compare"
+    "inCompare": "In Compare",
+    "quoteTitle": "Request a Quote",
+    "quoteSubtitle": "Tell us a bit about yourself and our sales team will get back to you with pricing for the {model}.",
+    "quoteFullName": "Full name",
+    "quotePhone": "Phone number",
+    "quoteEmail": "Email (optional)",
+    "quoteMessage": "Anything else we should know? (optional)",
+    "quoteSubmit": "Request Quote"
   },
   "compare": {
     "title": "Compare Models",

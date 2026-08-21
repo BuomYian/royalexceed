@@ -1,28 +1,25 @@
 import { useTranslations } from "next-intl";
-import { toUsdAmount, formatMoney, type Money } from "@/lib/currency";
 import { cn } from "@/lib/utils";
 
+/**
+ * Public-site pricing is quote-only by business decision — no model or
+ * inventory price is ever shown to visitors, regardless of whether one is
+ * actually set (`usdAmount`/`priceOnRequest` are accepted for backwards
+ * compatibility with existing call sites but are intentionally unused).
+ * Real prices remain fully visible in the admin CMS — see components/admin/*
+ * — this restriction is public-site-only.
+ */
 export function PriceDisplay({
-  usdAmount,
-  priceOnRequest,
   size = "md",
   className,
 }: {
-  usdAmount: Money;
+  usdAmount?: unknown;
   priceOnRequest?: boolean;
   size?: "sm" | "md" | "lg";
   className?: string;
 }) {
   const t = useTranslations("common");
-
-  const amount = priceOnRequest ? null : toUsdAmount(usdAmount);
   const sizeClass = size === "lg" ? "text-3xl" : size === "sm" ? "text-base" : "text-xl";
 
-  if (amount === null) {
-    return <span className={cn("font-heading font-bold", sizeClass, className)}>{t("priceOnRequest")}</span>;
-  }
-
-  return (
-    <span className={cn("font-heading font-bold", sizeClass, className)}>{formatMoney(amount)}</span>
-  );
+  return <span className={cn("font-heading font-bold", sizeClass, className)}>{t("priceOnRequest")}</span>;
 }

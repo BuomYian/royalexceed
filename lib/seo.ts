@@ -54,7 +54,6 @@ export function vehicleProductJsonLd(model: {
   description: string;
   slug: string;
   heroImageUrl: string | null;
-  startingPriceUsd: number | null;
   bodyType: string;
   seats: number;
 }) {
@@ -63,6 +62,12 @@ export function vehicleProductJsonLd(model: {
   // Royal Exceed Co. Ltd distributes two brands.
   const brand = model.displayName.split(" ")[0];
 
+  // No `offers`/price block: pricing is quote-only sitewide (public-facing
+  // pages never show a price — see components/vehicle/price-display.tsx),
+  // and an Offer with a real `price` here would leak it straight into page
+  // source and potentially Google's search-result rich snippets, defeating
+  // that entirely. `Offer` is optional on `Product`, so omitting it keeps
+  // the rest of the structured data valid.
   return {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -71,15 +76,6 @@ export function vehicleProductJsonLd(model: {
     image: model.heroImageUrl ? [model.heroImageUrl] : undefined,
     url: `${siteUrl()}/models/${model.slug}`,
     brand: { "@type": "Brand", name: brand },
-    ...(model.startingPriceUsd !== null && {
-      offers: {
-        "@type": "Offer",
-        priceCurrency: "USD",
-        price: model.startingPriceUsd,
-        availability: "https://schema.org/InStock",
-        seller: { "@type": "AutoDealer", name: "Royal Exceed Co. Ltd" },
-      },
-    }),
     additionalProperty: [
       { "@type": "PropertyValue", name: "Body type", value: model.bodyType },
       { "@type": "PropertyValue", name: "Seats", value: model.seats },
