@@ -38,6 +38,17 @@ export function optionalNumber(schema: z.ZodNumber) {
   }, schema.optional());
 }
 
+/**
+ * Optional Select-backed field. Base UI Selects need a defined (not
+ * `undefined`) starting value to stay controlled from first render, so forms
+ * default these to `""` — this coerces that placeholder back to `undefined`
+ * before validation runs, otherwise `z.enum(...).optional()` rejects `""`
+ * outright since it isn't a member of the enum.
+ */
+export function optionalSelect<T extends z.ZodTypeAny>(schema: T) {
+  return z.preprocess((val) => (val === "" ? undefined : val), schema.optional());
+}
+
 export const baseLeadFieldsSchema = z.object({
   fullName: z.string().trim().min(2, "forms.requiredField").max(120),
   phone: phoneSchema,

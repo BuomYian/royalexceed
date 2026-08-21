@@ -20,6 +20,41 @@ import {
 } from "@/lib/validations/lead";
 import type { ActionResult } from "@/lib/actions/models";
 
+const TIMELINE_LABELS: Record<string, string> = {
+  IMMEDIATELY: "Ready to buy now",
+  WITHIN_1_MONTH: "Within 1 month",
+  ONE_TO_THREE_MONTHS: "1–3 months",
+  RESEARCHING: "Just researching",
+};
+
+const PREFERRED_CONTACT_LABELS: Record<string, string> = {
+  PHONE: "Phone call",
+  WHATSAPP: "WhatsApp",
+  EMAIL: "Email",
+};
+
+/**
+ * `Lead` has no dedicated columns for variant/color/timeline/etc. — this
+ * folds the quote form's extra detail into the single `message` field so
+ * admins see everything the client asked for in one place (lead detail card,
+ * kanban preview, and the notification email all just render `message`).
+ */
+function formatQuoteMessage(data: QuoteLeadInput): string | undefined {
+  const parts: string[] = [];
+  if (data.variantName) parts.push(`Variant: ${data.variantName}`);
+  if (data.colorName) parts.push(`Color: ${data.colorName}`);
+  if (data.quantity > 1) parts.push(`Quantity: ${data.quantity}`);
+  if (data.timeline) parts.push(`Timeline: ${TIMELINE_LABELS[data.timeline]}`);
+  if (data.hasTradeIn) parts.push("Has a trade-in vehicle");
+  if (data.wantsFinancing) parts.push("Interested in financing");
+  if (data.preferredContact) parts.push(`Preferred contact: ${PREFERRED_CONTACT_LABELS[data.preferredContact]}`);
+  if (data.city) parts.push(`Location: ${data.city}`);
+
+  const summary = parts.join(" · ");
+  if (summary && data.message) return `${summary} — ${data.message}`;
+  return summary || data.message;
+}
+
 async function notifyLead(params: {
   type: string;
   fullName: string;
@@ -92,6 +127,7 @@ export async function submitQuoteLead(input: QuoteLeadInput): Promise<ActionResu
   }
   const data = parsed.data;
   const model = await prisma.model.findUnique({ where: { id: data.modelId } });
+  const message = formatQuoteMessage(data);
 
   await prisma.lead.create({
     data: {
@@ -99,14 +135,14 @@ export async function submitQuoteLead(input: QuoteLeadInput): Promise<ActionResu
       fullName: data.fullName,
       phone: data.phone,
       email: data.email,
-      message: data.message,
+      message,
       modelId: data.modelId,
       source: data.source ?? "website",
       pageUrl: data.pageUrl,
     },
   });
 
-  await notifyLead({ type: "quote request", fullName: data.fullName, phone: data.phone, email: data.email, modelName: model?.displayName });
+  await notifyLead({ type: "quote request", fullName: data.fullName, phone: data.phone, email: data.email, message, modelName: model?.displayName });
   revalidatePath("/admin/leads");
   return { success: true, data: undefined };
 }

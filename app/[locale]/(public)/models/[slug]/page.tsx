@@ -172,7 +172,11 @@ export default async function ModelDetailPage({ params }: PageProps<"/[locale]/m
             <p className="mt-2 text-muted-foreground">{t("quoteSubtitle", { model: model.displayName })}</p>
           </div>
           <div className="mt-8">
-            <QuoteForm modelId={model.id} />
+            <QuoteForm
+              modelId={model.id}
+              variants={model.variants.map((v) => ({ id: v.id, name: v.name }))}
+              colors={model.colors.map((c) => ({ id: c.id, name: c.name }))}
+            />
           </div>
         </div>
 

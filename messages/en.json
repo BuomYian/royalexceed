@@ -113,6 +113,30 @@
     "quoteFullName": "Full name",
     "quotePhone": "Phone number",
     "quoteEmail": "Email (optional)",
+    "quoteVariant": "Preferred variant",
+    "quoteAnyVariant": "Any variant",
+    "quoteColor": "Preferred color",
+    "quoteAnyColor": "Any color",
+    "quoteQuantity": "Quantity",
+    "quoteTimelineLabel": "When are you looking to buy?",
+    "quoteTimelinePlaceholder": "Select a timeframe",
+    "quoteTimelineOptions": {
+      "IMMEDIATELY": "Ready to buy now",
+      "WITHIN_1_MONTH": "Within 1 month",
+      "ONE_TO_THREE_MONTHS": "1–3 months",
+      "RESEARCHING": "Just researching"
+    },
+    "quoteCity": "City / delivery location",
+    "quoteCityPlaceholder": "e.g. Juba, Wau, Khartoum",
+    "quotePreferredContactLabel": "Preferred contact method",
+    "quotePreferredContactPlaceholder": "Select a method",
+    "quotePreferredContactOptions": {
+      "PHONE": "Phone call",
+      "WHATSAPP": "WhatsApp",
+      "EMAIL": "Email"
+    },
+    "quoteHasTradeIn": "I have a vehicle to trade in",
+    "quoteWantsFinancing": "I'm interested in financing options",
     "quoteMessage": "Anything else we should know? (optional)",
     "quoteSubmit": "Request Quote"
   },

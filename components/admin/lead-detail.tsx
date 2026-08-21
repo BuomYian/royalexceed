@@ -87,7 +87,9 @@ export function LeadDetail({
             <p><span className="text-muted-foreground">Phone:</span> {lead.phone}</p>
             {lead.email && <p><span className="text-muted-foreground">Email:</span> {lead.email}</p>}
             {lead.model && <p><span className="text-muted-foreground">Model:</span> {lead.model.displayName}</p>}
-            {lead.message && <p><span className="text-muted-foreground">Message:</span> {lead.message}</p>}
+            {lead.message && (
+              <p className="whitespace-pre-line"><span className="text-muted-foreground">Message:</span> {lead.message}</p>
+            )}
             {lead.source && <p><span className="text-muted-foreground">Source:</span> {lead.source}</p>}
           </CardContent>
         </Card>
