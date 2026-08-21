@@ -15,7 +15,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Honeypot } from "@/components/forms/honeypot";
 import { ConsentCheckbox } from "@/components/forms/consent-checkbox";
-import { TurnstileWidget } from "@/components/forms/turnstile-widget";
+import { TurnstileWidget, TURNSTILE_ENABLED } from "@/components/forms/turnstile-widget";
 import { Card, CardContent } from "@/components/ui/card";
 
 export function FinanceEnquiryForm() {
@@ -24,6 +24,9 @@ export function FinanceEnquiryForm() {
   const [pending, startTransition] = useTransition();
   const [done, setDone] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
+  // Gates Submit so it can't fire before Turnstile has a real token — see
+  // turnstile-widget.tsx for why a fixed timer would just reintroduce the bug.
+  const [turnstileReady, setTurnstileReady] = useState(!TURNSTILE_ENABLED);
 
   const form = useForm({
     resolver: zodResolver(financeLeadSchema),
@@ -85,11 +88,11 @@ export function FinanceEnquiryForm() {
       </label>
 
       <ConsentCheckbox control={form.control} name="consent" />
-      <TurnstileWidget onToken={(token) => form.setValue("turnstileToken", token)} />
+      <TurnstileWidget onToken={(token) => form.setValue("turnstileToken", token)} onReady={setTurnstileReady} />
 
       {serverError && <p className="text-sm text-destructive">{serverError}</p>}
 
-      <Button type="submit" size="lg" className="w-full" disabled={pending}>
+      <Button type="submit" size="lg" className="w-full" disabled={pending || !turnstileReady}>
         {pending && <Loader2 className="h-4 w-4 animate-spin" />}
         Send enquiry
       </Button>
