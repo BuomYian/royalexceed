@@ -1,7 +1,6 @@
 "use client";
 
 import { useLocale } from "next-intl";
-import { useParams } from "next/navigation";
 import { Globe } from "lucide-react";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
@@ -19,7 +18,6 @@ export function LocaleSwitcher({ compact = false }: { compact?: boolean }) {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
-  const params = useParams();
 
   return (
     <DropdownMenu>
@@ -35,13 +33,12 @@ export function LocaleSwitcher({ compact = false }: { compact?: boolean }) {
         {routing.locales.map((loc) => (
           <DropdownMenuItem
             key={loc}
-            onSelect={() =>
-              router.replace(
-                // @ts-expect-error -- dynamic pathname across locales is intentional here
-                { pathname, params },
-                { locale: loc },
-              )
-            }
+            // Base UI's Menu.Item has no `onSelect` — it's `onClick` (see
+            // node_modules/@base-ui/react/menu/item/MenuItem.d.ts). The old
+            // `onSelect` handler here was a silent no-op: it's a real DOM
+            // attribute name (the text-selection event), so React never
+            // stripped it or warned, it just never fired on a click.
+            onClick={() => router.replace(pathname, { locale: loc })}
           >
             {LABELS[loc] ?? loc}
           </DropdownMenuItem>

@@ -19,6 +19,7 @@ import { TurnstileWidget, TURNSTILE_ENABLED } from "@/components/forms/turnstile
 import { Card, CardContent } from "@/components/ui/card";
 
 export function FinanceEnquiryForm() {
+  const t = useTranslations("finance");
   const tForms = useTranslations("forms");
   const pathname = usePathname();
   const [pending, startTransition] = useTransition();
@@ -61,30 +62,30 @@ export function FinanceEnquiryForm() {
       <Honeypot register={form.register("honeypot")} />
 
       <div className="space-y-1.5">
-        <Label>Full name</Label>
+        <Label>{t("fullName")}</Label>
         <Input {...form.register("fullName")} autoComplete="name" />
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-1.5">
-          <Label>Phone number</Label>
+          <Label>{t("phone")}</Label>
           <Input {...form.register("phone")} type="tel" autoComplete="tel" />
           {form.formState.errors.phone && <p className="text-sm text-destructive">{tForms("invalidPhone")}</p>}
         </div>
         <div className="space-y-1.5">
-          <Label>Email (optional)</Label>
+          <Label>{t("email")}</Label>
           <Input {...form.register("email")} type="email" autoComplete="email" />
         </div>
       </div>
 
       <div className="space-y-1.5">
-        <Label>Message</Label>
-        <Textarea rows={3} {...form.register("message")} placeholder="Tell us about the vehicle(s) and quantity you need" />
+        <Label>{t("message")}</Label>
+        <Textarea rows={3} {...form.register("message")} placeholder={t("messagePlaceholder")} />
       </div>
 
       <label className="flex items-center gap-2.5 text-sm">
         <Switch checked={form.watch("isFleetEnquiry")} onCheckedChange={(v) => form.setValue("isFleetEnquiry", v)} />
-        This is a fleet / corporate enquiry
+        {t("fleetCheckbox")}
       </label>
 
       <ConsentCheckbox control={form.control} name="consent" />
@@ -94,7 +95,7 @@ export function FinanceEnquiryForm() {
 
       <Button type="submit" size="lg" className="w-full" disabled={pending || !turnstileReady}>
         {pending && <Loader2 className="h-4 w-4 animate-spin" />}
-        Send enquiry
+        {t("submit")}
       </Button>
     </form>
   );

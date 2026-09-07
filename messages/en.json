@@ -76,7 +76,11 @@
     "whyTechnicians": "Trained Technicians",
     "whyTechniciansBody": "Our workshop team is factory-trained on every Soueast and 212 model we sell.",
     "whyService": "Juba Service Center",
-    "whyServiceBody": "A dedicated after-sales facility in Juba Town, serving South Sudan and Sudan — no need to ship parts or vehicles abroad."
+    "whyServiceBody": "A dedicated after-sales facility in Juba Town, serving South Sudan and Sudan — no need to ship parts or vehicles abroad.",
+    "monFri": "Mon–Fri",
+    "saturday": "Saturday",
+    "sunday": "Sunday",
+    "getDirections": "Get directions"
   },
   "models": {
     "title": "Model Range",
@@ -155,6 +159,7 @@
       "SOLD": "Sold",
       "IN_TRANSIT": "In Transit"
     },
+    "allStatuses": "All statuses",
     "certifiedPreOwned": "Certified Pre-Owned",
     "mileage": "Mileage",
     "vin": "VIN",
@@ -184,6 +189,9 @@
   "services": {
     "title": "Service Booking",
     "subtitle": "Schedule maintenance or a repair with our trained technicians",
+    "fullName": "Full name",
+    "phone": "Phone number",
+    "email": "Email (optional)",
     "vehicleModel": "Vehicle model",
     "plateNumber": "Plate number (optional)",
     "vin": "VIN (optional)",
@@ -192,15 +200,22 @@
     "date": "Preferred date",
     "description": "Describe the issue (optional)",
     "menuTitle": "Service Menu",
-    "intervalsTitle": "Scheduled Maintenance Intervals"
+    "intervalsTitle": "Scheduled Maintenance Intervals",
+    "submit": "Book service",
+    "bookedTitle": "Service booked!",
+    "bookedBody": "Your reference number is {reference}. Our workshop team will confirm shortly."
   },
   "parts": {
     "title": "Genuine Parts",
     "subtitle": "Order genuine Soueast and 212 parts and accessories through Royal Exceed Co. Ltd",
+    "fullName": "Full name",
+    "phone": "Phone number",
+    "email": "Email (optional)",
     "partName": "Part name",
     "partNumber": "Part number (optional)",
     "vin": "VIN (optional)",
-    "quantity": "Quantity"
+    "quantity": "Quantity",
+    "submit": "Send enquiry"
   },
   "finance": {
     "title": "Financing & Corporate Purchase",
@@ -208,7 +223,14 @@
     "comingSoonBody": "We are finalizing local bank and leasing partnerships. Leave your details and we'll reach out as soon as financing options are available — or ask about our fleet/corporate purchase pathway today.",
     "fleetTitle": "Fleet & Corporate Purchase",
     "fleetBody": "NGOs, government agencies, and corporates can order in volume with dedicated account support.",
-    "documentsTitle": "Documents typically required"
+    "documentsTitle": "Documents typically required",
+    "fullName": "Full name",
+    "phone": "Phone number",
+    "email": "Email (optional)",
+    "message": "Message",
+    "messagePlaceholder": "Tell us about the vehicle(s) and quantity you need",
+    "fleetCheckbox": "This is a fleet / corporate enquiry",
+    "submit": "Send enquiry"
   },
   "about": {
     "title": "About Royal Exceed Co. Ltd",

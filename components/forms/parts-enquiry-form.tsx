@@ -60,18 +60,18 @@ export function PartsEnquiryForm() {
       <Honeypot register={form.register("honeypot")} />
 
       <div className="space-y-1.5">
-        <Label>Full name</Label>
+        <Label>{t("fullName")}</Label>
         <Input {...form.register("fullName")} autoComplete="name" />
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-1.5">
-          <Label>Phone number</Label>
+          <Label>{t("phone")}</Label>
           <Input {...form.register("phone")} type="tel" autoComplete="tel" />
           {form.formState.errors.phone && <p className="text-sm text-destructive">{tForms("invalidPhone")}</p>}
         </div>
         <div className="space-y-1.5">
-          <Label>Email (optional)</Label>
+          <Label>{t("email")}</Label>
           <Input {...form.register("email")} type="email" autoComplete="email" />
         </div>
       </div>
@@ -103,7 +103,7 @@ export function PartsEnquiryForm() {
 
       <Button type="submit" size="lg" className="w-full" disabled={pending || !turnstileReady}>
         {pending && <Loader2 className="h-4 w-4 animate-spin" />}
-        Send enquiry
+        {t("submit")}
       </Button>
     </form>
   );

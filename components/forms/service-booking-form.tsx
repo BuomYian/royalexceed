@@ -61,8 +61,8 @@ export function ServiceBookingForm() {
       <Card className="mx-auto max-w-lg">
         <CardContent className="flex flex-col items-center gap-4 py-10 text-center">
           <CheckCircle2 className="h-12 w-12 text-success" />
-          <h2 className="font-heading text-2xl font-bold">Service booked!</h2>
-          <p className="text-muted-foreground">Your reference number is {reference}. Our workshop team will confirm shortly.</p>
+          <h2 className="font-heading text-2xl font-bold">{t("bookedTitle")}</h2>
+          <p className="text-muted-foreground">{t("bookedBody", { reference })}</p>
         </CardContent>
       </Card>
     );
@@ -73,19 +73,19 @@ export function ServiceBookingForm() {
       <Honeypot register={form.register("honeypot")} />
 
       <div className="space-y-1.5">
-        <Label>Full name</Label>
+        <Label>{t("fullName")}</Label>
         <Input {...form.register("fullName")} autoComplete="name" />
         {form.formState.errors.fullName && <p className="text-sm text-destructive">{tForms("requiredField")}</p>}
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-1.5">
-          <Label>Phone number</Label>
+          <Label>{t("phone")}</Label>
           <Input {...form.register("phone")} type="tel" autoComplete="tel" />
           {form.formState.errors.phone && <p className="text-sm text-destructive">{tForms("invalidPhone")}</p>}
         </div>
         <div className="space-y-1.5">
-          <Label>Email (optional)</Label>
+          <Label>{t("email")}</Label>
           <Input {...form.register("email")} type="email" autoComplete="email" />
         </div>
       </div>
@@ -138,7 +138,7 @@ export function ServiceBookingForm() {
 
       <Button type="submit" size="lg" className="w-full" disabled={pending || !turnstileReady}>
         {pending && <Loader2 className="h-4 w-4 animate-spin" />}
-        Book service
+        {t("submit")}
       </Button>
     </form>
   );

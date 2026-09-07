@@ -29,16 +29,16 @@ export function LocationBlock({ settings }: { settings: ResolvedSiteSettings }) 
           <div className="flex gap-3">
             <Clock className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
             <div className="text-sm">
-              <p>Mon–Fri: {settings.hours.monFri}</p>
-              <p>Saturday: {settings.hours.saturday}</p>
-              <p>Sunday: {settings.hours.sunday}</p>
+              <p>{t("monFri")}: {settings.hours.monFri}</p>
+              <p>{t("saturday")}: {settings.hours.saturday}</p>
+              <p>{t("sunday")}: {settings.hours.sunday}</p>
             </div>
           </div>
           <Button
             variant="outline"
             render={
               <a href={settings.address.mapUrl} target="_blank" rel="noopener noreferrer">
-                <Navigation className="h-4 w-4" /> Get directions
+                <Navigation className="h-4 w-4" /> {t("getDirections")}
               </a>
             }
           />

@@ -25,7 +25,7 @@ export function InventoryStatusFilter() {
       >
         <SelectTrigger className="w-48"><SelectValue /></SelectTrigger>
         <SelectContent>
-          <SelectItem value="all">All statuses</SelectItem>
+          <SelectItem value="all">{t("allStatuses")}</SelectItem>
           {STATUSES.map((s) => (
             <SelectItem key={s} value={s}>{t(`status.${s}` as "status.AVAILABLE")}</SelectItem>
           ))}
