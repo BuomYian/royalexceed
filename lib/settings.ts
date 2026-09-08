@@ -54,19 +54,35 @@ export const DEFAULT_SITE_SETTINGS: SiteSettingsData = {
 
 export type ResolvedSiteSettings = SiteSettingsData;
 
+async function loadSiteSettings(): Promise<ResolvedSiteSettings> {
+  const row = await prisma.siteSetting.findUnique({
+    where: { id: "singleton" },
+  });
+
+  if (!row) {
+    return DEFAULT_SITE_SETTINGS;
+  }
+
+  const parsed = siteSettingsDataSchema.safeParse(row.data);
+  return parsed.success ? parsed.data : DEFAULT_SITE_SETTINGS;
+}
+
+/**
+ * Uncached read, straight from the row — for the admin settings **editor**.
+ *
+ * The editor must never be populated from `getSiteSettings()`. That read can
+ * serve a stale snapshot, and because the form saves back every field it was
+ * given, a save would write the stale values into the database and promote a
+ * cache artifact into real data. That is not hypothetical: it is how the
+ * department emails reverted to @royalexceed.com after the row had already
+ * been corrected. Read what is actually stored before offering it for edit.
+ */
+export function getSiteSettingsForEdit(): Promise<ResolvedSiteSettings> {
+  return loadSiteSettings();
+}
+
 const readSiteSettings = unstable_cache(
-  async (): Promise<ResolvedSiteSettings> => {
-    const row = await prisma.siteSetting.findUnique({
-      where: { id: "singleton" },
-    });
-
-    if (!row) {
-      return DEFAULT_SITE_SETTINGS;
-    }
-
-    const parsed = siteSettingsDataSchema.safeParse(row.data);
-    return parsed.success ? parsed.data : DEFAULT_SITE_SETTINGS;
-  },
+  loadSiteSettings,
   ["site-settings"],
   {
     tags: ["site-settings"],

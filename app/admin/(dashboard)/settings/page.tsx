@@ -1,12 +1,13 @@
 import { requirePageAccess } from "@/lib/auth";
-import { getSiteSettings } from "@/lib/settings";
+import { getSiteSettingsForEdit } from "@/lib/settings";
 import { SettingsForm } from "@/components/admin/settings-form";
 
 export const metadata = { title: "Site Settings" };
 
 export default async function AdminSettingsPage() {
   await requirePageAccess("settings", "read");
-  const settings = await getSiteSettings();
+  // Uncached on purpose — see getSiteSettingsForEdit.
+  const settings = await getSiteSettingsForEdit();
 
   return (
     <div className="max-w-3xl space-y-4">
