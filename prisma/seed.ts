@@ -85,10 +85,10 @@ async function seedSiteSettings() {
     },
     hours: { monFri: "8:00 AM – 6:00 PM", saturday: "8:00 AM – 6:00 PM", sunday: "Closed" },
     socials: {
-      facebook: "https://facebook.com/exceedlimited",
-      instagram: "https://instagram.com/exceedlimited",
-      tiktok: "https://tiktok.com/@exceedlimited",
-      x: "https://x.com/exceedlimited",
+      facebook: "https://facebook.com/211motors",
+      instagram: "https://instagram.com/211motors",
+      tiktok: "https://tiktok.com/@211motors",
+      x: "https://x.com/211motors",
     },
     // Left empty on purpose: the home page builds its hero banner from
     // featured models' own `heroImageUrl` (live CMS data) whenever any are
@@ -750,7 +750,7 @@ async function seedModels() {
 async function seedInventory(modelIds: Record<string, { id: string; variantIds: string[] }>) {
   const units: Prisma.InventoryUnitCreateInput[] = [
     {
-      stockNumber: "EXL-S05-0001",
+      stockNumber: "211M-S05-0001",
       vin: "LSVAX0R47NA000001",
       model: { connect: { id: modelIds.s05.id } },
       variant: { connect: { id: modelIds.s05.variantIds[0] } },
@@ -762,7 +762,7 @@ async function seedInventory(modelIds: Record<string, { id: string; variantIds: 
       arrivalDate: new Date("2026-06-01"),
     },
     {
-      stockNumber: "EXL-S05-0002",
+      stockNumber: "211M-S05-0002",
       vin: "LSVAX0R47NA000002",
       model: { connect: { id: modelIds.s05.id } },
       variant: { connect: { id: modelIds.s05.variantIds[1] } },
@@ -774,7 +774,7 @@ async function seedInventory(modelIds: Record<string, { id: string; variantIds: 
       arrivalDate: new Date("2026-06-15"),
     },
     {
-      stockNumber: "EXL-S06-0001",
+      stockNumber: "211M-S06-0001",
       vin: "LSVAX0R47NA000101",
       model: { connect: { id: modelIds.s06.id } },
       variant: { connect: { id: modelIds.s06.variantIds[0] } },
@@ -786,7 +786,7 @@ async function seedInventory(modelIds: Record<string, { id: string; variantIds: 
       arrivalDate: new Date("2026-06-10"),
     },
     {
-      stockNumber: "EXL-S06-0002",
+      stockNumber: "211M-S06-0002",
       vin: "LSVAX0R47NA000102",
       model: { connect: { id: modelIds.s06.id } },
       variant: { connect: { id: modelIds.s06.variantIds[1] } },
@@ -798,7 +798,7 @@ async function seedInventory(modelIds: Record<string, { id: string; variantIds: 
       arrivalDate: new Date("2026-07-01"),
     },
     {
-      stockNumber: "EXL-S06DM-0001",
+      stockNumber: "211M-S06DM-0001",
       vin: "LSVAX0R47NA000201",
       model: { connect: { id: modelIds["s06-dm"].id } },
       variant: { connect: { id: modelIds["s06-dm"].variantIds[0] } },
@@ -810,7 +810,7 @@ async function seedInventory(modelIds: Record<string, { id: string; variantIds: 
       arrivalDate: new Date("2026-09-01"),
     },
     {
-      stockNumber: "EXL-S07-0001",
+      stockNumber: "211M-S07-0001",
       vin: "LSVAX0R47NA000301",
       model: { connect: { id: modelIds.s07.id } },
       variant: { connect: { id: modelIds.s07.variantIds[0] } },
@@ -822,7 +822,7 @@ async function seedInventory(modelIds: Record<string, { id: string; variantIds: 
       arrivalDate: new Date("2026-05-20"),
     },
     {
-      stockNumber: "EXL-S07-0002",
+      stockNumber: "211M-S07-0002",
       vin: "LSVAX0R47NA000302",
       model: { connect: { id: modelIds.s07.id } },
       variant: { connect: { id: modelIds.s07.variantIds[1] } },
@@ -835,7 +835,7 @@ async function seedInventory(modelIds: Record<string, { id: string; variantIds: 
       soldAt: new Date("2026-05-02"),
     },
     {
-      stockNumber: "EXL-S09-0001",
+      stockNumber: "211M-S09-0001",
       vin: "LSVAX0R47NA000401",
       model: { connect: { id: modelIds.s09.id } },
       variant: { connect: { id: modelIds.s09.variantIds[0] } },
@@ -847,7 +847,7 @@ async function seedInventory(modelIds: Record<string, { id: string; variantIds: 
       arrivalDate: new Date("2026-06-25"),
     },
     {
-      stockNumber: "EXL-S09-0002",
+      stockNumber: "211M-S09-0002",
       vin: "LSVAX0R47NA000402",
       model: { connect: { id: modelIds.s09.id } },
       variant: { connect: { id: modelIds.s09.variantIds[1] } },
@@ -859,7 +859,7 @@ async function seedInventory(modelIds: Record<string, { id: string; variantIds: 
       arrivalDate: new Date("2026-10-01"),
     },
     {
-      stockNumber: "EXL-212T1-0001",
+      stockNumber: "211M-212T1-0001",
       vin: "LSVAX0R47NA000501",
       model: { connect: { id: modelIds["212-t01"].id } },
       variant: { connect: { id: modelIds["212-t01"].variantIds[0] } },
@@ -871,7 +871,7 @@ async function seedInventory(modelIds: Record<string, { id: string; variantIds: 
       arrivalDate: new Date("2026-06-20"),
     },
     {
-      stockNumber: "EXL-212T2-0001",
+      stockNumber: "211M-212T2-0001",
       vin: "LSVAX0R47NA000601",
       model: { connect: { id: modelIds["212-t02"].id } },
       variant: { connect: { id: modelIds["212-t02"].variantIds[1] } },
@@ -905,7 +905,7 @@ async function seedInventory(modelIds: Record<string, { id: string; variantIds: 
 async function seedArticles(authorId: string) {
   const articles = [
     {
-      slug: "exceed-limited-now-open-in-juba-town",
+      slug: "211motors-now-open-in-juba-town",
       title: "211Motors Now Open in Juba Town",
       excerpt: "211Motors proudly opens its doors as the sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan.",
       body: "<p>We are excited to announce the opening of our new showroom in Juba Town, near Muduria Roundabout. In partnership with FBM International Co., 211Motors is the sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan, bringing genuine new vehicles, factory-backed warranty, and trained after-sales technicians to the region for the first time.</p><p>Visit our showroom to explore the full Soueast range — S05, S06, S06 DM, S07, and flagship S09 — alongside the rugged 212 T01 and T02 off-roaders.</p>",

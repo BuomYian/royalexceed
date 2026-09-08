@@ -1,6 +1,6 @@
 import { test as base, expect, type Page } from "@playwright/test";
 
-const SUPER_ADMIN_EMAIL = process.env.SEED_SUPER_ADMIN_EMAIL ?? "admin@exceedlimited.com";
+const SUPER_ADMIN_EMAIL = process.env.SEED_SUPER_ADMIN_EMAIL ?? "admin@211motors.com";
 const SUPER_ADMIN_PASSWORD = process.env.SEED_SUPER_ADMIN_PASSWORD ?? "ChangeMe123!";
 
 async function loginAsSuperAdmin(page: Page) {

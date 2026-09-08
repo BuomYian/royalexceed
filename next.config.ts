@@ -27,6 +27,27 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      // The launch announcement was published under the old company's name.
+      // Its slug changed to "211motors-now-open-in-juba-town"; these keep the
+      // already-indexed URL alive with a 308 so the link equity carries over.
+      // Two entries because `localePrefix: "as-needed"` means English has no
+      // prefix (/news/...) while Arabic does (/ar/news/...) — and because
+      // next.config redirects are evaluated *before* proxy.ts, so next-intl's
+      // middleware never gets a chance to normalise /en/... first.
+      {
+        source: "/news/exceed-limited-now-open-in-juba-town",
+        destination: "/news/211motors-now-open-in-juba-town",
+        permanent: true,
+      },
+      {
+        source: "/:locale(en|ar)/news/exceed-limited-now-open-in-juba-town",
+        destination: "/:locale/news/211motors-now-open-in-juba-town",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

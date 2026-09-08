@@ -20,7 +20,7 @@ final values). Search the codebase for these and replace with real values before
 | Placeholder | Where |
 |---|---|
 | Phone `+211 92 000 0000`, WhatsApp `211920000000` | `lib/settings.ts` (`DEFAULT_SITE_SETTINGS`), `prisma/seed.ts`, admin → Settings |
-| Email `info@exceedlimited.com` + department emails | same as above |
+| Email `info@211motors.com` + department emails — set, but confirm the mailboxes actually exist | same as above |
 | Opening hours, address, map coordinates (`4.8517, 31.5825` — approximate Juba Town) | same as above |
 | Social links (Facebook/Instagram/TikTok/X) | same as above |
 | Brand colors (deep burgundy accent on near-black, per spec §5 fallback) | `app/globals.css` |
@@ -279,10 +279,15 @@ identity was clarified:
   location was added. If Sudan gets its own showroom later, extend `SiteSetting.data` with a
   `locations: []` array (currently a single `address` object) and update `LocationBlock`/`/contact`
   to render multiple entries.
-- Inventory stock-number prefixes changed from `FBM-*` to `EXL-*` (e.g. `EXL-S07-0001`) to match
-  the new company name.
-- Contact email domain placeholders moved from `fbminternational.com` to `exceedlimited.com`
-  (still flagged "REPLACE BEFORE GO-LIVE" like every other placeholder above).
+- Inventory stock-number prefixes moved `FBM-*` → `EXL-*` → `211M-*` (e.g. `211M-S07-0001`),
+  tracking the company renames. Note that `stockNumber` is the public URL segment for
+  `/inventory/[stockNumber]` and is emitted into `sitemap.xml`, so changing an existing unit's
+  stock number changes a live URL — fine for the seeded placeholder units, but real stock should
+  be renumbered only with a redirect.
+- Contact email domains moved `fbminternational.com` → `exceedlimited.com` → `211motors.com`,
+  tracking the two company renames. The live `SiteSetting` row, `DEFAULT_SITE_SETTINGS`, and the
+  seed values are all on `211motors.com` now; what is *not* verified is whether those mailboxes
+  are provisioned, so treat them as live-but-unconfirmed rather than as placeholders.
 
 ## Known gaps / follow-ups
 

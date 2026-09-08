@@ -31,10 +31,10 @@ export const DEFAULT_SITE_SETTINGS: SiteSettingsData = {
     sunday: "Closed",
   },
   socials: {
-    facebook: "https://facebook.com/exceedlimited",
-    instagram: "https://instagram.com/exceedlimited",
-    tiktok: "https://tiktok.com/@exceedlimited",
-    x: "https://x.com/exceedlimited",
+    facebook: "https://facebook.com/211motors",
+    instagram: "https://instagram.com/211motors",
+    tiktok: "https://tiktok.com/@211motors",
+    x: "https://x.com/211motors",
   },
   heroSlides: [],
   departments: {
@@ -68,7 +68,20 @@ const readSiteSettings = unstable_cache(
     return parsed.success ? parsed.data : DEFAULT_SITE_SETTINGS;
   },
   ["site-settings"],
-  { tags: ["site-settings"] },
+  {
+    tags: ["site-settings"],
+    // Belt-and-braces alongside the tag. An admin save calls
+    // `revalidateTag("site-settings", "max")` for an instant update, but that
+    // signal only reaches the deployment the save ran on — editing settings
+    // from a local dev server pointed at the production database leaves the
+    // deployed Data Cache serving a stale snapshot *indefinitely*, because an
+    // `unstable_cache` entry with no `revalidate` never expires on its own.
+    // (That is exactly how /contact went on advertising @royalexceed.com
+    // addresses for weeks after the database had been corrected.) A 5-minute
+    // ceiling lets the site self-heal; the row is a single small record, so
+    // re-reading it is cheap.
+    revalidate: 300,
+  },
 );
 
 /** Per-request-memoized, tag-cached site settings. Call `revalidateTag('site-settings', 'max')` after admin saves. */
