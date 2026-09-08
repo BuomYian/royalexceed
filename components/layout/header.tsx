@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Menu, X, Phone } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -15,6 +15,7 @@ import {
   SheetClose,
 } from "@/components/ui/sheet";
 import { LocaleSwitcher } from "@/components/layout/locale-switcher";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
 import type { ResolvedSiteSettings } from "@/lib/settings";
 import { cn } from "@/lib/utils";
 
@@ -33,10 +34,30 @@ export function Header({ settings }: { settings: ResolvedSiteSettings }) {
   const t = useTranslations("nav");
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Condenses the bar once the page moves, so the header reacts to scrolling
+  // instead of sitting as a fixed slab over the hero.
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border/60 bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70">
-      <div className="container-brand flex h-16 items-center justify-between gap-4">
+    <header
+      className={cn(
+        "sticky top-0 z-40 border-b bg-background/85 backdrop-blur transition-[background-color,border-color,box-shadow] duration-300 supports-[backdrop-filter]:bg-background/70",
+        scrolled ? "border-border shadow-lg shadow-background/40" : "border-border/60",
+      )}
+    >
+      <div
+        className={cn(
+          "container-brand flex items-center justify-between gap-4 transition-[height] duration-300",
+          scrolled ? "h-14" : "h-16",
+        )}
+      >
         <Link
           href="/"
           className="flex items-center gap-2 font-heading text-lg font-bold tracking-tight"
@@ -46,7 +67,7 @@ export function Header({ settings }: { settings: ResolvedSiteSettings }) {
             alt="Royal Exceed Co. Ltd"
             width={36}
             height={36}
-            className="h-9 w-9 rounded"
+            className={cn("rounded transition-all duration-300", scrolled ? "h-8 w-8" : "h-9 w-9")}
             priority
           />
           <span className="hidden sm:inline">Royal Exceed Co. Ltd</span>
@@ -68,6 +89,7 @@ export function Header({ settings }: { settings: ResolvedSiteSettings }) {
         </nav>
 
         <div className="hidden items-center gap-2 lg:flex">
+          <ThemeToggle />
           <LocaleSwitcher />
           {/* <a
             href={`tel:${settings.phone.replace(/\s+/g, "")}`}
@@ -82,6 +104,7 @@ export function Header({ settings }: { settings: ResolvedSiteSettings }) {
         </div>
 
         <div className="flex items-center gap-1 lg:hidden">
+          <ThemeToggle />
           <LocaleSwitcher compact />
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger

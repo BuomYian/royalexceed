@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { ADMIN_NAV } from "@/components/layout/admin-sidebar";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { can } from "@/lib/rbac";
 import { cn } from "@/lib/utils";
 import { CommandPalette } from "@/components/admin/command-palette";
@@ -107,6 +108,7 @@ export function AdminTopbar({
       <CommandPalette open={paletteOpen} onOpenChange={setPaletteOpen} role={user.role} />
 
       <div className="ms-auto flex items-center gap-3">
+        <ThemeToggle />
         <div className="hidden text-end sm:block">
           <p className="text-sm font-medium leading-tight">{user.fullName}</p>
           <p className="text-xs leading-tight text-muted-foreground">{user.role.replace("_", " ")}</p>

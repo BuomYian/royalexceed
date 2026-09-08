@@ -5,6 +5,7 @@ import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { ThemeProvider } from "@/components/theme-provider";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { WhatsAppButton } from "@/components/shared/whatsapp-button";
@@ -58,11 +59,15 @@ export default async function LocaleLayout({
   const settings = await getSiteSettings();
 
   return (
+    // suppressHydrationWarning: next-themes sets the theme class on <html>
+    // from an inline script before React hydrates, so the server markup
+    // deliberately won't match.
     <html
       lang={locale}
       dir={dir}
+      suppressHydrationWarning
       data-scroll-behavior="smooth"
-      className={`dark ${interTight.variable} ${inter.variable} h-full antialiased`}
+      className={`${interTight.variable} ${inter.variable} h-full antialiased`}
       style={
         {
           "--font-heading": "var(--font-heading-family)",
@@ -71,24 +76,29 @@ export default async function LocaleLayout({
       }
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
-        <NextIntlClientProvider>
-          <TooltipProvider delay={150}>
-            {settings.maintenanceMode ? (
-              <MaintenanceScreen />
-            ) : (
-              <>
-                <Header settings={settings} />
-                <main className="flex-1">{children}</main>
-                <Footer settings={settings} />
-                <WhatsAppButton
-                  phone={settings.whatsappNumber}
-                  message="Hello Royal Exceed Co. Ltd, I'd like some information."
-                />
-              </>
-            )}
-            <Toaster richColors position="top-center" />
-          </TooltipProvider>
-        </NextIntlClientProvider>
+        {/* Light is the default first impression; the header toggle switches to
+            the dark brand palette and persists that choice per visitor. Swap to
+            enableSystem + defaultTheme="system" to follow the OS setting instead. */}
+        <ThemeProvider defaultTheme="light" enableSystem={false} storageKey="royal-exceed-theme">
+          <NextIntlClientProvider>
+            <TooltipProvider delay={150}>
+              {settings.maintenanceMode ? (
+                <MaintenanceScreen />
+              ) : (
+                <>
+                  <Header settings={settings} />
+                  <main className="flex-1">{children}</main>
+                  <Footer settings={settings} />
+                  <WhatsAppButton
+                    phone={settings.whatsappNumber}
+                    message="Hello Royal Exceed Co. Ltd, I'd like some information."
+                  />
+                </>
+              )}
+              <Toaster richColors position="top-center" />
+            </TooltipProvider>
+          </NextIntlClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

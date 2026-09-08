@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Inter_Tight } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { ThemeProvider } from "@/components/theme-provider";
 import "../globals.css";
 
 const interTight = Inter_Tight({
@@ -18,13 +19,14 @@ export const metadata: Metadata = {
 };
 
 // Root layout for the entire /admin tree (multiple-root-layouts pattern — see
-// app/[locale]/layout.tsx for the public-site counterpart). Deliberately light
-// theme (no "dark" class) and no sidebar chrome here: the authenticated shell
-// with sidebar/topbar lives in app/admin/(dashboard)/layout.tsx so the login
-// page can render standalone.
+// app/[locale]/layout.tsx for the public-site counterpart). Light-first (the
+// dashboard is a daytime work tool) with its own theme storage key, so staff
+// toggling the dashboard to dark doesn't also re-theme the public site. No
+// sidebar chrome here: the authenticated shell with sidebar/topbar lives in
+// app/admin/(dashboard)/layout.tsx so the login page can render standalone.
 export default function AdminRootLayout({ children }: LayoutProps<"/admin">) {
   return (
-    <html lang="en" data-scroll-behavior="smooth" className={`${interTight.variable} ${inter.variable} h-full antialiased`}
+    <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth" className={`${interTight.variable} ${inter.variable} h-full antialiased`}
       style={
         {
           "--font-heading": "var(--font-heading-family)",
@@ -33,10 +35,12 @@ export default function AdminRootLayout({ children }: LayoutProps<"/admin">) {
       }
     >
       <body className="min-h-full bg-background text-foreground">
-        <TooltipProvider delay={150}>
-          {children}
-          <Toaster richColors position="top-right" />
-        </TooltipProvider>
+        <ThemeProvider defaultTheme="light" enableSystem={false} storageKey="royal-exceed-admin-theme">
+          <TooltipProvider delay={150}>
+            {children}
+            <Toaster richColors position="top-right" />
+          </TooltipProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

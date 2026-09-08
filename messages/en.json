@@ -80,7 +80,16 @@
     "monFri": "Mon–Fri",
     "saturday": "Saturday",
     "sunday": "Sunday",
-    "getDirections": "Get directions"
+    "getDirections": "Get directions",
+    "statsTitle": "Royal Exceed Co. Ltd at a glance",
+    "stats": {
+      "models": "Models in the range",
+      "stock": "Units in stock or in transit",
+      "countries": "Countries served",
+      "genuine": "Genuine factory parts"
+    },
+    "testimonialPrev": "Previous testimonial",
+    "testimonialNext": "Next testimonial"
   },
   "models": {
     "title": "Model Range",

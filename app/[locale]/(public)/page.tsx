@@ -4,9 +4,11 @@ import { getFeaturedModels, getModelsForHero } from "@/lib/data/models";
 import { getFeaturedInventory } from "@/lib/data/inventory";
 import { getApprovedTestimonials } from "@/lib/data/testimonials";
 import { getLatestArticles } from "@/lib/data/articles";
+import { getSiteStats } from "@/lib/data/stats";
 import { Hero } from "@/components/marketing/hero";
 import { AboutTeaser } from "@/components/marketing/about-teaser";
 import { TrustBar } from "@/components/marketing/trust-bar";
+import { StatsBand } from "@/components/marketing/stats-band";
 import { ModelRangeGrid } from "@/components/marketing/model-range-grid";
 import { FeaturedInventoryStrip } from "@/components/marketing/featured-inventory-strip";
 import { WhyFbm } from "@/components/marketing/why-fbm";
@@ -30,13 +32,16 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
-  const [settings, models, heroModels, inventory, testimonials, articles] = await Promise.all([
+  const [settings, models, heroModels, inventory, testimonials, articles, stats] = await Promise.all([
     getSiteSettings(),
     getFeaturedModels(),
     getModelsForHero(),
     getFeaturedInventory(),
-    getApprovedTestimonials(4),
+    // The testimonials block is a carousel now, so pull enough to be worth
+    // rotating through rather than the four that filled the old static grid.
+    getApprovedTestimonials(8),
     getLatestArticles(3),
+    getSiteStats(),
   ]);
 
   // Prefer live model data for the hero banner: `SiteSetting.heroSlides` has
@@ -61,6 +66,9 @@ export default async function HomePage() {
       <Hero slides={heroSlides.filter((s) => s.imageUrl)} />
       <Reveal><AboutTeaser /></Reveal>
       <TrustBar />
+      {/* Counts up from zero on scroll-in — StatsBand runs its own
+          IntersectionObserver, so it isn't wrapped in <Reveal>. */}
+      <StatsBand modelCount={stats.modelCount} unitsInStock={stats.unitsInStock} />
       {/* These two grids stagger-reveal each card individually (inside the
           component itself) rather than fading in as one block. */}
       <ModelRangeGrid

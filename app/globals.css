@@ -51,10 +51,14 @@
   --radius-2xl: calc(var(--radius) * 2);
 }
 
-/* FBM International brand tokens.
-   Public site is dark-first (near-black + burgundy accent); admin dashboard is light.
-   Toggle: the "dark" class is applied on <html> in app/[locale]/layout.tsx only. */
+/* Royal Exceed Co. Ltd brand tokens.
+   Both palettes are live: next-themes puts the "dark" class on <html> (see
+   components/theme-provider.tsx). The public site and the admin dashboard both
+   default to light, each with its own toggle and its own storage key.
+   `color-scheme` keeps native UI — scrollbars, date pickers, form controls —
+   in step with the palette. */
 :root {
+  color-scheme: light;
   --background: oklch(1 0 0);
   --foreground: oklch(0.18 0.005 285);
   --card: oklch(1 0 0);
@@ -94,6 +98,7 @@
 }
 
 .dark {
+  color-scheme: dark;
   --background: oklch(0.15 0.005 250); /* near-black #0B0D0F */
   --foreground: oklch(0.97 0.002 285);
   --card: oklch(0.19 0.006 250);
@@ -121,6 +126,19 @@
   --chart-3: oklch(0.7 0.15 150);
   --chart-4: oklch(0.78 0.15 80);
   --chart-5: oklch(0.7 0.01 285);
+  /* The admin sidebar reads these, not the tokens above (bg-sidebar,
+     text-sidebar-foreground, …). Without dark values here they fall through
+     to the light `:root` set, which left the nav rail white against a
+     near-black dashboard. `--sidebar` sits just above `--background` so the
+     rail still reads as its own panel rather than merging into the page. */
+  --sidebar: oklch(0.18 0.006 250);
+  --sidebar-foreground: oklch(0.97 0.002 285);
+  --sidebar-primary: oklch(0.5 0.19 18);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: oklch(0.27 0.008 250);
+  --sidebar-accent-foreground: oklch(0.97 0.002 285);
+  --sidebar-border: oklch(1 0 0 / 12%);
+  --sidebar-ring: oklch(0.5 0.19 18 / 0.6);
 }
 
 @layer base {
@@ -160,5 +178,27 @@
 @layer utilities {
   .container-brand {
     @apply mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-8;
+  }
+}
+
+/* Hero motion. Both are re-triggered by remounting the element with a
+   `key={activeSlide}` rather than by toggling classes, so the animation
+   restarts cleanly on every slide change. The `prefers-reduced-motion` block
+   above already collapses these to ~0ms for users who ask for less motion. */
+@keyframes hero-kenburns {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+
+@keyframes hero-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
   }
 }

@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { PriceDisplay } from "@/components/vehicle/price-display";
 import { Card, CardContent } from "@/components/ui/card";
@@ -23,7 +24,7 @@ export function VehicleCard({
 
   return (
     <Link href={`/models/${model.slug}`} className="group block">
-      <Card className="overflow-hidden py-0 transition-shadow hover:shadow-lg">
+      <Card className="overflow-hidden py-0 transition-all duration-300 ease-out group-hover:-translate-y-1 group-hover:border-primary/40 group-hover:shadow-xl group-hover:shadow-primary/5 motion-reduce:transition-none motion-reduce:group-hover:translate-y-0">
         <div className="relative aspect-video overflow-hidden bg-muted">
           {model.thumbnailUrl && (
             <Image
@@ -40,7 +41,15 @@ export function VehicleCard({
         </div>
         <CardContent className="space-y-2 pb-5">
           <div>
-            <h3 className="font-heading text-lg font-bold">{model.displayName}</h3>
+            <h3 className="flex items-center gap-1.5 font-heading text-lg font-bold">
+              {model.displayName}
+              {/* Slides in on hover as a "this is a link" affordance — the card
+                  otherwise gives no hint that the whole thing is clickable. */}
+              <ArrowRight
+                className="h-4 w-4 -translate-x-1 text-primary opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 rtl:rotate-180 rtl:translate-x-1 rtl:group-hover:translate-x-0 motion-reduce:transition-none"
+                aria-hidden="true"
+              />
+            </h3>
             {model.tagline && <p className="text-sm text-muted-foreground">{model.tagline}</p>}
           </div>
           <div className="flex items-center justify-between">

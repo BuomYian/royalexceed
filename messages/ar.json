@@ -80,7 +80,16 @@
     "monFri": "الإثنين–الجمعة",
     "saturday": "السبت",
     "sunday": "الأحد",
-    "getDirections": "احصل على الاتجاهات"
+    "getDirections": "احصل على الاتجاهات",
+    "statsTitle": "Royal Exceed المحدودة في لمحة",
+    "stats": {
+      "models": "طرازات في التشكيلة",
+      "stock": "وحدات متوفرة أو في الطريق",
+      "countries": "دولتان نخدمهما",
+      "genuine": "قطع غيار أصلية من المصنع"
+    },
+    "testimonialPrev": "الشهادة السابقة",
+    "testimonialNext": "الشهادة التالية"
   },
   "models": {
     "title": "تشكيلة الطرازات",
