@@ -11,17 +11,14 @@
  */
 import { createClient } from "@supabase/supabase-js";
 import { PrismaClient, type Prisma } from "@prisma/client";
+import { placeholderImage } from "./content/placeholder-image";
+import { newsArticles } from "./content/news-articles";
 
 const prisma = new PrismaClient();
 
 const SUPER_ADMIN_EMAIL = process.env.SEED_SUPER_ADMIN_EMAIL ?? "admin@211motors.com";
 const SUPER_ADMIN_PASSWORD = process.env.SEED_SUPER_ADMIN_PASSWORD ?? "Johnlat@2026";
 
-function placeholderImage(text: string, hex = "1a1d21", fg = "ffffff") {
-  // .png on the fg segment (not the default .svg) so next/image can optimize it
-  // without dangerouslyAllowSVG.
-  return `https://placehold.co/1600x900/${hex}/${fg}.png?text=${encodeURIComponent(text)}`;
-}
 
 async function seedSuperAdmin() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -903,57 +900,14 @@ async function seedInventory(modelIds: Record<string, { id: string; variantIds: 
 }
 
 async function seedArticles(authorId: string) {
-  const articles = [
-    {
-      slug: "211motors-now-open-in-juba-town",
-      title: "211Motors Now Open in Juba Town",
-      excerpt: "211Motors proudly opens its doors as the sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan.",
-      body: "<p>We are excited to announce the opening of our new showroom in Juba Town, near Muduria Roundabout. In partnership with FBM International Co., 211Motors is the sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan, bringing genuine new vehicles, factory-backed warranty, and trained after-sales technicians to the region for the first time.</p><p>Visit our showroom to explore the full Soueast range — S05, S06, S06 DM, S07, and flagship S09 — alongside the rugged 212 T01 and T02 off-roaders.</p>",
-      coverImageUrl: placeholderImage("211Motors Showroom Opening"),
-      tags: ["announcement", "showroom"],
-      status: "PUBLISHED" as const,
-      publishedAt: new Date("2026-05-01"),
-    },
-    {
-      slug: "introducing-the-soueast-s07",
-      title: "Introducing the Soueast S07",
-      excerpt: "Dual 12.3\" connected screens and a full ADAS suite arrive with the Soueast S07.",
-      body: "<p>The Soueast S07 brings class-leading technology to South Sudan and Sudan — dual 12.3\" connected screens, a full ADAS suite, and generous family space. Book a test drive at our Juba Town showroom today.</p>",
-      coverImageUrl: placeholderImage("Soueast S07 Launch"),
-      tags: ["new-model", "S07"],
-      status: "PUBLISHED" as const,
-      publishedAt: new Date("2026-06-10"),
-    },
-    {
-      slug: "212-off-road-range-arrives",
-      title: "The 212 Off-Road Range Arrives at 211Motors",
-      excerpt: "Retro styling, serious 4WD capability — the 212 T01 and T02 join the 211Motors range.",
-      body: "<p>211Motors is proud to introduce the 212 range to South Sudan and Sudan: the compact 212 T01 and flagship ladder-frame 212 T02. Built for unpaved roads, river crossings, and heavy-duty fleet use, both models are backed by the same genuine-parts guarantee and factory warranty as every Soueast vehicle we sell.</p>",
-      coverImageUrl: placeholderImage("212 Range Launch"),
-      tags: ["new-model", "212"],
-      status: "PUBLISHED" as const,
-      publishedAt: new Date("2026-08-01"),
-    },
-    {
-      slug: "genuine-parts-why-it-matters",
-      title: "Genuine Parts: Why It Matters",
-      excerpt: "Grey-market parts can cost you more in the long run. Here's why 211Motors only sources genuine Soueast and 212 parts.",
-      body: "<p>One of the most common questions we hear from buyers is about parts availability. As the sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan, 211Motors guarantees every part fitted to your vehicle is factory-sourced — never a grey-market substitute.</p>",
-      coverImageUrl: placeholderImage("Genuine Parts"),
-      tags: ["service", "parts"],
-      status: "PUBLISHED" as const,
-      publishedAt: new Date("2026-07-01"),
-    },
-  ];
-
-  for (const a of articles) {
+  for (const a of newsArticles) {
     await prisma.article.upsert({
       where: { slug: a.slug },
       update: {},
       create: { ...a, authorId },
     });
   }
-  console.log(`✔ Seeded ${articles.length} news articles`);
+  console.log(`✔ Seeded ${newsArticles.length} news articles`);
 }
 
 async function seedTestimonials() {

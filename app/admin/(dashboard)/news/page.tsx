@@ -4,8 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { requirePageAccess } from "@/lib/auth";
 import { can } from "@/lib/rbac";
 import { Button } from "@/components/ui/button";
-import { StatusBadge } from "@/components/admin/status-badge";
-import { Card, CardContent } from "@/components/ui/card";
+import { NewsList } from "@/components/admin/news-list";
 
 export const metadata = { title: "News & Offers" };
 
@@ -30,22 +29,15 @@ export default async function AdminNewsPage() {
         )}
       </div>
 
-      <div className="space-y-2">
-        {articles.map((a) => (
-          <Link key={a.id} href={`/admin/news/${a.id}`}>
-            <Card className="transition-colors hover:bg-accent/50">
-              <CardContent className="flex items-center justify-between gap-4 py-4">
-                <div>
-                  <p className="font-medium">{a.title}</p>
-                  <p className="text-sm text-muted-foreground">By {a.author.fullName}</p>
-                </div>
-                <StatusBadge status={a.status} />
-              </CardContent>
-            </Card>
-          </Link>
-        ))}
-        {articles.length === 0 && <p className="text-sm text-muted-foreground">No articles yet.</p>}
-      </div>
+      <NewsList
+        canDelete={can(user.role, "news", "delete")}
+        articles={articles.map((a) => ({
+          id: a.id,
+          title: a.title,
+          status: a.status,
+          authorName: a.author.fullName,
+        }))}
+      />
     </div>
   );
 }
