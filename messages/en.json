@@ -53,7 +53,7 @@
     "heroCta1": "Book a Test Drive",
     "heroCta2": "Explore the Range",
     "aboutTeaserTitle": "Who We Are",
-    "aboutTeaserBody": "Royal Exceed Co. Ltd brings reliable, genuine, factory-backed vehicles to South Sudan and Sudan. From our showroom in Juba Town, we serve individual buyers, NGOs, government agencies, and corporate fleets across both countries.",
+    "aboutTeaserBody": "211Motors brings reliable, genuine, factory-backed vehicles to South Sudan and Sudan. From our showroom in Juba Town, we serve individual buyers, NGOs, government agencies, and corporate fleets across both countries.",
     "aboutTeaserCta": "More about us",
     "aboutTeaserPartnerLabel": "Official partner",
     "aboutTeaserPartnerBody": "In partnership with FBM International Co., our principal in-market partner — every vehicle is factory-genuine, every part is manufacturer-sourced.",
@@ -61,7 +61,7 @@
     "rangeTitle": "The Soueast & 212 Range",
     "rangeSubtitle": "Built for South Sudan and Sudan's roads, backed by genuine parts and factory warranty",
     "arrivingTitle": "Featured & Arriving Soon",
-    "whyTitle": "Why Royal Exceed Co. Ltd",
+    "whyTitle": "Why 211Motors",
     "whySubtitle": "Everything you need for total peace of mind ownership",
     "servicesTitle": "Our Services",
     "testimonialsTitle": "What Our Clients Say",
@@ -81,7 +81,7 @@
     "saturday": "Saturday",
     "sunday": "Sunday",
     "getDirections": "Get directions",
-    "statsTitle": "Royal Exceed Co. Ltd at a glance",
+    "statsTitle": "211Motors at a glance",
     "stats": {
       "models": "Models in the range",
       "stock": "Units in stock or in transit",
@@ -216,7 +216,7 @@
   },
   "parts": {
     "title": "Genuine Parts",
-    "subtitle": "Order genuine Soueast and 212 parts and accessories through Royal Exceed Co. Ltd",
+    "subtitle": "Order genuine Soueast and 212 parts and accessories through 211Motors",
     "fullName": "Full name",
     "phone": "Phone number",
     "email": "Email (optional)",
@@ -242,7 +242,8 @@
     "submit": "Send enquiry"
   },
   "about": {
-    "title": "About Royal Exceed Co. Ltd",
+    "title": "About 211Motors",
+    "metaTitle": "About Us",
     "founderTitle": "A Word from Our Founder",
     "storyTitle": "Our Story",
     "partnershipTitle": "Our Partnership with FBM International Co.",
@@ -252,7 +253,7 @@
   },
   "news": {
     "title": "News & Offers",
-    "subtitle": "The latest from Royal Exceed Co. Ltd, Soueast, and 212",
+    "subtitle": "The latest from 211Motors, Soueast, and 212",
     "by": "By",
     "publishedOn": "Published on"
   },
@@ -280,10 +281,10 @@
   },
   "whatsapp": {
     "floatingLabel": "Chat on WhatsApp",
-    "genericMessage": "Hello Royal Exceed Co. Ltd, I'd like some information."
+    "genericMessage": "Hello 211Motors, I'd like some information."
   },
   "maintenance": {
     "title": "We'll be right back",
-    "body": "Royal Exceed Co. Ltd's website is undergoing scheduled maintenance. Please check back shortly, or reach us directly on WhatsApp."
+    "body": "211Motors' website is undergoing scheduled maintenance. Please check back shortly, or reach us directly on WhatsApp."
   }
 }

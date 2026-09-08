@@ -14,7 +14,7 @@ import { PrismaClient, type Prisma } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const SUPER_ADMIN_EMAIL = process.env.SEED_SUPER_ADMIN_EMAIL ?? "admin@royalexceed.com";
+const SUPER_ADMIN_EMAIL = process.env.SEED_SUPER_ADMIN_EMAIL ?? "admin@211motors.com";
 const SUPER_ADMIN_PASSWORD = process.env.SEED_SUPER_ADMIN_PASSWORD ?? "Johnlat@2026";
 
 function placeholderImage(text: string, hex = "1a1d21", fg = "ffffff") {
@@ -60,7 +60,7 @@ async function seedSuperAdmin() {
     create: {
       id: authUserId,
       email: SUPER_ADMIN_EMAIL,
-      fullName: "Royal Exceed Co. Ltd Admin",
+      fullName: "211Motors Admin",
       role: "SUPER_ADMIN",
     },
   });
@@ -71,10 +71,10 @@ async function seedSuperAdmin() {
 
 async function seedSiteSettings() {
   const data: Prisma.InputJsonValue = {
-    companyName: "Royal Exceed Co. Ltd",
+    companyName: "211Motors",
     phone: "+211 92 000 0000",
     whatsappNumber: "211920000000",
-    email: "info@royalexceed.com",
+    email: "info@211motors.com",
     address: {
       line: "Juba Town, near Muduria Roundabout",
       city: "Juba",
@@ -100,15 +100,15 @@ async function seedSiteSettings() {
     // needed.
     heroSlides: [],
     departments: {
-      sales: { label: "Sales", phone: "+211 91 237 7433", email: "sales@royalexceed.com" },
-      service: { label: "Service", phone: "+211 98 555 6999", email: "service@royalexceed.com" },
-      parts: { label: "Parts", phone: "+211 98 555 6999", email: "parts@royalexceed.com" },
-      fleet: { label: "Fleet & Corporate", phone: "+211 91 237 7433", email: "fleet@royalexceed.com" },
+      sales: { label: "Sales", phone: "+211 91 237 7433", email: "sales@211motors.com" },
+      service: { label: "Service", phone: "+211 98 555 6999", email: "service@211motors.com" },
+      parts: { label: "Parts", phone: "+211 98 555 6999", email: "parts@211motors.com" },
+      fleet: { label: "Fleet & Corporate", phone: "+211 91 237 7433", email: "fleet@211motors.com" },
     },
     seoDefaults: {
-      title: "Royal Exceed Co. Ltd | Soueast & 212 Vehicles — South Sudan & Sudan",
+      title: "211Motors | Soueast & 212 Vehicles — South Sudan & Sudan",
       description:
-        "Royal Exceed Co. Ltd, in partnership with FBM International Co., is the sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan. New vehicles, genuine parts, and factory-backed service in Juba.",
+        "211Motors, in partnership with FBM International Co., is the sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan. New vehicles, genuine parts, and factory-backed service in Juba.",
     },
     maintenanceMode: false,
   };
@@ -220,8 +220,8 @@ function buildModels(): ModelSeed[] {
       sortOrder: 0,
       heroImageUrl: placeholderImage("Soueast S05"),
       thumbnailUrl: placeholderImage("S05", "24272c"),
-      metaTitle: "Soueast S05 | Compact SUV | Royal Exceed Co. Ltd",
-      metaDescription: "Explore the Soueast S05 compact SUV, available now from Royal Exceed Co. Ltd, the sole authorized Soueast distributor in South Sudan and Sudan.",
+      metaTitle: "Soueast S05 | Compact SUV | 211Motors",
+      metaDescription: "Explore the Soueast S05 compact SUV, available now from 211Motors, the sole authorized Soueast distributor in South Sudan and Sudan.",
       variants: [
         {
           name: "Comfort 1.5L 2WD",
@@ -272,7 +272,7 @@ function buildModels(): ModelSeed[] {
         warranty: "3 years / 100,000 km",
       }),
       features: [
-        { title: "Genuine Parts, Always", description: "Every S05 sold by Royal Exceed Co. Ltd is backed by factory-sourced genuine parts — no grey-market substitutes.", imageUrl: placeholderImage("S05 Feature Parts"), layout: "image-right", sortOrder: 0 },
+        { title: "Genuine Parts, Always", description: "Every S05 sold by 211Motors is backed by factory-sourced genuine parts — no grey-market substitutes.", imageUrl: placeholderImage("S05 Feature Parts"), layout: "image-right", sortOrder: 0 },
         { title: "Built for the Region's Roads", description: "Reinforced suspension tuning and generous ground clearance handle South Sudan and Sudan's roads with ease.", imageUrl: placeholderImage("S05 Feature Suspension"), layout: "image-left", sortOrder: 1 },
       ],
     },
@@ -293,8 +293,8 @@ function buildModels(): ModelSeed[] {
       sortOrder: 1,
       heroImageUrl: placeholderImage("Soueast S06"),
       thumbnailUrl: placeholderImage("S06", "24272c"),
-      metaTitle: "Soueast S06 | 1.6T Crossover SUV | Royal Exceed Co. Ltd",
-      metaDescription: "The Soueast S06 1.6T crossover SUV — available from Royal Exceed Co. Ltd, the sole authorized Soueast distributor in South Sudan and Sudan.",
+      metaTitle: "Soueast S06 | 1.6T Crossover SUV | 211Motors",
+      metaDescription: "The Soueast S06 1.6T crossover SUV — available from 211Motors, the sole authorized Soueast distributor in South Sudan and Sudan.",
       variants: [
         {
           name: "Comfort 1.6T 2WD",
@@ -365,8 +365,8 @@ function buildModels(): ModelSeed[] {
       sortOrder: 2,
       heroImageUrl: placeholderImage("Soueast S06 DM"),
       thumbnailUrl: placeholderImage("S06 DM", "24272c"),
-      metaTitle: "Soueast S06 DM | Plug-in Hybrid SUV | Royal Exceed Co. Ltd",
-      metaDescription: "The Soueast S06 DM plug-in hybrid crossover — available from Royal Exceed Co. Ltd, the sole authorized Soueast distributor in South Sudan and Sudan.",
+      metaTitle: "Soueast S06 DM | Plug-in Hybrid SUV | 211Motors",
+      metaDescription: "The Soueast S06 DM plug-in hybrid crossover — available from 211Motors, the sole authorized Soueast distributor in South Sudan and Sudan.",
       variants: [
         {
           name: "DM Flagship",
@@ -424,8 +424,8 @@ function buildModels(): ModelSeed[] {
       sortOrder: 3,
       heroImageUrl: placeholderImage("Soueast S07"),
       thumbnailUrl: placeholderImage("S07", "24272c"),
-      metaTitle: "Soueast S07 | Family SUV with ADAS | Royal Exceed Co. Ltd",
-      metaDescription: "The Soueast S07 family SUV with 12.3\" connected screens and ADAS — from Royal Exceed Co. Ltd, sole authorized Soueast distributor in South Sudan and Sudan.",
+      metaTitle: "Soueast S07 | Family SUV with ADAS | 211Motors",
+      metaDescription: "The Soueast S07 family SUV with 12.3\" connected screens and ADAS — from 211Motors, sole authorized Soueast distributor in South Sudan and Sudan.",
       variants: [
         {
           name: "Comfort 1.5T 2WD",
@@ -499,8 +499,8 @@ function buildModels(): ModelSeed[] {
       sortOrder: 4,
       heroImageUrl: placeholderImage("Soueast S09"),
       thumbnailUrl: placeholderImage("S09", "24272c"),
-      metaTitle: "Soueast S09 | Flagship 7-Seat SUV | Royal Exceed Co. Ltd",
-      metaDescription: "The Soueast S09 flagship 7-seat SUV with a 2.0T engine — available from Royal Exceed Co. Ltd, the sole authorized Soueast distributor in South Sudan and Sudan.",
+      metaTitle: "Soueast S09 | Flagship 7-Seat SUV | 211Motors",
+      metaDescription: "The Soueast S09 flagship 7-seat SUV with a 2.0T engine — available from 211Motors, the sole authorized Soueast distributor in South Sudan and Sudan.",
       variants: [
         {
           name: "Comfort 2.0T 2WD",
@@ -573,8 +573,8 @@ function buildModels(): ModelSeed[] {
       sortOrder: 5,
       heroImageUrl: placeholderImage("212 T01"),
       thumbnailUrl: placeholderImage("212 T01", "24272c"),
-      metaTitle: "212 T01 | Off-Road SUV | Royal Exceed Co. Ltd",
-      metaDescription: "The 212 T01 retro-styled off-road SUV — available from Royal Exceed Co. Ltd, the sole authorized 212 distributor in South Sudan and Sudan.",
+      metaTitle: "212 T01 | Off-Road SUV | 211Motors",
+      metaDescription: "The 212 T01 retro-styled off-road SUV — available from 211Motors, the sole authorized 212 distributor in South Sudan and Sudan.",
       variants: [
         {
           name: "Explorer 2.0T 4WD",
@@ -645,8 +645,8 @@ function buildModels(): ModelSeed[] {
       sortOrder: 6,
       heroImageUrl: placeholderImage("212 T02"),
       thumbnailUrl: placeholderImage("212 T02", "24272c"),
-      metaTitle: "212 T02 | Flagship Off-Road SUV | Royal Exceed Co. Ltd",
-      metaDescription: "The 212 T02 flagship ladder-frame off-road SUV — available from Royal Exceed Co. Ltd, the sole authorized 212 distributor in South Sudan and Sudan.",
+      metaTitle: "212 T02 | Flagship Off-Road SUV | 211Motors",
+      metaDescription: "The 212 T02 flagship ladder-frame off-road SUV — available from 211Motors, the sole authorized 212 distributor in South Sudan and Sudan.",
       variants: [
         {
           name: "Field 2.0T 4WD",
@@ -906,10 +906,10 @@ async function seedArticles(authorId: string) {
   const articles = [
     {
       slug: "exceed-limited-now-open-in-juba-town",
-      title: "Royal Exceed Co. Ltd Now Open in Juba Town",
-      excerpt: "Royal Exceed Co. Ltd proudly opens its doors as the sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan.",
-      body: "<p>We are excited to announce the opening of our new showroom in Juba Town, near Muduria Roundabout. In partnership with FBM International Co., Royal Exceed Co. Ltd is the sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan, bringing genuine new vehicles, factory-backed warranty, and trained after-sales technicians to the region for the first time.</p><p>Visit our showroom to explore the full Soueast range — S05, S06, S06 DM, S07, and flagship S09 — alongside the rugged 212 T01 and T02 off-roaders.</p>",
-      coverImageUrl: placeholderImage("Royal Exceed Co. Ltd Showroom Opening"),
+      title: "211Motors Now Open in Juba Town",
+      excerpt: "211Motors proudly opens its doors as the sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan.",
+      body: "<p>We are excited to announce the opening of our new showroom in Juba Town, near Muduria Roundabout. In partnership with FBM International Co., 211Motors is the sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan, bringing genuine new vehicles, factory-backed warranty, and trained after-sales technicians to the region for the first time.</p><p>Visit our showroom to explore the full Soueast range — S05, S06, S06 DM, S07, and flagship S09 — alongside the rugged 212 T01 and T02 off-roaders.</p>",
+      coverImageUrl: placeholderImage("211Motors Showroom Opening"),
       tags: ["announcement", "showroom"],
       status: "PUBLISHED" as const,
       publishedAt: new Date("2026-05-01"),
@@ -926,9 +926,9 @@ async function seedArticles(authorId: string) {
     },
     {
       slug: "212-off-road-range-arrives",
-      title: "The 212 Off-Road Range Arrives at Royal Exceed Co. Ltd",
-      excerpt: "Retro styling, serious 4WD capability — the 212 T01 and T02 join the Royal Exceed Co. Ltd range.",
-      body: "<p>Royal Exceed Co. Ltd is proud to introduce the 212 range to South Sudan and Sudan: the compact 212 T01 and flagship ladder-frame 212 T02. Built for unpaved roads, river crossings, and heavy-duty fleet use, both models are backed by the same genuine-parts guarantee and factory warranty as every Soueast vehicle we sell.</p>",
+      title: "The 212 Off-Road Range Arrives at 211Motors",
+      excerpt: "Retro styling, serious 4WD capability — the 212 T01 and T02 join the 211Motors range.",
+      body: "<p>211Motors is proud to introduce the 212 range to South Sudan and Sudan: the compact 212 T01 and flagship ladder-frame 212 T02. Built for unpaved roads, river crossings, and heavy-duty fleet use, both models are backed by the same genuine-parts guarantee and factory warranty as every Soueast vehicle we sell.</p>",
       coverImageUrl: placeholderImage("212 Range Launch"),
       tags: ["new-model", "212"],
       status: "PUBLISHED" as const,
@@ -937,8 +937,8 @@ async function seedArticles(authorId: string) {
     {
       slug: "genuine-parts-why-it-matters",
       title: "Genuine Parts: Why It Matters",
-      excerpt: "Grey-market parts can cost you more in the long run. Here's why Royal Exceed Co. Ltd only sources genuine Soueast and 212 parts.",
-      body: "<p>One of the most common questions we hear from buyers is about parts availability. As the sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan, Royal Exceed Co. Ltd guarantees every part fitted to your vehicle is factory-sourced — never a grey-market substitute.</p>",
+      excerpt: "Grey-market parts can cost you more in the long run. Here's why 211Motors only sources genuine Soueast and 212 parts.",
+      body: "<p>One of the most common questions we hear from buyers is about parts availability. As the sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan, 211Motors guarantees every part fitted to your vehicle is factory-sourced — never a grey-market substitute.</p>",
       coverImageUrl: placeholderImage("Genuine Parts"),
       tags: ["service", "parts"],
       status: "PUBLISHED" as const,
@@ -962,7 +962,7 @@ async function seedTestimonials() {
       authorName: "Achol Deng",
       authorTitle: "Operations Director",
       company: "South Sudan Relief Network (NGO)",
-      quote: "Royal Exceed Co. Ltd's fleet support has been outstanding. Genuine parts and fast turnaround keep our vehicles on the road when it matters most.",
+      quote: "211Motors' fleet support has been outstanding. Genuine parts and fast turnaround keep our vehicles on the road when it matters most.",
       rating: 5,
       isApproved: true,
       sortOrder: 0,
@@ -980,7 +980,7 @@ async function seedTestimonials() {
       authorName: "Nyandeng Mabior",
       authorTitle: "Private buyer",
       company: null,
-      quote: "My S07 has been reliable and comfortable on the school run. The team at Royal Exceed Co. Ltd made the whole buying process easy.",
+      quote: "My S07 has been reliable and comfortable on the school run. The team at 211Motors made the whole buying process easy.",
       rating: 5,
       isApproved: true,
       sortOrder: 2,
@@ -989,7 +989,7 @@ async function seedTestimonials() {
       authorName: "Peter Garang",
       authorTitle: "Field Operations Manager",
       company: "Nile Logistics Ltd",
-      quote: "Our 212 T02s handle the unpaved routes between Juba and our upcountry sites without complaint. Royal Exceed Co. Ltd's fleet team has been a genuine partner.",
+      quote: "Our 212 T02s handle the unpaved routes between Juba and our upcountry sites without complaint. 211Motors' fleet team has been a genuine partner.",
       rating: 4,
       isApproved: true,
       sortOrder: 3,

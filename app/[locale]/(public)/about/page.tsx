@@ -8,7 +8,9 @@ import { Reveal } from "@/components/shared/reveal";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("about");
-  return { title: t("title"), alternates: { canonical: "/about" } };
+  // Not t("title") — that already contains the company name, and the root
+  // layout's "%s | 211Motors" template would then repeat it in the tab title.
+  return { title: t("metaTitle"), alternates: { canonical: "/about" } };
 }
 
 export default async function AboutPage() {
@@ -38,7 +40,7 @@ export default async function AboutPage() {
                 <p className="mt-2 text-muted-foreground italic">
                   &ldquo;When we opened our doors in Juba, we made a simple promise: every customer would drive away in
                   a genuine, factory-backed vehicle, and never wonder if they&rsquo;d been sold a compromise. That
-                  promise is still what guides Royal Exceed Co. Ltd today, and the reason our partnership with FBM
+                  promise is still what guides 211Motors today, and the reason our partnership with FBM
                   International Co. matters so much to us. Whether you are buying your first car or renewing a fleet,
                   our team is here to serve you with honesty and the standard our name is built on — the Art of
                   Quality.&rdquo;
@@ -54,7 +56,7 @@ export default async function AboutPage() {
           <section className="mt-10">
             <h2 className="font-heading text-2xl font-bold">{t("storyTitle")}</h2>
             <p className="mt-3 text-muted-foreground">
-              Royal Exceed Co. Ltd was founded to bring reliable, genuine, factory-backed vehicles to South Sudan and Sudan.
+              211Motors was founded to bring reliable, genuine, factory-backed vehicles to South Sudan and Sudan.
               From our showroom in Juba Town, near Muduria Roundabout, we serve individual buyers, NGOs,
               government agencies, and corporate fleets across both countries.
             </p>
@@ -72,7 +74,7 @@ export default async function AboutPage() {
               <div>
                 <h2 className="font-heading text-2xl font-bold">{t("partnershipTitle")}</h2>
                 <p className="mt-3 text-muted-foreground">
-                  Royal Exceed Co. Ltd is the <strong className="text-foreground">sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan</strong>,
+                  211Motors is the <strong className="text-foreground">sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan</strong>,
                   operating in partnership with FBM International Co., our principal in-market partner.
                   This means every vehicle we sell is factory-genuine, every part is sourced directly from the
                   manufacturer, and our technicians are factory-trained — a level of assurance no unauthorized
@@ -120,7 +122,7 @@ export default async function AboutPage() {
               <div>
                 <h2 className="font-heading text-2xl font-bold">{t("csrTitle")}</h2>
                 <p className="mt-3 text-muted-foreground">
-                  Royal Exceed Co. Ltd is committed to supporting local communities in Juba through employment,
+                  211Motors is committed to supporting local communities in Juba through employment,
                   technician training programs, and partnerships with local organizations.
                 </p>
               </div>

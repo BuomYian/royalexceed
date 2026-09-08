@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
@@ -19,6 +18,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import type { Role } from "@prisma/client";
+import { BrandLogo } from "@/components/shared/brand-logo";
 import { can, type Resource } from "@/lib/rbac";
 import { cn } from "@/lib/utils";
 
@@ -48,7 +48,7 @@ export function AdminSidebar({ role }: { role: Role }) {
   return (
     <aside className="hidden w-64 shrink-0 border-e border-border bg-sidebar lg:flex lg:flex-col">
       <div className="flex h-16 items-center gap-2 border-b border-sidebar-border px-5">
-        <Image src="/logo-favicon.png" alt="Royal Exceed Co. Ltd" width={32} height={32} className="h-8 w-8" />
+        <BrandLogo className="h-7" />
         <span className="font-heading text-sm font-bold text-sidebar-foreground">Admin</span>
       </div>
       <nav className="flex-1 space-y-0.5 overflow-y-auto px-3 py-4">

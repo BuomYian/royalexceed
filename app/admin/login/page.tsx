@@ -1,6 +1,6 @@
-import Image from "next/image";
 import { getCurrentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import { BrandLogo } from "@/components/shared/brand-logo";
 import { LoginForm } from "@/components/admin/login-form";
 
 export const metadata = { title: "Sign in" };
@@ -17,10 +17,10 @@ export default async function AdminLoginPage({
     <div className="flex min-h-dvh items-center justify-center bg-muted/40 px-4">
       <div className="w-full max-w-sm space-y-6 rounded-xl border border-border bg-card p-8 shadow-sm">
         <div className="space-y-1 text-center">
-          <Image src="/logo-favicon.png" alt="Royal Exceed Co. Ltd" width={44} height={44} className="mx-auto h-11 w-11" priority />
+          <BrandLogo priority className="mx-auto h-12" />
 
           <h1 className="font-heading text-xl font-bold">Admin sign in</h1>
-          <p className="text-sm text-muted-foreground">Royal Exceed Co. Ltd dashboard</p>
+          <p className="text-sm text-muted-foreground">211Motors dashboard</p>
         </div>
         <LoginForm next={typeof next === "string" ? next : undefined} />
       </div>

@@ -33,11 +33,11 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     metadataBase: new URL(siteUrl),
     title: {
-      default: "Royal Exceed Co. Ltd | Soueast & 212 Vehicles — South Sudan & Sudan",
-      template: "%s | Royal Exceed Co. Ltd",
+      default: "211Motors | Soueast & 212 Vehicles — South Sudan & Sudan",
+      template: "%s | 211Motors",
     },
     description:
-      "Royal Exceed Co. Ltd, in partnership with FBM International Co., is the sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan — new vehicle sales, genuine parts, and factory-backed service in Juba.",
+      "211Motors, in partnership with FBM International Co., is the sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan — new vehicle sales, genuine parts, and factory-backed service in Juba.",
     // No explicit `icons` field: app/icon.png (Next's file-convention favicon)
     // is picked up automatically and applies across the whole app, including
     // the separate admin root layout — an explicit override here would only
@@ -79,7 +79,7 @@ export default async function LocaleLayout({
         {/* Light is the default first impression; the header toggle switches to
             the dark brand palette and persists that choice per visitor. Swap to
             enableSystem + defaultTheme="system" to follow the OS setting instead. */}
-        <ThemeProvider defaultTheme="light" enableSystem={false} storageKey="royal-exceed-theme">
+        <ThemeProvider defaultTheme="light" enableSystem={false} storageKey="211motors-theme">
           <NextIntlClientProvider>
             <TooltipProvider delay={150}>
               {settings.maintenanceMode ? (
@@ -91,7 +91,7 @@ export default async function LocaleLayout({
                   <Footer settings={settings} />
                   <WhatsAppButton
                     phone={settings.whatsappNumber}
-                    message="Hello Royal Exceed Co. Ltd, I'd like some information."
+                    message="Hello 211Motors, I'd like some information."
                   />
                 </>
               )}
@@ -110,7 +110,7 @@ function MaintenanceScreen() {
       <div className="max-w-md space-y-4">
         <h1 className="text-3xl font-bold">We&apos;ll be right back</h1>
         <p className="text-muted-foreground">
-          Royal Exceed Co. Ltd&apos;s website is undergoing scheduled
+          211Motors&apos; website is undergoing scheduled
           maintenance. Please check back shortly, or reach us directly on
           WhatsApp.
         </p>

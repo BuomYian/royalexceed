@@ -13,8 +13,8 @@ const interTight = Inter_Tight({
 const inter = Inter({ variable: "--font-sans-family", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: { default: "Admin | Royal Exceed Co. Ltd", template: "%s | Royal Exceed Co. Ltd Admin" },
-  description: "Royal Exceed Co. Ltd admin dashboard.",
+  title: { default: "Admin | 211Motors", template: "%s | 211Motors Admin" },
+  description: "211Motors admin dashboard.",
   robots: { index: false, follow: false },
 };
 
@@ -35,7 +35,7 @@ export default function AdminRootLayout({ children }: LayoutProps<"/admin">) {
       }
     >
       <body className="min-h-full bg-background text-foreground">
-        <ThemeProvider defaultTheme="light" enableSystem={false} storageKey="royal-exceed-admin-theme">
+        <ThemeProvider defaultTheme="light" enableSystem={false} storageKey="211motors-admin-theme">
           <TooltipProvider delay={150}>
             {children}
             <Toaster richColors position="top-right" />

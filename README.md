@@ -1,13 +1,13 @@
-# Royal Exceed Co. Ltd — Website & Admin CMS
+# 211Motors — Website & Admin CMS
 
-Production-ready dealership website and admin dashboard for **Royal Exceed Co. Ltd**, the sole
+Production-ready dealership website and admin dashboard for **211Motors**, the sole
 authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan, operating in
 partnership with FBM International Co. Built with Next.js 16 (App Router), Prisma + Supabase
 (Postgres + Auth), and Cloudinary (media storage).
 
 Full requirements are in [`docs/fbm-international-website-prompt.md`](docs/fbm-international-website-prompt.md)
 (the original spec was written under the working name "FBM International" — the company and
-partner names were finalized as Royal Exceed Co. Ltd / FBM International Co. after the initial build;
+partner names were finalized as 211Motors / FBM International Co. after the initial build;
 see "Rebrand notes" below).
 
 ---
@@ -25,7 +25,7 @@ final values). Search the codebase for these and replace with real values before
 | Social links (Facebook/Instagram/TikTok/X) | same as above |
 | Brand colors (deep burgundy accent on near-black, per spec §5 fallback) | `app/globals.css` |
 | Vehicle photography (currently `placehold.co` placeholders) | reseed via the admin Media Library / Models editor |
-| First admin credentials `admin@royalexceed.com` / `Johnlat@2026` | change the password immediately after first login |
+| First admin credentials `admin@211motors.com` / `Johnlat@2026` | change the password immediately after first login |
 
 All of the above are also editable **without a redeploy** from `/admin/settings`, `/admin/models`,
 and `/admin/media` once the site is live — the seed values just need to exist for first boot.
@@ -263,9 +263,9 @@ The site was originally built for a company named "FBM International" per the or
 (`docs/fbm-international-website-prompt.md`). Partway through the build, the actual business
 identity was clarified:
 
-- **Royal Exceed Co. Ltd** is the company operating this site — sole authorized distributor of
+- **211Motors** is the company operating this site — sole authorized distributor of
   **Soueast and 212** vehicles in **South Sudan and Sudan**.
-- **FBM International Co.** is Royal Exceed Co. Ltd's principal in-market partner (named throughout
+- **FBM International Co.** is 211Motors' principal in-market partner (named throughout
   the trust/partnership copy — hero trust bar, footer tagline, About page, JSON-LD description —
   but not the operating company itself).
 - The vehicle lineup expanded from Soueast-only to **Soueast + 212** (212 is a retro-styled,

@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import { Menu, X, Phone } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
@@ -14,6 +13,7 @@ import {
   SheetTrigger,
   SheetClose,
 } from "@/components/ui/sheet";
+import { BrandLogo } from "@/components/shared/brand-logo";
 import { LocaleSwitcher } from "@/components/layout/locale-switcher";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
 import type { ResolvedSiteSettings } from "@/lib/settings";
@@ -58,19 +58,11 @@ export function Header({ settings }: { settings: ResolvedSiteSettings }) {
           scrolled ? "h-14" : "h-16",
         )}
       >
-        <Link
-          href="/"
-          className="flex items-center gap-2 font-heading text-lg font-bold tracking-tight"
-        >
-          <Image
-            src="/logo-favicon.png"
-            alt="Royal Exceed Co. Ltd"
-            width={36}
-            height={36}
-            className={cn("rounded transition-all duration-300", scrolled ? "h-8 w-8" : "h-9 w-9")}
+        <Link href="/" className="flex items-center">
+          <BrandLogo
             priority
+            className={cn("transition-[height] duration-300", scrolled ? "h-8" : "h-10")}
           />
-          <span className="hidden sm:inline">Royal Exceed Co. Ltd</span>
         </Link>
 
         <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
@@ -119,7 +111,7 @@ export function Header({ settings }: { settings: ResolvedSiteSettings }) {
               <SheetHeader>
                 <div className="flex items-center justify-between">
                   <SheetTitle className="font-heading">
-                    Royal Exceed Co. Ltd
+                    <BrandLogo className="h-8" />
                   </SheetTitle>
                   <SheetClose
                     render={

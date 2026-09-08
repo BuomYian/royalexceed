@@ -28,7 +28,7 @@ export const departmentContactSchema = z.object({
 });
 
 export const siteSettingsDataSchema = z.object({
-  companyName: z.string().default("Royal Exceed Co. Ltd"),
+  companyName: z.string().default("211Motors"),
   phone: z.string(),
   whatsappNumber: z.string(), // digits-only intl format for wa.me, e.g. "211912345678"
   email: z.string().email(),

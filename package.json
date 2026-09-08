@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "brand:build": "node scripts/build-brand-assets.mjs",
     "db:migrate": "prisma migrate dev",
     "db:seed": "tsx prisma/seed.ts",
     "db:studio": "prisma studio",
@@ -15,6 +16,9 @@
     "supabase:stop": "supabase stop",
     "test:unit": "vitest run",
     "test:e2e": "playwright test"
+  },
+  "engines": {
+    "node": ">=20.19.0"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

@@ -13,10 +13,10 @@ import {
  * exact coordinates) were not provided in the spec — see README "Before go-live".
  */
 export const DEFAULT_SITE_SETTINGS: SiteSettingsData = {
-  companyName: "Royal Exceed Co. Ltd",
+  companyName: "211Motors",
   phone: "+211 92 000 0000",
   whatsappNumber: "211920000000",
-  email: "info@royalexceed.com",
+  email: "info@211motors.com",
   address: {
     line: "Juba Town, near Muduria Roundabout",
     city: "Juba",
@@ -38,15 +38,15 @@ export const DEFAULT_SITE_SETTINGS: SiteSettingsData = {
   },
   heroSlides: [],
   departments: {
-    sales: { label: "Sales", phone: "+211 91 237 7433", email: "sales@royalexceed.com" },
-    service: { label: "Service", phone: "+211 98 555 6999", email: "service@royalexceed.com" },
-    parts: { label: "Parts", phone: "+211 98 555 6999", email: "parts@royalexceed.com" },
-    fleet: { label: "Fleet & Corporate", phone: "+211 91 237 7433", email: "fleet@royalexceed.com" },
+    sales: { label: "Sales", phone: "+211 91 237 7433", email: "sales@211motors.com" },
+    service: { label: "Service", phone: "+211 98 555 6999", email: "service@211motors.com" },
+    parts: { label: "Parts", phone: "+211 98 555 6999", email: "parts@211motors.com" },
+    fleet: { label: "Fleet & Corporate", phone: "+211 91 237 7433", email: "fleet@211motors.com" },
   },
   seoDefaults: {
-    title: "Royal Exceed Co. Ltd | Soueast & 212 Vehicles — South Sudan & Sudan",
+    title: "211Motors | Soueast & 212 Vehicles — South Sudan & Sudan",
     description:
-      "Royal Exceed Co. Ltd, in partnership with FBM International Co., is the sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan. New vehicles, genuine parts, and factory-backed service in Juba.",
+      "211Motors, in partnership with FBM International Co., is the sole authorized distributor of Soueast and 212 vehicles in South Sudan and Sudan. New vehicles, genuine parts, and factory-backed service in Juba.",
   },
   maintenanceMode: false,
   googleBusinessProfileUrl: undefined,

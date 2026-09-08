@@ -1,8 +1,8 @@
 import { useTranslations } from "next-intl";
 import { MapPin, Clock, Phone, Mail } from "lucide-react";
-import Image from "next/image";
 import NextLink from "next/link";
 import { Link } from "@/i18n/navigation";
+import { BrandLogo } from "@/components/shared/brand-logo";
 import {
   FacebookIcon,
   InstagramIcon,
@@ -35,18 +35,8 @@ export function Footer({ settings }: { settings: ResolvedSiteSettings }) {
     <footer className="border-t border-border/60 bg-background">
       <div className="container-brand grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-5">
         <div className="sm:col-span-2 lg:col-span-2">
-          <Link
-            href="/"
-            className="flex items-center gap-2 font-heading text-lg font-bold"
-          >
-            <Image
-              src="/logo-favicon.png"
-              alt="Royal Exceed Co. Ltd"
-              width={36}
-              height={36}
-              className="h-9 w-9 rounded"
-            />
-            Royal Exceed Co. Ltd
+          <Link href="/" className="flex items-center">
+            <BrandLogo className="h-10" />
           </Link>
           <p className="mt-1.5 text-xs font-semibold tracking-[0.2em] text-muted-foreground uppercase">
             Art of Quality
@@ -163,7 +153,7 @@ export function Footer({ settings }: { settings: ResolvedSiteSettings }) {
       <div className="border-t border-border/60">
         <div className="container-brand flex flex-col items-center justify-between gap-3 py-6 text-xs text-muted-foreground sm:flex-row">
           <p>
-            © {year} Royal Exceed Co. Ltd. {tFooter("rights")}
+            © {year} 211Motors. {tFooter("rights")}
           </p>
           <div className="flex gap-4">
             {/*

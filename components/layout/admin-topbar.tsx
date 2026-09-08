@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, LogOut, Search, ExternalLink } from "lucide-react";
 import type { Role } from "@prisma/client";
@@ -11,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { ADMIN_NAV } from "@/components/layout/admin-sidebar";
+import { BrandLogo } from "@/components/shared/brand-logo";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { can } from "@/lib/rbac";
 import { cn } from "@/lib/utils";
@@ -44,7 +44,7 @@ export function AdminTopbar({
         <SheetContent side="left" className="w-64 p-0">
           <SheetTitle className="sr-only">Admin navigation</SheetTitle>
           <div className="flex h-16 items-center gap-2 border-b border-border px-5">
-            <Image src="/logo-favicon.png" alt="Royal Exceed Co. Ltd" width={32} height={32} className="h-8 w-8" />
+            <BrandLogo className="h-7" />
             <span className="font-heading text-sm font-bold">Admin</span>
           </div>
           <nav className="space-y-0.5 p-3">

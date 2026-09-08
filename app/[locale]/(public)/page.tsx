@@ -24,7 +24,10 @@ import { autoDealerJsonLd } from "@/lib/seo";
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings();
   return {
-    title: settings.seoDefaults?.title,
+    // `absolute` opts out of the root layout's "%s | 211Motors" template —
+    // the configured SEO title already leads with the company name, so
+    // without this the home page title renders the brand twice.
+    title: { absolute: settings.seoDefaults?.title ?? "" },
     description: settings.seoDefaults?.description,
     alternates: { canonical: "/" },
     openGraph: { title: settings.seoDefaults?.title, description: settings.seoDefaults?.description, type: "website" },
